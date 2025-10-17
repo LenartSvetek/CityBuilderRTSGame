@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Buidlings_House
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Buidlings_House
+  m_GUID: e548443a813292e4d8488511d9843d86
+  m_SerializeEntries:
+  - m_GUID: 2ddf396db4b5c414993936c3fa554abf
+    m_Address: Assets/Game/Buildings/House/Env_CompanyBuilding_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    - House
+    - level2
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60bbe753566ce5147bb6f23f272afe06
+    m_Address: Assets/Game/Buildings/House/Env_CompanyBuilding_02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    - House
+    - level1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8dfab16e28084cd4da4a4346447d9663
+    m_Address: Assets/Pandazole_Ultimate_Pack/Pandazole City Town Pack/Prefabs/Env_Motel_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    - House
+    - level2
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b846e66566f20394ea5e77dbedbed858
+    m_Address: Assets/Pandazole_Ultimate_Pack/Pandazole City Town Pack/Prefabs/Env_Motel_02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    - House
+    - level1
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a618a29d07c70f54b93d38a16abbae97, type: 2}
+  m_SchemaSet:
+    m_Schemas: []
