@@ -37,10 +37,13 @@ public class PlayerController : MonoBehaviour {
     }
     private void FixedUpdate() {
         // Use moveInput to move the player
-        Vector3 movement = new Vector3(moveInput.x, 0, moveInput.y);
-        rb.MovePosition(rb.position + movement * Time.deltaTime * 5f);
+        Vector3 movement = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+        movement.x *= rb.transform.forward.x;
+        movement.z *= rb.transform.forward.z;
+        
+        rb.MovePosition(rb.position + Time.deltaTime * 5f * movement);
 
-        Vector3 euler = rb.rotation.eulerAngles + new Vector3(0, lookInput.y * Time.deltaTime * 15f, 0);
+        Vector3 euler = rb.rotation.eulerAngles + new Vector3(0, lookInput.y * Time.deltaTime * 10f, 0);
         rb.MoveRotation(Quaternion.Euler(euler));
     }
 }
