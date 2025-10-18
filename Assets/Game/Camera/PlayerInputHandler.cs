@@ -1,49 +1,74 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
-    private PlayerInput inputActions;
-    private Vector2 moveInput;
-    private Vector2 lookInput;
-    private Rigidbody rb;
+    private PlayerInput _inputActions;
+    private Vector2 _moveInput;
+
+    private bool _isLooking;
+    private Vector2 _lookInput;
+    
+    private Rigidbody _rb;
+    
+    [SerializeField]
+    private CinemachineCamera cam;
+    private CinemachineOrbitalFollow _orbitalCamera;
 
     private void Awake() {
-        inputActions = new PlayerInput();
+        _inputActions = new PlayerInput();
 
         // Subscribe to Move action
-        inputActions.Player.Move.performed += OnMove;
-        inputActions.Player.Move.canceled += OnMove; // To detect when movement stops
+        _inputActions.Player.Move.performed += OnMove;
+        _inputActions.Player.Move.canceled += OnMove; // To detect when movement stops
 
-        inputActions.Player.Look.performed += OnLook;
-        inputActions.Player.Look.canceled += OnLook;
+        _inputActions.Player.Look.performed += OnLook;
+        _inputActions.Player.Look.canceled += OnLook;
 
-        rb = GetComponent<Rigidbody>();
+        _inputActions.Player.LookActivation.performed += OnLookActivation;
+        _inputActions.Player.LookActivation.canceled += OnLookActivation;
+
+        _rb = GetComponent<Rigidbody>();
+        _orbitalCamera = cam.GetComponent<CinemachineOrbitalFollow>();
     }
 
     private void OnEnable() {
-        inputActions.Enable();
+        _inputActions.Enable();
     }
 
     private void OnDisable() {
-        inputActions.Disable();
+        _inputActions.Disable();
     }
 
     private void OnMove(InputAction.CallbackContext context) {
-        moveInput = context.ReadValue<Vector2>();
+        _moveInput = context.ReadValue<Vector2>();
     }
 
     private void OnLook(InputAction.CallbackContext context) {
-        lookInput = context.ReadValue<Vector2>();
+        _lookInput = context.ReadValue<Vector2>();
     }
+    
+    private void OnLookActivation(InputAction.CallbackContext context) {
+        _isLooking = context.ReadValueAsButton();
+        
+        _orbitalCamera.HorizontalAxis.Recentering.Enabled = !_isLooking;
+        
+    }
+    
     private void FixedUpdate() {
         // Use moveInput to move the player
-        Vector3 movement = new Vector3(moveInput.x, 0, moveInput.y).normalized;
-        movement.x *= rb.transform.forward.x;
-        movement.z *= rb.transform.forward.z;
+        Vector3 movement = new Vector3(_moveInput.x, 0, _moveInput.y).normalized;
         
-        rb.MovePosition(rb.position + Time.deltaTime * 5f * movement);
+        
+        _rb.MovePosition(_rb.position + Time.deltaTime * 5f * movement);
 
-        Vector3 euler = rb.rotation.eulerAngles + new Vector3(0, lookInput.y * Time.deltaTime * 10f, 0);
-        rb.MoveRotation(Quaternion.Euler(euler));
+        if (_isLooking)
+        {
+            _orbitalCamera.HorizontalAxis.Value += _lookInput.x * Time.deltaTime * 10f;
+            
+        }
+
+        // Vector3 euler = rb.rotation.eulerAngles + new Vector3(0, lookInput.y * Time.deltaTime * 10f, 0);
+        // rb.MoveRotation(Quaternion.Euler(euler));
     }
 }
