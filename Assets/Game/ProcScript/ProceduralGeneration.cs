@@ -1,44 +1,47 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class ProceduralMesh : MonoBehaviour
+[RequireComponent(typeof(Terrain), typeof(TerrainCollider))]
+public class ProceduralTerrain : MonoBehaviour
 {
+    [Range(2, 512)]
+    public int resolution = 129; // must be 2^n + 1
+    public float size = 1280f;   // total terrain width/depth
+    public float heightScale = 50f;
+
+    FastNoiseLite noise = new FastNoiseLite();
+
     void Start()
     {
-        Mesh mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
+        noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
 
-        // Define vertices
-        Vector3[] vertices = new Vector3[]
+        // Create a new TerrainData object
+        TerrainData terrainData = new TerrainData();
+        terrainData.heightmapResolution = resolution;
+        terrainData.size = new Vector3(size, heightScale, size);
+
+        // Generate heightmap
+        float[,] heights = new float[resolution, resolution];
+        for (int z = 0; z < resolution; z++)
         {
-            new Vector3(0, 0, 0), // Bottom Left
-            new Vector3(1, 0, 0), // Bottom Right
-            new Vector3(0, 1, 0), // Top Left
-            new Vector3(1, 1, 0)  // Top Right
-        };
+            for (int x = 0; x < resolution; x++)
+            {
+                float nx = (float)x / resolution;
+                float nz = (float)z / resolution;
 
-        // Define triangles (two triangles make a quad)
-        int[] triangles = new int[]
-        {
-            0, 2, 1, // First triangle
-            2, 3, 1  // Second triangle
-        };
+                // Noise returns roughly [-1, 1], normalize to [0, 1]
+                float noiseValue = (noise.GetNoise(x, z) + 1f) * 0.5f;
+                heights[z, x] = noiseValue;
+            }
+        }
 
-        // Optional: Define UVs for texturing
-        Vector2[] uvs = new Vector2[]
-        {
-            new Vector2(0, 0),
-            new Vector2(1, 0),
-            new Vector2(0, 1),
-            new Vector2(1, 1)
-        };
+        // Apply heightmap to terrain
+        terrainData.SetHeights(0, 0, heights);
 
-        // Assign to mesh
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.uv = uvs;
+        // Assign to terrain and collider
+        Terrain terrain = GetComponent<Terrain>();
+        TerrainCollider collider = GetComponent<TerrainCollider>();
 
-        // Recalculate normals for lighting
-        mesh.RecalculateNormals();
+        terrain.terrainData = terrainData;
+        collider.terrainData = terrainData;
     }
 }

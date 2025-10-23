@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
-public class PlayerController : MonoBehaviour
+public class PlayerInputHandler : MonoBehaviour
 {
     private PlayerInput _inputActions;
     private Vector2 _moveInput;
@@ -11,12 +11,12 @@ public class PlayerController : MonoBehaviour
     private bool _isLooking;
     private Vector2 _lookInput;
 
-    private Rigidbody _rb;
-
     [SerializeField]
     private CinemachineCamera cam;
     private CinemachineOrbitalFollow _orbitalCamera;
 
+    private PlayerController _playerController;
+    
     private void Awake()
     {
         _inputActions = new PlayerInput();
@@ -31,8 +31,9 @@ public class PlayerController : MonoBehaviour
         _inputActions.Player.LookActivation.performed += OnLookActivation;
         _inputActions.Player.LookActivation.canceled += OnLookActivation;
 
-        _rb = GetComponent<Rigidbody>();
         _orbitalCamera = cam.GetComponent<CinemachineOrbitalFollow>();
+        
+        _playerController = GetComponent<PlayerController>();
     }
 
     private void OnEnable()
@@ -76,28 +77,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Use moveInput to move the player
-        Vector3 movement = new Vector3(_moveInput.x, 0, _moveInput.y).normalized;
-
-        // Flatten camera forward and right vectors (ignore X rotation)
-        Vector3 forward = _orbitalCamera.transform.forward;
-        forward.y = 0f;
-        forward.Normalize();
-
-        Vector3 right = _orbitalCamera.transform.right;
-        right.y = 0f;
-        right.Normalize();
-
-        // Movement direction
-        Vector3 direction = forward * movement.z + right * movement.x;
-        direction.Normalize();
-
-        _rb.MovePosition(_rb.position + Time.deltaTime * 5f * direction);
-
+        if (_moveInput != Vector2.zero)
+        {
+            _playerController.OnPlayerMove(_moveInput);
+        }
+        
         if (_isLooking)
         {
-            _orbitalCamera.HorizontalAxis.Value += _lookInput.x * Time.deltaTime * 10f;
-
+            _playerController.OnPlayerLook(_lookInput);
         }
 
         // Vector3 euler = rb.rotation.eulerAngles + new Vector3(0, lookInput.y * Time.deltaTime * 10f, 0);
