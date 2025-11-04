@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2827565588983649516}
   - component: {fileID: 7519513766371859622}
   - component: {fileID: 4013568951686597272}
+  - component: {fileID: 2043941502239233409}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -100,7 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe4d8e7efec59f4280ebac7cb91d933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  obj: {fileID: 8585650954766913903, guid: 5c06f3174e1062d44b9caa19b044b217, type: 3}
   cam: {fileID: 5787360501477789552}
+  brain: {fileID: 2623637202651866189}
 --- !u!114 &7519513766371859622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +130,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   _cam: {fileID: 5787360501477789552}
+--- !u!114 &2043941502239233409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5841234427854500003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c653674b5e2a3274da2ffd7405c55d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomCursor
+  cursorUI: {fileID: 0}
+  smoothSpeed: 1000
+  offset: {x: 8, y: -10, z: 0}
 --- !u!1 &5854594156091906292
 GameObject:
   m_ObjectHideFlags: 0

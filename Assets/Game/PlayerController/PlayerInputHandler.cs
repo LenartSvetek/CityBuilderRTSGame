@@ -5,6 +5,8 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    public GameObject obj;
+
     private PlayerInput _inputActions;
     private Vector2 _moveInput;
 
@@ -13,6 +15,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     [SerializeField]
     private CinemachineCamera cam;
+    [SerializeField]
+    private CinemachineBrain brain;
     private CinemachineOrbitalFollow _orbitalCamera;
 
     private PlayerController _playerController;
@@ -31,9 +35,13 @@ public class PlayerInputHandler : MonoBehaviour
         _inputActions.Player.LookActivation.performed += OnLookActivation;
         _inputActions.Player.LookActivation.canceled += OnLookActivation;
 
+        _inputActions.Player.Action.canceled += OnAction;
+
         _orbitalCamera = cam.GetComponent<CinemachineOrbitalFollow>();
         
         _playerController = GetComponent<PlayerController>();
+
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void OnEnable()
@@ -73,6 +81,12 @@ public class PlayerInputHandler : MonoBehaviour
 
         _orbitalCamera.HorizontalAxis.Recentering.Enabled = !_isLooking;
 
+    }
+
+    private void OnAction(InputAction.CallbackContext context) {
+        if(!context.ReadValueAsButton()) {
+            ObjectPlacer.PlaceObject(brain.GetComponent<Camera>(), obj);
+        }
     }
 
     private void FixedUpdate()
