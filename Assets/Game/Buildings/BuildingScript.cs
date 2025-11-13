@@ -96,8 +96,11 @@ public class BuildingScript : MonoBehaviour {
 #if UNITY_EDITOR
                 EditorApplication.delayCall += () => {
                     if (self != null) {
-                        Instantiate(handle.Result[rInd]).transform.parent = self.gameObject.transform;
+                        GameObject building = Instantiate(handle.Result[rInd]);
+                        building.transform.parent = self.gameObject.transform;
+                        building.transform.localPosition = Vector3.zero;
                     }
+                     
                     _isSpawning = false;
                 };
 #else
