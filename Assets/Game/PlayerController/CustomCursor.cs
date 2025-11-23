@@ -23,6 +23,7 @@ public class CustomCursor : MonoBehaviour
 
         // Smoothly interpolate toward the real mouse position
         Vector3 currentPos = cursorUI.position;
+        targetPos.z = currentPos.z;
         cursorUI.position = Vector3.Lerp(currentPos, targetPos, Time.unscaledDeltaTime * smoothSpeed);
 
 

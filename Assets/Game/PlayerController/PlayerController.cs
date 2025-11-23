@@ -1,5 +1,6 @@
 using System;
 using Unity.Cinemachine;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,14 +10,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private CinemachineCamera _cam;
     private CinemachineOrbitalFollow _orbitalCamera;
+
+    [SerializeField]
+    private CinemachineBrain _brain;
+    private Camera _acCam;
+    [SerializeField]
+    private GameObject Placer;
     
     PlayerSettings _playerSettings;
+
+    [SerializeField]
+    private GameObject _obj;
     
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _orbitalCamera = _cam.GetComponent<CinemachineOrbitalFollow>();
         _playerSettings = GetComponent<PlayerSettings>();
+
+        _acCam = _brain.GetComponent<Camera>();
     }
 
     public void OnPlayerMove(Vector2 moveInput)
@@ -43,5 +55,26 @@ public class PlayerController : MonoBehaviour
     public void OnPlayerLook(Vector2 lookInput)
     {
         _orbitalCamera.HorizontalAxis.Value += lookInput.x * Time.deltaTime * 10f;
+    }
+
+    void FixedUpdate() {
+        // When you left-click
+        Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // Check if the ray hits the terrain (or anything with a collider)
+        if (Physics.Raycast(ray, out hit)) {
+            // Place object at the hit point
+            Vector3 position = hit.point;
+            Placer.transform.position = position;
+        }
+    }
+
+    public void OnBuildingUI() {
+        Vector3 position = Placer.transform.position;
+        Placer.transform.parent = null;
+        //Destroy(Placer);
+        //Placer = Instantiate(_obj, position, Quaternion.identity);
+        //Placer.transform.parent = this.transform;
     }
 }
