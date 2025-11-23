@@ -9,6 +9,7 @@ public class ObjectPlacer : MonoBehaviour
 
         // Check if the ray hits the terrain (or anything with a collider)
         if (Physics.Raycast(ray, out hit)) {
+            Debug.Log(hit.collider.gameObject.name);
             // Place object at the hit point
             Vector3 position = hit.point;
             Instantiate(obj, position, Quaternion.identity);

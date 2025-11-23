@@ -5,7 +5,6 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public GameObject obj;
 
     private PlayerInput _inputActions;
     private Vector2 _moveInput;
@@ -85,7 +84,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void OnAction(InputAction.CallbackContext context) {
         if(!context.ReadValueAsButton()) {
-            ObjectPlacer.PlaceObject(brain.GetComponent<Camera>(), obj);
+            _playerController.OnPlayerClick();
         }
     }
 

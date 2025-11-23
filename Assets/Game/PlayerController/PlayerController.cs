@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject _obj;
     
+    private bool _isPlacingBuilding = false;
+    
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
+        
         // When you left-click
         Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -70,11 +73,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnPlayerClick()
+    {
+        if (!_isPlacingBuilding) return; 
+        
+        ObjectPlacer.PlaceObject(_acCam.GetComponent<Camera>(), _obj);
+        _isPlacingBuilding = false;
+    }
+    
     public void OnBuildingUI() {
         Vector3 position = Placer.transform.position;
+        Debug.Log("Yoo wtf");
+
         Placer.transform.parent = null;
-        //Destroy(Placer);
-        //Placer = Instantiate(_obj, position, Quaternion.identity);
-        //Placer.transform.parent = this.transform;
+        Destroy(Placer);
+        
+        Placer = Instantiate(_obj, position, Quaternion.identity);
+        Placer.transform.parent = this.transform;
+        
+        _isPlacingBuilding = true;
     }
 }
