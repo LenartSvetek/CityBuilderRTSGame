@@ -69,6 +69,8 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit)) {
             // Place object at the hit point
             Vector3 position = hit.point;
+            position.x = Mathf.Floor(position.x / 10) * 10 + 5;
+            position.z = Mathf.Floor(position.z / 10) * 10 + 5;
             Placer.transform.position = position;
         }
     }
