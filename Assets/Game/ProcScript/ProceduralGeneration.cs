@@ -30,7 +30,7 @@ public class ProceduralTerrain : MonoBehaviour
 
                 // Noise returns roughly [-1, 1], normalize to [0, 1]
                 float noiseValue = (noise.GetNoise(x, z) + 1f) * 0.5f;
-                heights[z, x] = noiseValue;
+                heights[z, x] = 0;
             }
         }
 

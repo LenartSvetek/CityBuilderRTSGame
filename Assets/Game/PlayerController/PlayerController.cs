@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject _obj;
+
+    [SerializeField]
+    private float _gridSize = 5;
     
     private bool _isPlacingBuilding = false;
     
@@ -69,17 +72,27 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit)) {
             // Place object at the hit point
             Vector3 position = hit.point;
-            position.x = Mathf.Floor(position.x / 10) * 10 + 5;
-            position.z = Mathf.Floor(position.z / 10) * 10 + 5;
+            position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
+            position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
             Placer.transform.position = position;
         }
     }
 
     public void OnPlayerClick()
     {
-        if (!_isPlacingBuilding) return; 
-        
-        ObjectPlacer.PlaceObject(_acCam.GetComponent<Camera>(), _obj);
+        if (!_isPlacingBuilding) return;
+
+        Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // Check if the ray hits the terrain (or anything with a collider)
+        if (Physics.Raycast(ray, out hit)) {
+            // Place object at the hit point
+            Vector3 position = hit.point;
+            position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
+            position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
+            ObjectPlacer.PlaceObject(position, _obj);
+        }
         _isPlacingBuilding = false;
     }
     

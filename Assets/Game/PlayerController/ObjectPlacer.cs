@@ -16,4 +16,8 @@ public class ObjectPlacer : MonoBehaviour
             Debug.Log($"Place position: {position}");
         }
     }
+
+    static public void PlaceObject(Vector3 position, GameObject obj) {
+        Instantiate(obj, position, Quaternion.identity);
+    }
 }
