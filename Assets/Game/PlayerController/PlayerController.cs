@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject Placer;
     
+    [SerializeField]
+    private GameObject DefualtPlacer;
+    
     PlayerSettings _playerSettings;
 
     [SerializeField]
@@ -75,6 +78,8 @@ public class PlayerController : MonoBehaviour
             position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
             position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
             Placer.transform.position = position;
+            
+            
         }
     }
 
@@ -92,14 +97,18 @@ public class PlayerController : MonoBehaviour
             position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
             position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
             ObjectPlacer.PlaceObject(position, _obj);
+
+            Placer.transform.parent = null;
+            Destroy(Placer);
+            
+            Placer = Instantiate(DefualtPlacer, position, Quaternion.identity);
+            Placer.transform.parent = transform;
         }
         _isPlacingBuilding = false;
     }
     
     public void OnBuildingUI() {
         Vector3 position = Placer.transform.position;
-        Debug.Log("Yoo wtf");
-
         Placer.transform.parent = null;
         Destroy(Placer);
         

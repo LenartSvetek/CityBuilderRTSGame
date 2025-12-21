@@ -501,6 +501,10 @@ PrefabInstance:
       propertyPath: _gridSize
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4013568951686597272, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
+      propertyPath: DefualtPlacer
+      value: 
+      objectReference: {fileID: 8345890698088014458, guid: d6e6f930ddf09c44782e28360334c701, type: 3}
     - target: {fileID: 5841234427854500003, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
       propertyPath: m_Name
       value: Player
