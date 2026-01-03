@@ -428,6 +428,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &806905342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5841234427854500003, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
+  m_PrefabInstance: {fileID: 932620223}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9162545680957173857, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 390.057
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9162545680957173857, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
       propertyPath: m_LocalPosition.y
@@ -519,7 +524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9162545680957173857, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.9673
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9162545680957173857, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
       propertyPath: m_LocalRotation.w
@@ -552,7 +557,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5841234427854500003, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1010735094}
   m_SourcePrefab: {fileID: 100100000, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
 --- !u!1 &960777699
 GameObject:
@@ -631,12 +639,24 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4013568951686597272, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
   m_PrefabInstance: {fileID: 932620223}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 806905342}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bd73d9ae8dd35e41af5ebc7c87263e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+--- !u!114 &1010735094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806905342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2394dd8c023be49b9962347559fb59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerResources
 --- !u!1 &1826249922
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,6 +669,7 @@ GameObject:
   - component: {fileID: 1826249923}
   - component: {fileID: 1826249928}
   - component: {fileID: 1826249927}
+  - component: {fileID: 1826249929}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -680,7 +701,7 @@ Transform:
   m_GameObject: {fileID: 1826249922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -114.3, y: 9, z: -156.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -746,6 +767,33 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &1826249929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826249922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c560274fde6c8924ba2f2ea1a321e9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Resources
+  types:
+  - resource:
+      resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
+      amount: 5000
+    level: 1
+  - resource:
+      resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
+      amount: 10000
+    level: 2
+  - resource:
+      resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
+      amount: 15000
+    level: 3
+  resourcePrefab: {fileID: 8455136431455234019, guid: 1976dcac3f037464cae9f0875f79c55b, type: 3}
+  place: 10
 --- !u!1 &1996902301
 GameObject:
   m_ObjectHideFlags: 0

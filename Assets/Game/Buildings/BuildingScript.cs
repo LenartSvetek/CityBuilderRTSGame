@@ -8,14 +8,24 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public enum BUILDING_TYPE {
     House,
-    Utility
+    Utility,
+    Resource
 }
 
 public class BuildingScript : MonoBehaviour {
 
     [SerializeField]
     private BUILDING_TYPE _type = BUILDING_TYPE.House;
+    
+    [SerializeField]
+    private ResourceSO _resource;
 
+    public ResourceSO resource
+    {
+        get => _resource;
+        set => _resource = value;
+    }
+    
     public BUILDING_TYPE type {
         get => _type;
         set {
@@ -54,36 +64,30 @@ public class BuildingScript : MonoBehaviour {
         Debug.Log($"Number of children: {children.Count}");
 
         foreach (Transform child in children) {
-#if UNITY_EDITOR
-            GameObject tmpBuilding = child.gameObject;
-            BuildingScript self = this;
-            EditorApplication.delayCall += () => {
-                if (self != null && tmpBuilding != null)
-                    DestroyImmediate(tmpBuilding);
-            };
-#else
-                        DestroyAllChildren(child.gameObject); 
-#endif
+            DestroyAllChildren(child.gameObject); 
         }
     }
-
-#if UNITY_EDITOR
-    private bool _isSpawning = true;
-    private void OnValidate() {
-        if (EditorApplication.isPlayingOrWillChangePlaymode && _isSpawning)
-            return;
-
-        if (this != null)
-            updateBuilding();
-    }
-#endif
 
     void updateBuilding() {
         DestroyAllChildren(gameObject);
 
         Debug.Log($"Yoo level is {_level}");
 
-        Addressables.LoadAssetsAsync<GameObject>(new List<string>() { "Building", _type.ToString(), $"level{_level}" }, null, Addressables.MergeMode.Intersection).Completed += OnComplete;
+        if (_type == BUILDING_TYPE.Resource)
+        {
+            if(_resource == null) return;
+
+            Addressables
+                .LoadAssetsAsync<GameObject>(
+                    new List<string>() { "Building", _type.ToString(), _resource.resourceName, $"level{_level}" },
+                    null, Addressables.MergeMode.Intersection).Completed += OnComplete;
+        }
+        else
+        {
+            Addressables
+                .LoadAssetsAsync<GameObject>(new List<string>() { "Building", _type.ToString(), $"level{_level}" },
+                    null, Addressables.MergeMode.Intersection).Completed += OnComplete;
+        }
     }
 
     private void OnComplete(AsyncOperationHandle<IList<GameObject>> handle) {
@@ -92,21 +96,9 @@ public class BuildingScript : MonoBehaviour {
 
             if (handle.Result.Count > 0) {
                 int rInd = Mathf.FloorToInt(Random.value * handle.Result.Count);
-                BuildingScript self = this;
-#if UNITY_EDITOR
-                EditorApplication.delayCall += () => {
-                    if (self != null) {
-                        GameObject building = Instantiate(handle.Result[rInd]);
-                        building.transform.parent = self.gameObject.transform;
-                        building.transform.localPosition = Vector3.zero;
-                    }
-                     
-                    _isSpawning = false;
-                };
-#else
-                
-                Instantiate(handle.Result[rInd]).transform.parent = gameObject.transform;
-#endif
+
+                GameObject obj = Instantiate(handle.Result[rInd], gameObject.transform);
+                obj.transform.localPosition = Vector3.zero;
             }
 
         }

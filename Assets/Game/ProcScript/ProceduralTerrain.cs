@@ -5,7 +5,7 @@ public class ProceduralTerrain : MonoBehaviour
 {
     [Range(2, 512)]
     public int resolution = 129; // must be 2^n + 1
-    public float size = 1280f;   // total terrain width/depth
+    public float size = 1024f;   // total terrain width/depth
     public float heightScale = 50f;
 
     FastNoiseLite noise = new FastNoiseLite();
@@ -43,5 +43,8 @@ public class ProceduralTerrain : MonoBehaviour
 
         terrain.terrainData = terrainData;
         collider.terrainData = terrainData;
+        
+        Resources resources = GetComponentInParent<Resources>();
+        resources.PlaceResources(this);
     }
 }
