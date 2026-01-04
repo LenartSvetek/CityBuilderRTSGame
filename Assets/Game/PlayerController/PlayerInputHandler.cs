@@ -36,6 +36,8 @@ public class PlayerInputHandler : MonoBehaviour
 
         _inputActions.Player.Action.canceled += OnAction;
 
+        _inputActions.Player.Action2.canceled += OnSecondaryAction;
+
         _orbitalCamera = cam.GetComponent<CinemachineOrbitalFollow>();
         
         _playerController = GetComponent<PlayerController>();
@@ -85,6 +87,12 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnAction(InputAction.CallbackContext context) {
         if(!context.ReadValueAsButton()) {
             _playerController.OnPlayerClick();
+        }
+    }
+    
+    private void OnSecondaryAction(InputAction.CallbackContext context) {
+        if(!context.ReadValueAsButton()) {
+            _playerController.OnPlayerSecondaryClick();
         }
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Terrain), typeof(TerrainCollider))]
 public class ProceduralTerrain : MonoBehaviour
@@ -9,6 +10,10 @@ public class ProceduralTerrain : MonoBehaviour
     public float heightScale = 50f;
 
     FastNoiseLite noise = new FastNoiseLite();
+
+    public NavMeshBaker navMeshBaker;
+    
+    public GameObject pawnPrefab;
 
     void Start()
     {
@@ -46,5 +51,14 @@ public class ProceduralTerrain : MonoBehaviour
         
         Resources resources = GetComponentInParent<Resources>();
         resources.PlaceResources(this);
+        
+        navMeshBaker.Build();
+
+        Vector3 pos = new Vector3(100, 0, 100);
+        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        
+        pos.z = 90;
+        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        
     }
 }

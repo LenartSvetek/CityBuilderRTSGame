@@ -11,6 +11,6 @@ public class PawnController : MonoBehaviour
 
     public void IssueCommand(IPawnCommand command)
     {
-        command.Execute(pawn);
+        command.Execute(gameObject);
     }
 }

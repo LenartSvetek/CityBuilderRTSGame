@@ -15,7 +15,7 @@ MonoBehaviour:
   pawnName: Worker
   prefab: {fileID: 0}
   maxHealth: 100
-  moveSpeed: 10
+  moveSpeed: 50
   attackRange: 5
   attackDamage: 5
   canGather: 1

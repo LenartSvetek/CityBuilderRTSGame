@@ -11,6 +11,12 @@ public class PawnMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         pawn = GetComponent<Pawn>();
         agent.speed = pawn.data.moveSpeed;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position);
+        }
     }
 
     public void MoveTo(Vector3 position)

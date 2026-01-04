@@ -39,13 +39,22 @@
                     "id": "bf05d9c8-6bb7-422d-9892-0d4b7bffbf98",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Action",
                     "type": "Button",
                     "id": "6f0bce22-bb56-49f9-8867-222a26394d18",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Action2",
+                    "type": "Button",
+                    "id": "bf656681-9400-433c-baa6-868f33b40dcf",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -248,6 +257,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14f5a5c9-218c-4c2f-afd3-8222bc7a5b3c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Action2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

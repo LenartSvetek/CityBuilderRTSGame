@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum PlayerInputState
 {
     Idle,
-    Selecting,
     Commanding,
     PlacingBuilding,
     DragSelecting
@@ -42,6 +43,9 @@ public class PlayerController : MonoBehaviour
     private PlayerInputState _inputState = PlayerInputState.Idle;
     
     private Selectable howeredPawn = null;
+    
+    [SerializeField]
+    private List<PawnController> controlledPawns = new List<PawnController>();
     
     private void Start()
     {
@@ -86,14 +90,14 @@ public class PlayerController : MonoBehaviour
 
         // Check if the ray hits the terrain (or anything with a collider)
         if (Physics.Raycast(ray, out hit)) {
-            if (hit.transform.tag == "Pawn" && howeredPawn is null)
+            if ( hit.transform.CompareTag("Pawn") && howeredPawn is null)
             {
                 howeredPawn = hit.transform.GetComponent<Selectable>();
-                howeredPawn.Select();
+                howeredPawn.Hover();
             }
-            else if (hit.transform.tag != "Pawn" && howeredPawn is not null)
+            else if (!hit.transform.CompareTag("Pawn") && howeredPawn is not null)
             {
-                howeredPawn.Deselect();
+                howeredPawn.StopHover();
                 howeredPawn = null;
             }
             
@@ -109,44 +113,76 @@ public class PlayerController : MonoBehaviour
 
     public void OnPlayerClick()
     {
+        Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        
+        if(!Physics.Raycast(ray, out hit)) return;
+        
         switch (_inputState)
         {
             case PlayerInputState.Idle:
-                break;
-            case PlayerInputState.Selecting:
+                switch (hit.transform.tag)
+                {
+                    case "Pawn":
+                        selectPawn(hit.transform.gameObject);
+                        break;
+                }
                 break;
             case PlayerInputState.Commanding:
+                switch (hit.transform.tag)
+                {
+                    case "Pawn":
+                        selectPawn(hit.transform.gameObject);
+                        break;
+                }
                 break;
             case PlayerInputState.PlacingBuilding:
-                placeBuilding();
+                placeBuilding(hit);
+                _inputState = PlayerInputState.Idle;
                 break;
             case PlayerInputState.DragSelecting:
                 break;
         }
 
     }
-
-    public void placeBuilding()
+    
+    public void selectPawn(GameObject pawn)
     {
-        Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        Selectable p = null;
+        if(howeredPawn != null) p = howeredPawn;
+        else p = pawn.GetComponent<Selectable>();
+        
+        p.SelectDeselect();
 
-        // Check if the ray hits the terrain (or anything with a collider)
-        if (Physics.Raycast(ray, out hit)) {
-            // Place object at the hit point
-            Vector3 position = hit.point;
-            position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
-            position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
-            ObjectPlacer.PlaceObject(position, _obj);
-
-            Placer.transform.parent = null;
-            Destroy(Placer);
-            
-            Placer = Instantiate(DefualtPlacer, position, Quaternion.identity);
-            Placer.transform.parent = transform;
-            Placer.SetActive(false);
+        if (p.isSelected)
+        {
+            if(controlledPawns.Exists(x => x.gameObject == p.gameObject)) return;
+            controlledPawns.Add(p.gameObject.GetComponent<PawnController>());
+            _inputState = PlayerInputState.Commanding;
         }
-        _inputState = PlayerInputState.Idle;
+        else
+        {
+            if(!controlledPawns.Exists(x => x.gameObject == p.gameObject)) return;
+            controlledPawns.Remove(p.gameObject.GetComponent<PawnController>());
+            
+            if(controlledPawns.Count == 0) _inputState = PlayerInputState.Idle;
+        }
+    }
+    
+    public void placeBuilding(RaycastHit hit)
+    {
+        // Place object at the hit point
+        Vector3 position = hit.point;
+        position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
+        position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
+        ObjectPlacer.PlaceObject(position, _obj);
+
+        Placer.transform.parent = null;
+        Destroy(Placer);
+        
+        Placer = Instantiate(DefualtPlacer, position, Quaternion.identity);
+        Placer.transform.parent = transform;
+        Placer.SetActive(false);
     }
     
     public void OnBuildingUI() {
@@ -159,5 +195,45 @@ public class PlayerController : MonoBehaviour
         Placer.SetActive(true);
         
         _inputState = PlayerInputState.PlacingBuilding;
+    }
+    
+    public void OnPlayerSecondaryClick()
+    {
+        Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        
+        if(!Physics.Raycast(ray, out hit)) return;
+        
+        switch (_inputState)
+        {
+            case PlayerInputState.Idle:
+                break;
+            case PlayerInputState.Commanding:
+                switch (hit.transform.tag)
+                {
+                    case "Terrain":
+                        CommandPawnTo(hit);
+                        break;
+                }
+                break;
+        }
+    }
+
+    public void CommandPawnTo(RaycastHit hit)
+    {
+        Vector3 position = hit.point;
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(position, out navHit, 2f, NavMesh.AllAreas))
+        {
+            position = navHit.position;
+        }
+        
+        foreach (PawnController pawn in controlledPawns)
+        {
+            MoveCommand moveCommand = new MoveCommand(position);
+            Debug.Log(position);
+            
+            pawn.IssueCommand(moveCommand);
+        }
     }
 }

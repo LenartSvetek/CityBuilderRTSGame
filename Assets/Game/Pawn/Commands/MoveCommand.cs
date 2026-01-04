@@ -9,7 +9,7 @@ public class MoveCommand : IPawnCommand
         this.target = target;
     }
 
-    public void Execute(Pawn pawn)
+    public void Execute(GameObject pawn)
     {
         pawn.GetComponent<PawnMovement>().MoveTo(target);
     }
