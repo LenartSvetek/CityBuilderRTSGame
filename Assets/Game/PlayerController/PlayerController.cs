@@ -1,7 +1,18 @@
 using System;
 using Unity.Cinemachine;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+
+public enum PlayerInputState
+{
+    Idle,
+    Selecting,
+    Commanding,
+    PlacingBuilding,
+    DragSelecting
+}
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,7 +39,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _gridSize = 5;
     
-    private bool _isPlacingBuilding = false;
+    private PlayerInputState _inputState = PlayerInputState.Idle;
+    
+    private Selectable howeredPawn = null;
     
     private void Start()
     {
@@ -73,20 +86,48 @@ public class PlayerController : MonoBehaviour
 
         // Check if the ray hits the terrain (or anything with a collider)
         if (Physics.Raycast(ray, out hit)) {
+            if (hit.transform.tag == "Pawn" && howeredPawn is null)
+            {
+                howeredPawn = hit.transform.GetComponent<Selectable>();
+                howeredPawn.Select();
+            }
+            else if (hit.transform.tag != "Pawn" && howeredPawn is not null)
+            {
+                howeredPawn.Deselect();
+                howeredPawn = null;
+            }
+            
             // Place object at the hit point
             Vector3 position = hit.point;
             position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
             position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
             Placer.transform.position = position;
-            
+
             
         }
     }
 
     public void OnPlayerClick()
     {
-        if (!_isPlacingBuilding) return;
+        switch (_inputState)
+        {
+            case PlayerInputState.Idle:
+                break;
+            case PlayerInputState.Selecting:
+                break;
+            case PlayerInputState.Commanding:
+                break;
+            case PlayerInputState.PlacingBuilding:
+                placeBuilding();
+                break;
+            case PlayerInputState.DragSelecting:
+                break;
+        }
 
+    }
+
+    public void placeBuilding()
+    {
         Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -103,8 +144,9 @@ public class PlayerController : MonoBehaviour
             
             Placer = Instantiate(DefualtPlacer, position, Quaternion.identity);
             Placer.transform.parent = transform;
+            Placer.SetActive(false);
         }
-        _isPlacingBuilding = false;
+        _inputState = PlayerInputState.Idle;
     }
     
     public void OnBuildingUI() {
@@ -114,7 +156,8 @@ public class PlayerController : MonoBehaviour
         
         Placer = Instantiate(_obj, position, Quaternion.identity);
         Placer.transform.parent = this.transform;
+        Placer.SetActive(true);
         
-        _isPlacingBuilding = true;
+        _inputState = PlayerInputState.PlacingBuilding;
     }
 }
