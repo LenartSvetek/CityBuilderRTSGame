@@ -60,5 +60,17 @@ public class ProceduralTerrain : MonoBehaviour
         pos.z = 90;
         Instantiate(pawnPrefab, pos, Quaternion.identity);
         
+        pos.z = 80;
+        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        
+        pos.z = 70;
+        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        
+        pos.z = 60;
+        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        
+        pos.z = 50;
+        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        
     }
 }

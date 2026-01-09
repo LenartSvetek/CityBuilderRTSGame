@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MoveCommand : IPawnCommand
 {
@@ -11,6 +12,12 @@ public class MoveCommand : IPawnCommand
 
     public void Execute(GameObject pawn)
     {
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(target, out navHit, 2f, NavMesh.AllAreas))
+        {
+            target = navHit.position;
+        }
+        
         pawn.GetComponent<PawnMovement>().MoveTo(target);
     }
 }

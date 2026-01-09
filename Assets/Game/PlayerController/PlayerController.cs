@@ -221,19 +221,34 @@ public class PlayerController : MonoBehaviour
 
     public void CommandPawnTo(RaycastHit hit)
     {
-        Vector3 position = hit.point;
+        Vector3 initPos = hit.point;
         NavMeshHit navHit;
-        if (NavMesh.SamplePosition(position, out navHit, 2f, NavMesh.AllAreas))
-        {
-            position = navHit.position;
-        }
+
+        float pawnOffset = 5;
         
-        foreach (PawnController pawn in controlledPawns)
+        
+        int rows = Mathf.CeilToInt(Mathf.Sqrt(controlledPawns.Count));
+        int cols = Mathf.CeilToInt(controlledPawns.Count / (float)rows);
+        
+        initPos.z -= cols / 2.0f * pawnOffset;
+        initPos.x -= rows / 2.0f * pawnOffset;
+        
+        for (int i = 0; i < controlledPawns.Count; i++)
         {
-            MoveCommand moveCommand = new MoveCommand(position);
-            Debug.Log(position);
+            int row = Mathf.FloorToInt(i / (float)cols);
+            int col = i % cols;
+            
+            Vector3 pos = new Vector3(initPos.x + row * pawnOffset, 0, initPos.z - col * pawnOffset);
+            
+            PawnController pawn = controlledPawns[i];
+            
+            
+            MoveCommand moveCommand = new MoveCommand(pos);
+            Debug.Log(pos);
             
             pawn.IssueCommand(moveCommand);
         }
+        
+        
     }
 }
