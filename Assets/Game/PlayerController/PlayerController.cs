@@ -1,19 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Cinemachine;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum PlayerInputState
+public enum PlayerState
 {
     Idle,
-    Commanding,
+    Controlling,
     PlacingBuilding,
-    DragSelecting
+    DragSelecting,
 }
 
+public enum ObjectType
+{
+    Null,
+    Pawn,
+    Resource,
+    Building,
+}
 
 public class PlayerController : MonoBehaviour
 {
@@ -40,13 +48,33 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _gridSize = 5;
     
-    private PlayerInputState _inputState = PlayerInputState.Idle;
-    
-    private Selectable howeredPawn = null;
+    public event Action<PlayerState> OnStateChanged;
+    private PlayerState _playerState = PlayerState.Idle;
+
+    public PlayerState playerState
+    {
+        get { return _playerState; }
+        set
+        {
+            if (_playerState == value) return;
+
+            _playerState = value;
+            OnStateChanged?.Invoke(_playerState);
+        }
+    }
+
+    public ObjectType objectType = ObjectType.Null;
+    public GameObject hoveredObject = null;
     
     [SerializeField]
-    private List<PawnController> controlledPawns = new List<PawnController>();
+    private List<GameObject> selectedObjects = new List<GameObject>();
+
+    public List<GameObject> SelectedObjects
+    {
+        get { return selectedObjects; }
+    }
     
+    [SerializeField]
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -90,15 +118,16 @@ public class PlayerController : MonoBehaviour
 
         // Check if the ray hits the terrain (or anything with a collider)
         if (Physics.Raycast(ray, out hit)) {
-            if ( hit.transform.CompareTag("Pawn") && howeredPawn is null)
+            if ( hit.transform.CompareTag("Pawn") && hoveredObject is null)
             {
-                howeredPawn = hit.transform.GetComponent<Selectable>();
-                howeredPawn.Hover();
+                hoveredObject = hit.transform.gameObject;
+                hoveredObject.GetComponent<Selectable>()?.Hover();
             }
-            else if (!hit.transform.CompareTag("Pawn") && howeredPawn is not null)
+            else if (!hit.transform.CompareTag("Pawn") && hoveredObject is not null)
             {
-                howeredPawn.StopHover();
-                howeredPawn = null;
+                if(hoveredObject)
+                    hoveredObject.GetComponent<Selectable>()?.StopHover();
+                hoveredObject = null;
             }
             
             // Place object at the hit point
@@ -117,56 +146,78 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         
         if(!Physics.Raycast(ray, out hit)) return;
-        
-        switch (_inputState)
+        Debug.Log(hit.transform.gameObject.tag);
+        switch (playerState)
         {
-            case PlayerInputState.Idle:
+            case PlayerState.Idle:
                 switch (hit.transform.tag)
                 {
                     case "Pawn":
-                        selectPawn(hit.transform.gameObject);
+                        if(objectType != ObjectType.Pawn) deselectAll();
+                        objectType = ObjectType.Pawn;
+                        selectObject(hit.transform.gameObject);
+                        break;
+                    case "Resource":
+                        if(objectType != ObjectType.Resource) deselectAll();
+                        objectType = ObjectType.Resource;
+                        selectObject(hit.transform.gameObject);
                         break;
                 }
                 break;
-            case PlayerInputState.Commanding:
+            case PlayerState.Controlling:
                 switch (hit.transform.tag)
                 {
                     case "Pawn":
-                        selectPawn(hit.transform.gameObject);
+                        if(objectType != ObjectType.Pawn) deselectAll();
+                        objectType = ObjectType.Pawn;
+                        selectObject(hit.transform.gameObject);
+                        break;
+                    case "Resource":
+                        if(objectType != ObjectType.Resource) deselectAll();
+                        objectType = ObjectType.Resource;
+                        selectObject(hit.transform.gameObject);
                         break;
                 }
                 break;
-            case PlayerInputState.PlacingBuilding:
+            case PlayerState.PlacingBuilding:
                 placeBuilding(hit);
-                _inputState = PlayerInputState.Idle;
+                playerState = PlayerState.Idle;
                 break;
-            case PlayerInputState.DragSelecting:
+            case PlayerState.DragSelecting:
                 break;
         }
 
     }
     
-    public void selectPawn(GameObject pawn)
+    public void selectObject(GameObject pawn)
     {
         Selectable p = null;
-        if(howeredPawn != null) p = howeredPawn;
+        if(hoveredObject != null) p = hoveredObject.GetComponent<Selectable>();
         else p = pawn.GetComponent<Selectable>();
         
-        p.SelectDeselect();
+        
+        if(p is not null)
+            p.SelectDeselect();
 
         if (p.isSelected)
         {
-            if(controlledPawns.Exists(x => x.gameObject == p.gameObject)) return;
-            controlledPawns.Add(p.gameObject.GetComponent<PawnController>());
-            _inputState = PlayerInputState.Commanding;
+            if(selectedObjects.Exists(x => x.gameObject == p.gameObject)) return;
+            selectedObjects.Add(p.gameObject);
+            playerState = PlayerState.Controlling;
         }
         else
         {
-            if(!controlledPawns.Exists(x => x.gameObject == p.gameObject)) return;
-            controlledPawns.Remove(p.gameObject.GetComponent<PawnController>());
+            if(!selectedObjects.Exists(x => x.gameObject == p.gameObject)) return;
+            selectedObjects.Remove(p.gameObject);
             
-            if(controlledPawns.Count == 0) _inputState = PlayerInputState.Idle;
+            if(selectedObjects.Count == 0) playerState = PlayerState.Idle;
         }
+    }
+
+    public void deselectAll()
+    {
+        selectedObjects.ForEach(p => p.GetComponent<Selectable>().Deselect());
+        selectedObjects.Clear();
     }
     
     public void placeBuilding(RaycastHit hit)
@@ -194,7 +245,7 @@ public class PlayerController : MonoBehaviour
         Placer.transform.parent = this.transform;
         Placer.SetActive(true);
         
-        _inputState = PlayerInputState.PlacingBuilding;
+        playerState = PlayerState.PlacingBuilding;
     }
     
     public void OnPlayerSecondaryClick()
@@ -204,11 +255,11 @@ public class PlayerController : MonoBehaviour
         
         if(!Physics.Raycast(ray, out hit)) return;
         
-        switch (_inputState)
+        switch (playerState)
         {
-            case PlayerInputState.Idle:
+            case PlayerState.Idle:
                 break;
-            case PlayerInputState.Commanding:
+            case PlayerState.Controlling:
                 switch (hit.transform.tag)
                 {
                     case "Terrain":
@@ -227,20 +278,20 @@ public class PlayerController : MonoBehaviour
         float pawnOffset = 5;
         
         
-        int rows = Mathf.CeilToInt(Mathf.Sqrt(controlledPawns.Count));
-        int cols = Mathf.CeilToInt(controlledPawns.Count / (float)rows);
+        int rows = Mathf.CeilToInt(Mathf.Sqrt(selectedObjects.Count));
+        int cols = Mathf.CeilToInt(selectedObjects.Count / (float)rows);
         
         initPos.z -= cols / 2.0f * pawnOffset;
         initPos.x -= rows / 2.0f * pawnOffset;
         
-        for (int i = 0; i < controlledPawns.Count; i++)
+        for (int i = 0; i < selectedObjects.Count; i++)
         {
             int row = Mathf.FloorToInt(i / (float)cols);
             int col = i % cols;
             
             Vector3 pos = new Vector3(initPos.x + row * pawnOffset, 0, initPos.z - col * pawnOffset);
             
-            PawnController pawn = controlledPawns[i];
+            PawnController pawn = selectedObjects[i].GetComponent<PawnController>();
             
             
             MoveCommand moveCommand = new MoveCommand(pos);

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Selectable : MonoBehaviour
@@ -9,30 +8,35 @@ public class Selectable : MonoBehaviour
     public void SelectDeselect()
     {
         isSelected = !isSelected;
-        selectionRing.SetActive(isSelected);
+        if(selectionRing is not null)
+            selectionRing.SetActive(isSelected);
     }
     
     public void Select()
     {
         isSelected = true;
-        selectionRing.SetActive(true);
+        if (selectionRing is not null)
+            selectionRing.SetActive(true);
         // highlight
     }
 
     public void Deselect()
     {
-        selectionRing.SetActive(false);
+        if (selectionRing is not null)
+            selectionRing.SetActive(false);
         isSelected = false;
     }
     
     public void Hover()
     {
-        selectionRing.SetActive(true);
+        if(selectionRing is not null)
+            selectionRing.SetActive(true);
     }
 
     public void StopHover()
     {
         if (isSelected) return;
-        selectionRing.SetActive(false);
+        if(selectionRing is not null)
+            selectionRing.SetActive(false);
     }
 }

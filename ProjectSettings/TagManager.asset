@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pawn
   - Terrain
+  - Resource
   layers:
   - Default
   - TransparentFX
