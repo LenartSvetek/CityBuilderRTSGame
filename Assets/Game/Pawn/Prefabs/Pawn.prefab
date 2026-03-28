@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7150113387355185021}
   m_Layer: 7
   m_Name: pawn
-  m_TagString: Untagged
+  m_TagString: Pawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 954658557206744786}
   m_Layer: 7
   m_Name: Selection
-  m_TagString: Untagged
+  m_TagString: Pawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 5417007808266017585}
   m_Layer: 7
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Pawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 5890956726001358409}
   m_Layer: 7
   m_Name: Icosphere
-  m_TagString: Untagged
+  m_TagString: Pawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Cinemachine;
-using Unity.VisualScripting.Dependencies.NCalc;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -110,122 +107,122 @@ public class PlayerController : MonoBehaviour
         _orbitalCamera.HorizontalAxis.Value += lookInput.x * Time.deltaTime * 10f;
     }
 
-    void FixedUpdate() {
-        
-        // When you left-click
+    void LateUpdate() 
+    {
+        // Moved from FixedUpdate to Update so it perfectly syncs with Cinemachine!
         Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // Check if the ray hits the terrain (or anything with a collider)
-        if (Physics.Raycast(ray, out hit)) {
-            if ( hit.transform.CompareTag("Pawn") && hoveredObject is null)
+        // Added a LayerMask so hover doesn't get confused by random invisible objects
+        int hoverMask = LayerMask.GetMask("Units", "Building", "Resource", "Terrain");
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, hoverMask)) 
+        {
+            GameObject hitObj = hit.transform.root.gameObject; // Look at the root parent!
+
+            if (hitObj.CompareTag("Pawn"))
             {
-                hoveredObject = hit.transform.gameObject;
-                hoveredObject.GetComponent<Selectable>()?.Hover();
+                if (hoveredObject != hitObj)
+                {
+                    if (hoveredObject != null) hoveredObject.GetComponent<Selectable>()?.StopHover();
+                    hoveredObject = hitObj;
+                    hoveredObject.GetComponent<Selectable>()?.Hover();
+                }
             }
-            else if (!hit.transform.CompareTag("Pawn") && hoveredObject is not null)
+            else if (hoveredObject != null)
             {
-                if(hoveredObject)
-                    hoveredObject.GetComponent<Selectable>()?.StopHover();
+                hoveredObject.GetComponent<Selectable>()?.StopHover();
                 hoveredObject = null;
             }
             
             // Place object at the hit point
-            Vector3 position = hit.point;
-            position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
-            position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
-            Placer.transform.position = position;
-
-            
+            if (Placer != null)
+            {
+                Vector3 position = hit.point;
+                position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
+                position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
+                Placer.transform.position = position;
+            }
         }
     }
 
     public void OnPlayerClick()
-    {
-        Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
+    {  
+        _brain.ManualUpdate();
+        Ray ray = _brain.OutputCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        
 
-        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 100f);
-
-        //if(!Physics.Raycast(ray, out hit)) return;
-        //Debug.Log(hit.transform.gameObject.tag);
         int layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
+        
         switch (playerState)
         {
             case PlayerState.Idle:
-                layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
-                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, layersToHit)) return;
-                Debug.Log($"Hit: {hit.transform.name}");
-                switch (hit.transform.tag)
-                {
-                    case "Pawn":
-                        if(objectType != ObjectType.Pawn) deselectAll();
-                        objectType = ObjectType.Pawn;
-                        selectObject(hit.transform.gameObject);
-                        break;
-                    case "Resource":
-                        if(objectType != ObjectType.Resource) deselectAll();
-                        objectType = ObjectType.Resource;
-                        selectObject(hit.transform.gameObject);
-                        break;
-                }
-                break;
             case PlayerState.Controlling:
-                layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
-                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, layersToHit)) return;
-                Debug.Log($"Hit: {hit.transform.name}");
-                switch (hit.transform.tag)
+                
+                if (!Physics.SphereCast(ray, 0.5f, out hit, Mathf.Infinity, layersToHit)) return;
+                
+                // Always check the root object in case you hit a child mesh!
+                GameObject hitObj = hit.transform.root.gameObject;
+                Debug.Log($"Hit: {hitObj.name}");
+
+                switch (hitObj.tag)
                 {
                     case "Pawn":
                         if(objectType != ObjectType.Pawn) deselectAll();
                         objectType = ObjectType.Pawn;
-                        selectObject(hit.transform.gameObject);
+                        selectObject(hitObj);
                         break;
                     case "Resource":
                         if(objectType != ObjectType.Resource) deselectAll();
                         objectType = ObjectType.Resource;
-                        selectObject(hit.transform.gameObject);
+                        selectObject(hitObj);
                         break;
                 }
                 break;
+
             case PlayerState.PlacingBuilding:
-                layersToHit = LayerMask.GetMask("Terrain");
-                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, layersToHit)) return;
-                Debug.Log($"Hit: {hit.transform.name}");
+                
+                int terrainMask = LayerMask.GetMask("Terrain");
+                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, terrainMask)) return;
+                
                 placeBuilding(hit);
                 playerState = PlayerState.Idle;
                 break;
+
             case PlayerState.DragSelecting:
                 break;
         }
-
     }
     
     public void selectObject(GameObject pawn)
     {
-        Selectable p = null;
-        if(hoveredObject != null) p = hoveredObject.GetComponent<Selectable>();
-        else p = pawn.GetComponent<Selectable>();
+        // Removed the hoveredObject hijack! Now it strictly selects exactly what you clicked.
+        Selectable p = pawn.GetComponent<Selectable>();
         
-        
-        if(p is not null)
+        if(p != null)
+        {
             p.SelectDeselect();
 
-        if (p.isSelected)
-        {
-            if(selectedObjects.Exists(x => x.gameObject == p.gameObject)) return;
-            selectedObjects.Add(p.gameObject);
-            playerState = PlayerState.Controlling;
-        }
-        else
-        {
-            if(!selectedObjects.Exists(x => x.gameObject == p.gameObject)) return;
-            selectedObjects.Remove(p.gameObject);
-            
-            if(selectedObjects.Count == 0) playerState = PlayerState.Idle;
+            if (p.isSelected)
+            {
+                if(!selectedObjects.Contains(p.gameObject)) 
+                {
+                    selectedObjects.Add(p.gameObject);
+                }
+                playerState = PlayerState.Controlling;
+            }
+            else
+            {
+                if(selectedObjects.Contains(p.gameObject))
+                {
+                    selectedObjects.Remove(p.gameObject);
+                }
+                
+                if(selectedObjects.Count == 0) playerState = PlayerState.Idle;
+            }
         }
     }
-
     public void deselectAll()
     {
         selectedObjects.ForEach(p => p.GetComponent<Selectable>().Deselect());
