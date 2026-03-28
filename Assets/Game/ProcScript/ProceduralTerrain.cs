@@ -55,22 +55,22 @@ public class ProceduralTerrain : MonoBehaviour
         navMeshBaker.Build();
 
         Vector3 pos = new Vector3(100, 0, 100);
-        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        Instantiate(pawnPrefab, pos, Quaternion.identity).name = "pawn 1";
         
         pos.z = 90;
-        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        Instantiate(pawnPrefab, pos, Quaternion.identity).name = "pawn 2";
         
         pos.z = 80;
-        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        Instantiate(pawnPrefab, pos, Quaternion.identity).name = "pawn 3";
         
         pos.z = 70;
-        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        Instantiate(pawnPrefab, pos, Quaternion.identity).name = "pawn 4";
         
         pos.z = 60;
-        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        Instantiate(pawnPrefab, pos, Quaternion.identity).name = "pawn 5";
         
         pos.z = 50;
-        Instantiate(pawnPrefab, pos, Quaternion.identity);
+        Instantiate(pawnPrefab, pos, Quaternion.identity).name = "pawn 6";
         
     }
 }

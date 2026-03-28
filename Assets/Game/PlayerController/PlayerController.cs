@@ -144,12 +144,18 @@ public class PlayerController : MonoBehaviour
     {
         Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        
-        if(!Physics.Raycast(ray, out hit)) return;
-        Debug.Log(hit.transform.gameObject.tag);
+
+        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 100f);
+
+        //if(!Physics.Raycast(ray, out hit)) return;
+        //Debug.Log(hit.transform.gameObject.tag);
+        int layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
         switch (playerState)
         {
             case PlayerState.Idle:
+                layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
+                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, layersToHit)) return;
+                Debug.Log($"Hit: {hit.transform.name}");
                 switch (hit.transform.tag)
                 {
                     case "Pawn":
@@ -165,6 +171,9 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case PlayerState.Controlling:
+                layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
+                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, layersToHit)) return;
+                Debug.Log($"Hit: {hit.transform.name}");
                 switch (hit.transform.tag)
                 {
                     case "Pawn":
@@ -180,6 +189,9 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case PlayerState.PlacingBuilding:
+                layersToHit = LayerMask.GetMask("Terrain");
+                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, layersToHit)) return;
+                Debug.Log($"Hit: {hit.transform.name}");
                 placeBuilding(hit);
                 playerState = PlayerState.Idle;
                 break;
