@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private List<GameObject> selectedObjects = new List<GameObject>();
 
+    private bool playerClicked = false;
+    
     public List<GameObject> SelectedObjects
     {
         get { return selectedObjects; }
@@ -109,33 +111,18 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate() 
     {
-        // Moved from FixedUpdate to Update so it perfectly syncs with Cinemachine!
+        _brain.ManualUpdate();
+        if(playerClicked) handlePlayerClick();
+        
         Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // Added a LayerMask so hover doesn't get confused by random invisible objects
         int hoverMask = LayerMask.GetMask("Units", "Building", "Resource", "Terrain");
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hoverMask)) 
         {
-            GameObject hitObj = hit.transform.root.gameObject; // Look at the root parent!
+            GameObject hitObj = hit.transform.root.gameObject;
 
-            if (hitObj.CompareTag("Pawn"))
-            {
-                if (hoveredObject != hitObj)
-                {
-                    if (hoveredObject != null) hoveredObject.GetComponent<Selectable>()?.StopHover();
-                    hoveredObject = hitObj;
-                    hoveredObject.GetComponent<Selectable>()?.Hover();
-                }
-            }
-            else if (hoveredObject != null)
-            {
-                hoveredObject.GetComponent<Selectable>()?.StopHover();
-                hoveredObject = null;
-            }
-            
-            // Place object at the hit point
             if (Placer != null)
             {
                 Vector3 position = hit.point;
@@ -144,16 +131,22 @@ public class PlayerController : MonoBehaviour
                 Placer.transform.position = position;
             }
         }
+        
+        playerClicked = false;
     }
-
+    
     public void OnPlayerClick()
     {  
-        _brain.ManualUpdate();
+        playerClicked = true;
+    }
+
+    void handlePlayerClick()
+    {
         Ray ray = _brain.OutputCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         
 
-        int layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
+        int layersToHit = LayerMask.GetMask("Units", "Building", "Resource", "Terrain");
         
         switch (playerState)
         {
@@ -164,18 +157,20 @@ public class PlayerController : MonoBehaviour
                 
                 // Always check the root object in case you hit a child mesh!
                 GameObject hitObj = hit.transform.root.gameObject;
-                Debug.Log($"Hit: {hitObj.name}");
+                Debug.Log($"Hit: {hitObj.name} | {hitObj.tag}");
 
                 switch (hitObj.tag)
-                {
+                { 
+                    case "Terrain":
+                        deselectAll();
+                        break;
                     case "Pawn":
                         if(objectType != ObjectType.Pawn) deselectAll();
-                        objectType = ObjectType.Pawn;
                         selectObject(hitObj);
                         break;
                     case "Resource":
                         if(objectType != ObjectType.Resource) deselectAll();
-                        objectType = ObjectType.Resource;
+                        
                         selectObject(hitObj);
                         break;
                 }
@@ -200,8 +195,12 @@ public class PlayerController : MonoBehaviour
         // Removed the hoveredObject hijack! Now it strictly selects exactly what you clicked.
         Selectable p = pawn.GetComponent<Selectable>();
         
+        if(!Input.GetKey(KeyCode.LeftShift)) deselectAll();
+        
         if(p != null)
         {
+            SetObjectType(pawn);
+            
             p.SelectDeselect();
 
             if (p.isSelected)
@@ -223,10 +222,32 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    void SetObjectType(GameObject p)
+    {
+        switch (p.tag)
+        {
+            case "Pawn":
+                objectType = ObjectType.Pawn;
+                break;
+            case "Resource":
+                objectType = ObjectType.Resource;
+                break;
+            case "Building":
+                objectType = ObjectType.Building;
+                break; 
+            default:
+                objectType = ObjectType.Null;
+                break;
+        }
+    }
+    
     public void deselectAll()
     {
         selectedObjects.ForEach(p => p.GetComponent<Selectable>().Deselect());
         selectedObjects.Clear();
+        objectType = ObjectType.Null;
+        playerState = PlayerState.Idle;
     }
     
     public void placeBuilding(RaycastHit hit)
@@ -269,13 +290,55 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Idle:
                 break;
             case PlayerState.Controlling:
+                Debug.Log(hit.transform.tag);
                 switch (hit.transform.tag)
                 {
                     case "Terrain":
-                        CommandPawnTo(hit);
+                        if(objectType == ObjectType.Pawn)
+                            CommandPawnTo(hit);
+                        break;
+                    case "Resource":
+                        if(objectType == ObjectType.Pawn)
+                            CommandPawnGather(hit);
                         break;
                 }
                 break;
+        }
+    }
+
+    void CommandPawnGather(RaycastHit hit)
+    {
+        Vector3 goTo = hit.point;
+
+        float pawnOffset = 5;
+        
+        
+        int rows = Mathf.CeilToInt(Mathf.Sqrt(selectedObjects.Count));
+        int cols = Mathf.CeilToInt(selectedObjects.Count / (float)rows);
+        
+        goTo.z -= cols / 2.0f * pawnOffset;
+        goTo.x -= rows / 2.0f * pawnOffset;
+        
+        for (var i = 0; i < selectedObjects.Count; i++)
+        {
+            int row = Mathf.FloorToInt(i / (float)cols);
+            int col = i % cols;
+            
+            Vector3 pos = new Vector3(goTo.x + row * pawnOffset, 0, goTo.z - col * pawnOffset);
+            
+            PawnController pawn = selectedObjects[i].GetComponent<PawnController>();
+            
+            
+            MoveCommand goToCommand = new MoveCommand(pos);
+            MoveCommand backCommand = new MoveCommand(pawn.gameObject.transform.position);
+            Debug.Log(pos);
+
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                pawn.ClearCommands();
+                pawn.CyclicCommands(true);
+                pawn.IssueCommands(new List<IPawnCommand>() { goToCommand, backCommand });
+            }
         }
     }
 
@@ -303,10 +366,15 @@ public class PlayerController : MonoBehaviour
             PawnController pawn = selectedObjects[i].GetComponent<PawnController>();
             
             
-            MoveCommand moveCommand = new MoveCommand(pos);
-            Debug.Log(pos);
+            MoveCommand goToCommand = new MoveCommand(pos);
             
-            pawn.IssueCommand(moveCommand);
+            Debug.Log(pos);
+
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                pawn.ClearCommands();
+                pawn.IssueCommands(new List<IPawnCommand>() { goToCommand });
+            }
         }
         
         

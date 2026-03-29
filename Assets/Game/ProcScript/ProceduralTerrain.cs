@@ -6,7 +6,7 @@ public class ProceduralTerrain : MonoBehaviour
 {
     [Range(2, 512)]
     public int resolution = 129; // must be 2^n + 1
-    public float size = 1024f;   // total terrain width/depth
+    public float size = 128f;   // total terrain width/depth
     public float heightScale = 50f;
 
     FastNoiseLite noise = new FastNoiseLite();
@@ -55,6 +55,7 @@ public class ProceduralTerrain : MonoBehaviour
         navMeshBaker.Build();
 
         Vector3 pos = new Vector3(100, 0, 100);
+        
         Instantiate(pawnPrefab, pos, Quaternion.identity).name = "pawn 1";
         
         pos.z = 90;

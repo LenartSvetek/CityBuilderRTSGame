@@ -14,17 +14,10 @@ public class ContextMenuController : MonoBehaviour
 
     void OnPlayerStateChanged(PlayerState state)
     {
-        switch (state)
-        {
-            case PlayerState.Controlling:
-                ShowUI();
-                break;
-            default:
-                break;
-        }
+        UpdateUI();
     }
 
-    void ShowUI()
+    void UpdateUI()
     {
         ObjectType objectType = player.objectType;
 

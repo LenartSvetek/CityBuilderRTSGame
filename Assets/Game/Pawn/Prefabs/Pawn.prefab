@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selectable
   selectionRing: {fileID: 5315904887280299278}
-  isSelected: 1
+  isSelected: 0
 --- !u!54 &2481694965169359841
 Rigidbody:
   m_ObjectHideFlags: 0
