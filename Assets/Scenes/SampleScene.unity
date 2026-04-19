@@ -339,7 +339,7 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 2
+  UpdateMethod: 1
   BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
@@ -730,8 +730,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RTSCameraController
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   sprintActionName: Sprint
+  inputDeadZone: 0.1
   moveSpeed: 15
   sprintSpeedMultiplier: 4
+  acceleration: 50
+  decelerateDuration: 0.5
+  decelerateCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00078201294
+      value: 1
+      inSlope: -4.0337334
+      outSlope: -4.0337334
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.0265825
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.23000456
+      outSlope: -0.23000456
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041439455
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  GroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  GroundSensorRadious: 5
+  HeightMovementSmoothing: 0
   camera: {fileID: 399398200}
   orbitalFollow: {fileID: 399398199}
   cameraTarget: {fileID: 1174163338}
@@ -1022,6 +1054,10 @@ PrefabInstance:
       propertyPath: brain
       value: 
       objectReference: {fileID: 350262128}
+    - target: {fileID: 4013568951686597272, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
+      propertyPath: _cameraController
+      value: 
+      objectReference: {fileID: 399398205}
     - target: {fileID: 5841234427854500003, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
       propertyPath: m_Name
       value: Player

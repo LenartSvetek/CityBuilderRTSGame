@@ -25,12 +25,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     
     [SerializeField]
-    private CinemachineCamera _cam;
-    private CinemachineOrbitalFollow _orbitalCamera;
+    RTSCameraController _cameraController;
 
-    [SerializeField]
-    private CinemachineBrain _brain;
-    private Camera _acCam;
     [SerializeField]
     private GameObject Placer;
     
@@ -77,41 +73,20 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _orbitalCamera = _cam.GetComponent<CinemachineOrbitalFollow>();
         _playerSettings = GetComponent<PlayerSettings>();
-
-        _acCam = _brain.GetComponent<Camera>();
-    }
-
-    public void OnPlayerMove(Vector2 moveInput)
-    {
-        // Use moveInput to move the player
-        Vector3 movement = new Vector3(moveInput.x, 0, moveInput.y).normalized;
-
-        // Flatten camera forward and right vectors (ignore X rotation)
-        Vector3 forward = _orbitalCamera.transform.forward;
-        forward.y = 0f;
-        forward.Normalize();
-
-        Vector3 right = _orbitalCamera.transform.right;
-        right.y = 0f;
-        right.Normalize();
-
-        // Movement direction
-        Vector3 direction = forward * movement.z + right * movement.x;
-        direction.Normalize();
-
-        _rigidbody.MovePosition(_rigidbody.position + Time.deltaTime * _playerSettings.PlayerSpeed * direction);
     }
 
     void LateUpdate() 
     {
-        _brain.ManualUpdate();
         if(playerClicked) handlePlayerClick();
         
-        Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
+        Vector3 mousePos = _cameraController.GetCursorPosition;
+        
+        Ray ray = new Ray(mousePos + Vector3.up * 100f, Vector3.down);
         RaycastHit hit;
 
+        
+        
         int hoverMask = LayerMask.GetMask("Units", "Building", "Resource", "Terrain");
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hoverMask)) 
@@ -137,9 +112,11 @@ public class PlayerController : MonoBehaviour
 
     void handlePlayerClick()
     {
-        Ray ray = _brain.OutputCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        Vector3 mousePos = _cameraController.GetCursorPosition;
         
+        Ray ray = new Ray(mousePos + Vector3.up * 100f, Vector3.down);
+        RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red, 1000);
 
         int layersToHit = LayerMask.GetMask("Units", "Building", "Resource", "Terrain");
         
@@ -275,7 +252,10 @@ public class PlayerController : MonoBehaviour
     
     public void OnPlayerSecondaryClick()
     {
-        Ray ray = _acCam.ScreenPointToRay(Input.mousePosition);
+        Vector3 mousePos = _cameraController.GetCursorPosition;
+        
+        Ray ray = new Ray(mousePos + Vector3.up * 100f, Vector3.down);
+        
         RaycastHit hit;
         
         if(!Physics.Raycast(ray, out hit)) return;
