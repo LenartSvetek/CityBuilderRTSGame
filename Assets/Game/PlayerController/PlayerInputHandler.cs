@@ -30,8 +30,8 @@ public class PlayerInputHandler : MonoBehaviour
         _inputActions.Player.Look.performed += OnLook;
         _inputActions.Player.Look.canceled += OnLook;
 
-        _inputActions.Player.LookActivation.performed += OnLookActivation;
-        _inputActions.Player.LookActivation.canceled += OnLookActivation;
+        _inputActions.Player.orbit.performed += OnLookActivation;
+        _inputActions.Player.orbit.canceled += OnLookActivation;
 
         _inputActions.Player.Action.canceled += OnAction;
 
@@ -78,9 +78,6 @@ public class PlayerInputHandler : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
         }
-
-        _orbitalCamera.HorizontalAxis.Recentering.Enabled = !_isLooking;
-
     }
 
     private void OnAction(InputAction.CallbackContext context) {
@@ -97,15 +94,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_moveInput != Vector2.zero)
-        {
-            _playerController.OnPlayerMove(_moveInput);
-        }
         
-        if (_isLooking)
-        {
-            _playerController.OnPlayerLook(_lookInput);
-        }
 
         // Vector3 euler = rb.rotation.eulerAngles + new Vector3(0, lookInput.y * Time.deltaTime * 10f, 0);
         // rb.MoveRotation(Quaternion.Euler(euler));

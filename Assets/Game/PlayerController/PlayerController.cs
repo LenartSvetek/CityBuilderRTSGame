@@ -104,11 +104,6 @@ public class PlayerController : MonoBehaviour
         _rigidbody.MovePosition(_rigidbody.position + Time.deltaTime * _playerSettings.PlayerSpeed * direction);
     }
 
-    public void OnPlayerLook(Vector2 lookInput)
-    {
-        _orbitalCamera.HorizontalAxis.Value += lookInput.x * Time.deltaTime * 10f;
-    }
-
     void LateUpdate() 
     {
         _brain.ManualUpdate();
