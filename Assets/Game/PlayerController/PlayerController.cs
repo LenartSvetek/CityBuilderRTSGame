@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public enum PlayerState
 {
@@ -96,8 +97,8 @@ public class PlayerController : MonoBehaviour
             if (Placer != null)
             {
                 Vector3 position = hit.point;
-                position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
-                position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
+                //position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
+                //position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
                 Placer.transform.position = position;
             }
         }
@@ -112,6 +113,13 @@ public class PlayerController : MonoBehaviour
 
     void handlePlayerClick()
     {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("Clicked on UI, ignoring.");
+            return;
+        }
+        
+        
         Vector3 mousePos = _cameraController.GetCursorPosition;
         
         Ray ray = new Ray(mousePos + Vector3.up * 100f, Vector3.down);
@@ -226,27 +234,33 @@ public class PlayerController : MonoBehaviour
     {
         // Place object at the hit point
         Vector3 position = hit.point;
-        position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
-        position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
-        ObjectPlacer.PlaceObject(position, _obj);
+        //position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
+        //position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
+        //ObjectPlacer.PlaceObject(position, Placer);
 
         Placer.transform.parent = null;
-        Destroy(Placer);
+        Placer.transform.position = position;
+        Placer = null;
+        Debug.Log("placing building at: " + position);
         
         Placer = Instantiate(DefualtPlacer, position, Quaternion.identity);
         Placer.transform.parent = transform;
         Placer.SetActive(false);
     }
     
-    public void OnBuildingUI() {
+    public void OnBuildingUI(GameObject buildingPrefab) {
         Vector3 position = Placer.transform.position;
         Placer.transform.parent = null;
         Destroy(Placer);
         
-        Placer = Instantiate(_obj, position, Quaternion.identity);
+        Debug.Log(buildingPrefab.name);
+
+        Placer = Instantiate(buildingPrefab, position, Quaternion.identity);
         Placer.transform.parent = this.transform;
         Placer.SetActive(true);
         
+        Debug.Log("Placer set to: " + Placer.name);
+
         playerState = PlayerState.PlacingBuilding;
     }
     

@@ -97,7 +97,7 @@ public class BuildingScript : MonoBehaviour {
             if (handle.Result.Count > 0) {
                 int rInd = Mathf.FloorToInt(Random.value * handle.Result.Count);
 
-                GameObject obj = Instantiate(handle.Result[rInd], gameObject.transform);
+                GameObject obj = Instantiate(handle.Result[rInd], transform);
                 obj.tag = _type.ToString();
                 obj.transform.localPosition = Vector3.zero;
             }
