@@ -120,13 +120,13 @@ public class PlayerController : MonoBehaviour
         }
         
         
-        Vector3 mousePos = _cameraController.GetCursorPosition;
         
-        Ray ray = new Ray(mousePos + Vector3.up * 100f, Vector3.down);
+        
+        Ray ray = _cameraController.GetRay;
         RaycastHit hit;
-        Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red, 1000);
+        // Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red, 1000);
 
-        int layersToHit = LayerMask.GetMask("Units", "Building", "Resource", "Terrain");
+        int layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
         
         switch (playerState)
         {
@@ -240,6 +240,7 @@ public class PlayerController : MonoBehaviour
 
         Placer.transform.parent = null;
         Placer.transform.position = position;
+        Placer.GetComponentInChildren<BoxCollider>().enabled = true;
         Placer = null;
         Debug.Log("placing building at: " + position);
         
@@ -266,9 +267,7 @@ public class PlayerController : MonoBehaviour
     
     public void OnPlayerSecondaryClick()
     {
-        Vector3 mousePos = _cameraController.GetCursorPosition;
-        
-        Ray ray = new Ray(mousePos + Vector3.up * 100f, Vector3.down);
+        Ray ray = _cameraController.GetRay;
         
         RaycastHit hit;
         

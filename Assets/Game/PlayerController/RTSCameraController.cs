@@ -160,5 +160,6 @@ public class RTSCameraController : MonoBehaviour
         }
     }
     
-    public Vector3 GetCursorPosition => cursorPositon; 
+    public Vector3 GetCursorPosition => cursorPositon;
+    public Ray GetRay => Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 }

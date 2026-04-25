@@ -100,6 +100,8 @@ public class BuildingScript : MonoBehaviour {
                 GameObject obj = Instantiate(handle.Result[rInd], transform);
                 obj.tag = _type.ToString();
                 obj.transform.localPosition = Vector3.zero;
+                obj.name = "Model";
+                obj.GetComponent<BoxCollider>().enabled = false;
             }
 
         }

@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/UI/styles.uss?fileID=7433441132597879392&amp;guid=4b5949fc7f5a54245b3e269ba620727b&amp;type=3#styles" />
+    <ui:TabView style="bottom: 0; position: absolute;">
+        <ui:Tab label="Nothing&#10;" />
+        <ui:Tab label="Buildings&#10;">
+            <ui:VisualElement name="Buildings" style="flex-grow: 1; bottom: auto; left: auto; width: 767px; top: auto; position: relative; height: 433px; flex-direction: row; flex-wrap: wrap; flex-basis: auto;" />
+        </ui:Tab>
+    </ui:TabView>
+</ui:UXML>
