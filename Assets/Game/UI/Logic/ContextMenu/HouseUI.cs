@@ -1,17 +1,14 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class HouseUI : MonoBehaviour
 {
-    private HouseComponent house;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Show()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Hide()
+    public static VisualElement buildUI(VisualTreeAsset template, HouseSO house)
     {
+        var ui = template.Instantiate().contentContainer;
         
+        
+        return ui;
     }
 }

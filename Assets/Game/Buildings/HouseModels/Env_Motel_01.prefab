@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1582826311441863283}
   - component: {fileID: 8411616029845880748}
   - component: {fileID: -4672321193634636912}
-  - component: {fileID: -3736051629996348697}
+  - component: {fileID: 4517097636695730109}
   m_Layer: 8
   m_Name: Env_Motel_01
   m_TagString: Untagged
@@ -109,7 +109,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 5.9274993, y: 10.401885, z: 6.6544437}
   m_Center: {x: 0, y: 5.199057, z: 0.53238595}
@@ -131,7 +131,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &-3736051629996348697
+--- !u!114 &4517097636695730109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

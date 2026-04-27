@@ -1,15 +1,20 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ContextMenuController : MonoBehaviour
 {
-    public ResourceUI resourceUI;
+    public UIDocument HUD;
     public PlayerController player;
+    
+    [Header("Components")]
+    public VisualTreeAsset HouseUI;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player.OnStateChanged += OnPlayerStateChanged;
+        HUD = GetComponent<UIDocument>();
     }
 
     void OnPlayerStateChanged(PlayerState state)
@@ -20,18 +25,25 @@ public class ContextMenuController : MonoBehaviour
     void UpdateUI()
     {
         ObjectType objectType = player.objectType;
-
+        Debug.Log("Yooo");
+        Debug.Log(objectType.ToString());
         switch (objectType)
         {
             case ObjectType.Pawn:
                 break;
             case ObjectType.Building:
+                BuildingScript obj = player.SelectedObjects[0].GetComponent<BuildingScript>();
+                if (obj.CompareTag("House"))
+                {
+                    Debug.Log(obj.name);
+                    var ui = global::HouseUI.buildUI(HouseUI, obj.GetComponent<HouseComp>().house);
+                    HUD.rootVisualElement.Q("ContexMenu").Add(ui);
+                }
                 break;
             case ObjectType.Resource:
-                resourceUI.show(player.SelectedObjects[0]);
                 break;
             case ObjectType.Null:
-                resourceUI.hide();
+                HUD.rootVisualElement.Q("ContexMenu").Clear();
                 break;
         }
     }

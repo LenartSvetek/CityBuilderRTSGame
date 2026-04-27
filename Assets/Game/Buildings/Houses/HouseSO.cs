@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class HouseComponent : MonoBehaviour
+[CreateAssetMenu(fileName = "HouseSO", menuName = "Building/SO/HouseSO")]
+public class HouseSO : ScriptableObject
 {
     [Header("Info")] 
     [SerializeField] public int maxPopulation = 5;

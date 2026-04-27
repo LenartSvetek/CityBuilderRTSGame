@@ -101,7 +101,7 @@ public class BuildingScript : MonoBehaviour {
                 obj.tag = _type.ToString();
                 obj.transform.localPosition = Vector3.zero;
                 obj.name = "Model";
-                obj.GetComponent<BoxCollider>().enabled = false;
+                
             }
 
         }

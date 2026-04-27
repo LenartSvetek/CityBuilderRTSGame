@@ -10,7 +10,7 @@ public enum PlayerState
     Idle,
     Controlling,
     PlacingBuilding,
-    DragSelecting,
+    DragSelecting
 }
 
 public enum ObjectType
@@ -135,7 +135,6 @@ public class PlayerController : MonoBehaviour
                 
                 if (!Physics.SphereCast(ray, 0.5f, out hit, Mathf.Infinity, layersToHit)) return;
                 
-                // Always check the root object in case you hit a child mesh!
                 GameObject hitObj = hit.transform.root.gameObject;
                 Debug.Log($"Hit: {hitObj.name} | {hitObj.tag}");
 
@@ -152,6 +151,13 @@ public class PlayerController : MonoBehaviour
                         if(objectType != ObjectType.Resource) deselectAll();
                         
                         selectObject(hitObj);
+                        break;
+                    case "Building":
+                    case "House":
+                        if(objectType != ObjectType.Building) deselectAll();
+                        
+                        selectObject(hitObj);
+                        playerState = PlayerState.Controlling;
                         break;
                 }
                 break;
@@ -205,6 +211,7 @@ public class PlayerController : MonoBehaviour
 
     void SetObjectType(GameObject p)
     {
+        Debug.Log($"SetObjectType: {p.tag}");
         switch (p.tag)
         {
             case "Pawn":
@@ -213,6 +220,7 @@ public class PlayerController : MonoBehaviour
             case "Resource":
                 objectType = ObjectType.Resource;
                 break;
+            case "House":
             case "Building":
                 objectType = ObjectType.Building;
                 break; 

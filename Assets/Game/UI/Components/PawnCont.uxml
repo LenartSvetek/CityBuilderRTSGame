@@ -1,0 +1,3 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Pops" style="flex-grow: initial; justify-content: flex-start; flex-direction: row; flex-wrap: nowrap; flex-shrink: initial; height: 46px; width: auto; align-items: stretch; -unity-background-scale-mode: stretch-to-fill; flex-basis: initial;" />
+</ui:UXML>

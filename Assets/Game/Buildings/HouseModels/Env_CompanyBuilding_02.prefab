@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7151387266864435809}
   - component: {fileID: 5929294460753122572}
   - component: {fileID: 4888027748749472830}
-  - component: {fileID: -1765324348892421491}
+  - component: {fileID: -2331622086541161463}
   m_Layer: 8
   m_Name: Env_CompanyBuilding_02
   m_TagString: Untagged
@@ -109,7 +109,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 5.747164, y: 7.492651, z: 9.273619}
   m_Center: {x: 0, y: 3.7463255, z: 0.45888376}
@@ -131,7 +131,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &-1765324348892421491
+--- !u!114 &-2331622086541161463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

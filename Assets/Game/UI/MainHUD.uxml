@@ -3,7 +3,8 @@
     <ui:TabView style="bottom: 0; position: absolute;">
         <ui:Tab label="Nothing&#10;" />
         <ui:Tab label="Buildings&#10;">
-            <ui:VisualElement name="Buildings" style="flex-grow: 1; bottom: auto; left: auto; width: 767px; top: auto; position: relative; height: 433px; flex-direction: row; flex-wrap: wrap; flex-basis: auto;" />
+            <ui:VisualElement name="Buildings" style="flex-grow: 1; bottom: auto; left: auto; width: 767px; top: auto; position: relative; height: auto; flex-direction: row; flex-wrap: wrap; flex-basis: auto;" />
         </ui:Tab>
     </ui:TabView>
+    <ui:VisualElement name="ContexMenu" style="flex-grow: 1; position: absolute; right: 0; bottom: 0; height: 340px; width: 249px;" />
 </ui:UXML>
