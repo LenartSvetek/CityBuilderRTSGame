@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -86,9 +88,11 @@ public class PlayerController : MonoBehaviour
         Ray ray = new Ray(mousePos + Vector3.up * 100f, Vector3.down);
         RaycastHit hit;
 
-        
-        
-        int hoverMask = LayerMask.GetMask("Units", "Building", "Resource", "Terrain");
+        var layersAll = new List<String>() { "Units", "Building", "Resource", "Terrain" };
+        var layers = new List<String>{};
+        if(Placer == null) layers.AddRange(layersAll);
+        else layers.Add("Terrain");
+        int hoverMask = LayerMask.GetMask(layers.ToArray());
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hoverMask)) 
         {
@@ -121,12 +125,11 @@ public class PlayerController : MonoBehaviour
         
         
         
-        
         Ray ray = _cameraController.GetRay;
         RaycastHit hit;
         // Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red, 1000);
 
-        int layersToHit = LayerMask.GetMask("Units", "Building", "Resource");
+        int layersToHit = LayerMask.GetMask("Units", "Building", "Resource", "Terrain");
         
         switch (playerState)
         {
@@ -168,7 +171,6 @@ public class PlayerController : MonoBehaviour
                 if (!Physics.Raycast(ray, out hit, Mathf.Infinity, terrainMask)) return;
                 
                 placeBuilding(hit);
-                playerState = PlayerState.Idle;
                 break;
 
             case PlayerState.DragSelecting:
@@ -240,6 +242,8 @@ public class PlayerController : MonoBehaviour
     
     public void placeBuilding(RaycastHit hit)
     {
+        if (Placer.GetComponent<PlacingComp>().canPlace != true) return;
+
         // Place object at the hit point
         Vector3 position = hit.point;
         //position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
@@ -248,13 +252,19 @@ public class PlayerController : MonoBehaviour
 
         Placer.transform.parent = null;
         Placer.transform.position = position;
-        Placer.GetComponentInChildren<BoxCollider>().enabled = true;
+        BoxCollider collider = Placer.GetComponentInChildren<BoxCollider>();
+        collider.enabled = true;
+
+        Destroy(Placer.GetComponent<PlacingComp>());
+
         Placer = null;
         Debug.Log("placing building at: " + position);
         
         Placer = Instantiate(DefualtPlacer, position, Quaternion.identity);
         Placer.transform.parent = transform;
         Placer.SetActive(false);
+
+        playerState = PlayerState.Idle;
     }
     
     public void OnBuildingUI(GameObject buildingPrefab) {
@@ -262,10 +272,16 @@ public class PlayerController : MonoBehaviour
         Placer.transform.parent = null;
         Destroy(Placer);
         
-        Debug.Log(buildingPrefab.name);
+        Debug.Log("Prefab: " + buildingPrefab.name);
 
         Placer = Instantiate(buildingPrefab, position, Quaternion.identity);
         Placer.transform.parent = this.transform;
+        
+        BoxCollider collider = Placer.GetComponentInChildren<BoxCollider>();
+		collider.enabled = false;
+
+        Placer.AddComponent<PlacingComp>();
+
         Placer.SetActive(true);
         
         Debug.Log("Placer set to: " + Placer.name);

@@ -14,34 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Resources
   m_GUID: 39288fbb4ee5425408cf4cd16b57c3c9
-  m_SerializeEntries:
-  - m_GUID: 86abf43599d76cd4395d523c814397ca
-    m_Address: Stone/stone_largeB
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Building
-    - Resource
-    - Stone
-    - level3
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: acf80b195c73d5c4f8df172f0233072b
-    m_Address: Stone/stone_smallFlatA
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Building
-    - Resource
-    - Stone
-    - level1
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ad95f0a4673f954469008a5af4162244
-    m_Address: Stone/stone_largeA
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Building
-    - Resource
-    - Stone
-    - level2
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a618a29d07c70f54b93d38a16abbae97, type: 2}
   m_SchemaSet:

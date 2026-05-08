@@ -40,9 +40,7 @@ public class BuildingScript : MonoBehaviour {
     public int level {
         get => _level;
         set {
-            Debug.Log($"is it even calling it");
             _level = value;
-            updateBuilding();
         }
     }
 
@@ -68,10 +66,10 @@ public class BuildingScript : MonoBehaviour {
         }
     }
 
-    void updateBuilding() {
+    public void updateBuilding() {
         DestroyAllChildren(gameObject);
 
-        Debug.Log($"Yoo level is {_level}");
+        Debug.Log($"Yoo level is {_level} type: {_type.ToString()}");
 
         if (_type == BUILDING_TYPE.Resource)
         {
@@ -90,7 +88,10 @@ public class BuildingScript : MonoBehaviour {
         }
     }
 
-    private void OnComplete(AsyncOperationHandle<IList<GameObject>> handle) {
+    private void OnComplete(AsyncOperationHandle<IList<GameObject>> handle)
+    {
+        if (transform.childCount != 0) return;
+        
         if (handle.Status == AsyncOperationStatus.Succeeded) {
             Debug.Log($"Loaded {handle.Result.Count} assets that matched both labels.");
 
@@ -101,7 +102,6 @@ public class BuildingScript : MonoBehaviour {
                 obj.tag = _type.ToString();
                 obj.transform.localPosition = Vector3.zero;
                 obj.name = "Model";
-                
             }
 
         }

@@ -32,11 +32,11 @@ public class ContextMenuController : MonoBehaviour
             case ObjectType.Pawn:
                 break;
             case ObjectType.Building:
-                BuildingScript obj = player.SelectedObjects[0].GetComponent<BuildingScript>();
+                HouseComp obj = player.SelectedObjects[0].GetComponent<HouseComp>();
                 if (obj.CompareTag("House"))
                 {
                     Debug.Log(obj.name);
-                    var ui = global::HouseUI.buildUI(HouseUI, obj.GetComponent<HouseComp>().house);
+                    var ui = global::HouseUI.buildUI(HouseUI, obj);
                     HUD.rootVisualElement.Q("ContexMenu").Add(ui);
                 }
                 break;

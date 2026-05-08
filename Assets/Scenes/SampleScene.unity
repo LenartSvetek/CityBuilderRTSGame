@@ -1386,7 +1386,7 @@ MonoBehaviour:
       maxAmount: 15000
     level: 3
   resourcePrefab: {fileID: 8455136431455234019, guid: 1976dcac3f037464cae9f0875f79c55b, type: 3}
-  place: 10
+  place: 1
 --- !u!114 &1826249930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1553,5 +1553,5 @@ SceneRoots:
   - {fileID: 399398201}
   - {fileID: 505655769}
   - {fileID: 592909561}
-  - {fileID: 1734650365}
   - {fileID: 172497636}
+  - {fileID: 1734650365}

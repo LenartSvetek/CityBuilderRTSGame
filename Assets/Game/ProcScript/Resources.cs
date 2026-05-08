@@ -33,7 +33,7 @@ public class Resources : MonoBehaviour
             ResourceNode resourceNode = resource.GetComponent<ResourceNode>();
             resourceNode.amount = type.resource;
             
-            
+            buildingScript.updateBuilding();
         }
     }
 }

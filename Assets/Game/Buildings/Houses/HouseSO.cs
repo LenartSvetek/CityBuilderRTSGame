@@ -5,6 +5,6 @@ public class HouseSO : ScriptableObject
 {
     [Header("Info")] 
     [SerializeField] public int maxPopulation = 5;
-    [SerializeField] public int population = 0;
-    [SerializeField] public int minPopulation = 0;
+    public int level = 1;
+    [Header("Prefabs")] [SerializeField] public GameObject[] prefabs;
 }

@@ -14,7 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: 45201e68a3195e84d93c62612a839cf0
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 044578364612ad64483ddaac584e3181
+    m_Address: Assets/Game/Buildings/Resources_moved/Stone/stone_largeA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    - Resource
+    - Stone
+    - level2
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b26cc6a34675de2468a5f8d7c64e4df7
+    m_Address: Assets/Game/Buildings/Resources_moved/Stone/stone_smallFlatA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    - Resource
+    - Stone
+    - level1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed96fe2665fbb8f48b6a57251a047416
+    m_Address: Assets/Game/Buildings/Resources_moved/Stone/stone_largeB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    - Resource
+    - Stone
+    - level3
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a618a29d07c70f54b93d38a16abbae97, type: 2}
   m_SchemaSet:
