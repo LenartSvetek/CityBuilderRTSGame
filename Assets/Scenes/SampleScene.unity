@@ -1002,6 +1002,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OrchestratorScript
   playerController: {fileID: 1656769960}
   cameraController: {fileID: 399398205}
+  _resources:
+  - resource: {fileID: 11400000, guid: a3f2183e6b2f79546ac3de9533788855, type: 2}
+    amount: 250
+    maxAmount: 5000
+  - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
+    amount: 250
+    maxAmount: 5000
+  - resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
+    amount: 250
+    maxAmount: 5000
 --- !u!4 &592909561
 Transform:
   m_ObjectHideFlags: 0
@@ -1166,6 +1176,7 @@ GameObject:
   - component: {fileID: 1734650364}
   - component: {fileID: 1734650366}
   - component: {fileID: 1734650367}
+  - component: {fileID: 1734650368}
   m_Layer: 5
   m_Name: MainHUD
   m_TagString: Untagged
@@ -1224,9 +1235,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Buildings
   orchestrator: {fileID: 592909560}
+  playerController: {fileID: 1656769960}
   buildings:
   - buttonName: House
-    prefab: {fileID: 8455136431455234019, guid: 2907489a895c6544a81bd42ef3d85b06, type: 3}
+    SO: {fileID: 11400000, guid: f9874d641776362429b654484ed9255e, type: 2}
   buttonTemplate: {fileID: 9197481963319205126, guid: a58bde2bbf2985b48aae2aabddae803e, type: 3}
 --- !u!114 &1734650367
 MonoBehaviour:
@@ -1243,6 +1255,19 @@ MonoBehaviour:
   HUD: {fileID: 1734650364}
   player: {fileID: 1656769960}
   HouseUI: {fileID: 9197481963319205126, guid: 173a651b445fd5b419585eb6b5025d84, type: 3}
+--- !u!114 &1734650368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734650363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b375a73dd615ae748b0f24c2bbb04811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.UI.Logic.Resources
+  resourceTemplate: {fileID: 9197481963319205126, guid: 74533610fe58e0b4a9d3029782e257e7, type: 3}
 --- !u!1 &1826249922
 GameObject:
   m_ObjectHideFlags: 0

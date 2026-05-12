@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 public enum PlayerState
@@ -72,11 +68,14 @@ public class PlayerController : MonoBehaviour
         get { return selectedObjects; }
     }
     
+    OrchestratorScript _orchestrator;
+
     [SerializeField]
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _playerSettings = GetComponent<PlayerSettings>();
+        _orchestrator = UnityEngine.Object.FindFirstObjectByType<OrchestratorScript>();
     }
 
     void LateUpdate() 
@@ -243,6 +242,7 @@ public class PlayerController : MonoBehaviour
     public void placeBuilding(RaycastHit hit)
     {
         if (Placer.GetComponent<PlacingComp>().canPlace != true) return;
+        if(!_orchestrator.ApplyBuildingCost(currHoldBuilding)) return;
 
         // Place object at the hit point
         Vector3 position = hit.point;
@@ -264,17 +264,23 @@ public class PlayerController : MonoBehaviour
         Placer.transform.parent = transform;
         Placer.SetActive(false);
 
+        currHoldBuilding = null;
         playerState = PlayerState.Idle;
     }
-    
-    public void OnBuildingUI(GameObject buildingPrefab) {
+
+    BuidlingSO currHoldBuilding = null;
+    public void OnBuildingUI(BuidlingSO buildingSO) {
+        if(!_orchestrator.CheckBuildingCost(buildingSO)) return;
+
+        currHoldBuilding = buildingSO;
+
         Vector3 position = Placer.transform.position;
         Placer.transform.parent = null;
         Destroy(Placer);
         
-        Debug.Log("Prefab: " + buildingPrefab.name);
+        Debug.Log("Prefab: " + buildingSO.name);
 
-        Placer = Instantiate(buildingPrefab, position, Quaternion.identity);
+        Placer = Instantiate(buildingSO.prefab, position, Quaternion.identity);
         Placer.transform.parent = this.transform;
         
         BoxCollider collider = Placer.GetComponentInChildren<BoxCollider>();
@@ -291,104 +297,30 @@ public class PlayerController : MonoBehaviour
     
     public void OnPlayerSecondaryClick()
     {
-        Ray ray = _cameraController.GetRay;
+        //Ray ray = _cameraController.GetRay;
         
-        RaycastHit hit;
+        //RaycastHit hit;
         
-        if(!Physics.Raycast(ray, out hit)) return;
+        //if(!Physics.Raycast(ray, out hit)) return;
         
-        switch (playerState)
-        {
-            case PlayerState.Idle:
-                break;
-            case PlayerState.Controlling:
-                Debug.Log(hit.transform.tag);
-                switch (hit.transform.tag)
-                {
-                    case "Terrain":
-                        if(objectType == ObjectType.Pawn)
-                            CommandPawnTo(hit);
-                        break;
-                    case "Resource":
-                        if(objectType == ObjectType.Pawn)
-                            CommandPawnGather(hit);
-                        break;
-                }
-                break;
-        }
-    }
-
-    void CommandPawnGather(RaycastHit hit)
-    {
-        Vector3 goTo = hit.point;
-
-        float pawnOffset = 5;
-        
-        
-        int rows = Mathf.CeilToInt(Mathf.Sqrt(selectedObjects.Count));
-        int cols = Mathf.CeilToInt(selectedObjects.Count / (float)rows);
-        
-        goTo.z -= cols / 2.0f * pawnOffset;
-        goTo.x -= rows / 2.0f * pawnOffset;
-        
-        for (var i = 0; i < selectedObjects.Count; i++)
-        {
-            int row = Mathf.FloorToInt(i / (float)cols);
-            int col = i % cols;
-            
-            Vector3 pos = new Vector3(goTo.x + row * pawnOffset, 0, goTo.z - col * pawnOffset);
-            
-            PawnController pawn = selectedObjects[i].GetComponent<PawnController>();
-            
-            
-            MoveCommand goToCommand = new MoveCommand(pos);
-            MoveCommand backCommand = new MoveCommand(pawn.gameObject.transform.position);
-            Debug.Log(pos);
-
-            if (!Input.GetKey(KeyCode.LeftShift))
-            {
-                pawn.ClearCommands();
-                pawn.CyclicCommands(true);
-                pawn.IssueCommands(new List<IPawnCommand>() { goToCommand, backCommand });
-            }
-        }
-    }
-
-    public void CommandPawnTo(RaycastHit hit)
-    {
-        Vector3 initPos = hit.point;
-        NavMeshHit navHit;
-
-        float pawnOffset = 5;
-        
-        
-        int rows = Mathf.CeilToInt(Mathf.Sqrt(selectedObjects.Count));
-        int cols = Mathf.CeilToInt(selectedObjects.Count / (float)rows);
-        
-        initPos.z -= cols / 2.0f * pawnOffset;
-        initPos.x -= rows / 2.0f * pawnOffset;
-        
-        for (int i = 0; i < selectedObjects.Count; i++)
-        {
-            int row = Mathf.FloorToInt(i / (float)cols);
-            int col = i % cols;
-            
-            Vector3 pos = new Vector3(initPos.x + row * pawnOffset, 0, initPos.z - col * pawnOffset);
-            
-            PawnController pawn = selectedObjects[i].GetComponent<PawnController>();
-            
-            
-            MoveCommand goToCommand = new MoveCommand(pos);
-            
-            Debug.Log(pos);
-
-            if (!Input.GetKey(KeyCode.LeftShift))
-            {
-                pawn.ClearCommands();
-                pawn.IssueCommands(new List<IPawnCommand>() { goToCommand });
-            }
-        }
-        
-        
+        //switch (playerState)
+        //{
+        //    case PlayerState.Idle:
+        //        break;
+        //    case PlayerState.Controlling:
+        //        Debug.Log(hit.transform.tag);
+        //        switch (hit.transform.tag)
+        //        {
+        //            case "Terrain":
+        //                if(objectType == ObjectType.Pawn)
+        //                    CommandPawnTo(hit);
+        //                break;
+        //            case "Resource":
+        //                if(objectType == ObjectType.Pawn)
+        //                    CommandPawnGather(hit);
+        //                break;
+        //        }
+        //        break;
+        //}
     }
 }

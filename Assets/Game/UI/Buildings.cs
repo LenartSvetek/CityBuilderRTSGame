@@ -5,11 +5,12 @@ using UnityEngine.UIElements;
 public class Buildings : MonoBehaviour
 {
     [SerializeField] OrchestratorScript orchestrator;
-    
+    [SerializeField] PlayerController playerController;
+
     [System.Serializable]
     public struct BuildingData {
         public string buttonName;
-        public GameObject prefab;
+        public BuidlingSO SO;
     }
 
     public List<BuildingData> buildings;
@@ -25,8 +26,8 @@ public class Buildings : MonoBehaviour
             VisualElement instance = buttonTemplate.Instantiate();
             Button btn = instance.Q<Button>();
 
-            btn.text = item.prefab.name;
-            btn.clicked += () => orchestrator.OnBuildingBTN(item.prefab);
+            btn.text = item.buttonName;
+            btn.clicked += () => playerController.OnBuildingUI(item.SO);
 
             container.Add(instance);
         }

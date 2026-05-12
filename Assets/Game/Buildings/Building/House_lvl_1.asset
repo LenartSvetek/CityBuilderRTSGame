@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49a4519b32004742b4afce5b518277f, type: 3}
+  m_Name: House_lvl_1
+  m_EditorClassIdentifier: Assembly-CSharp::BuidlingSO
+  prefab: {fileID: 8455136431455234019, guid: 2907489a895c6544a81bd42ef3d85b06, type: 3}
+  resourceCosts:
+  - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
+    amount: 10
+  - resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
+    amount: 10

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd8a2114daf05134a868bc532f101ddd, type: 3}
-  m_Name: HouseLvL1
+  m_Name: HouseLvL2Info
   m_EditorClassIdentifier: Assembly-CSharp::HouseSO
   maxPopulation: 5
-  level: 1
+  level: 2
   prefabs:
-  - {fileID: 8664407419727344564, guid: 60bbe753566ce5147bb6f23f272afe06, type: 3}
-  - {fileID: 1398429965378699571, guid: b846e66566f20394ea5e77dbedbed858, type: 3}
+  - {fileID: 8576294685000717922, guid: 2ddf396db4b5c414993936c3fa554abf, type: 3}
+  - {fileID: 1078515718066926502, guid: 8dfab16e28084cd4da4a4346447d9663, type: 3}

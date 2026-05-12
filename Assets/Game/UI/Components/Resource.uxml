@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: space-between; align-items: stretch; visibility: visible; display: flex; overflow: visible; left: auto; right: auto; flex-shrink: 0; margin-right: 5px; margin-left: 5px;">
+        <ui:VisualElement name="ResourcePic" style="flex-grow: 1; background-image: resource(&apos;assets/Wood&apos;); width: 32px; height: 32px; position: absolute;" />
+        <ui:Label text="0/5000" name="ResourceAmount" style="padding-left: 35px;" />
+    </ui:VisualElement>
+</ui:UXML>
