@@ -7,6 +7,7 @@ public class ContextMenuController : MonoBehaviour
     public UIDocument HUD;
     public PlayerController player;
     
+
     [Header("Components")]
     public VisualTreeAsset HouseUI;
     
@@ -27,6 +28,7 @@ public class ContextMenuController : MonoBehaviour
         ObjectType objectType = player.objectType;
         Debug.Log("Yooo");
         Debug.Log(objectType.ToString());
+        HUD.rootVisualElement.Q("ContexMenu").Clear();
         switch (objectType)
         {
             case ObjectType.Pawn:
@@ -43,7 +45,7 @@ public class ContextMenuController : MonoBehaviour
             case ObjectType.Resource:
                 break;
             case ObjectType.Null:
-                HUD.rootVisualElement.Q("ContexMenu").Clear();
+                
                 break;
         }
     }

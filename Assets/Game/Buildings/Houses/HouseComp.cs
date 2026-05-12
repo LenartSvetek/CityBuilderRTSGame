@@ -1,14 +1,18 @@
 using JetBrains.Annotations;
+using System;
 using UnityEngine;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
+using Random = UnityEngine.Random;
 
 public class HouseComp : MonoBehaviour
 {
+    public event Action<HouseComp> OnHouseUpdate;
+
     [SerializeField] HouseSO _house;
 
+    [SerializeField]
     private int _population = 0;
 
-    public int population => _population;
     public HouseSO house => _house;
 
     private void Awake()
@@ -20,4 +24,27 @@ public class HouseComp : MonoBehaviour
         obj.transform.localPosition = Vector3.zero;
         obj.name = "Model";
     }
+
+    
+
+    private void OnMouseOver()
+    {
+        SetPopulation(_population + 1);
+    }
+
+    [ContextMenu("Set population")]
+    public void SetPopulation(int newPopulation)
+    {
+        _population = Mathf.Clamp(newPopulation, 0, _house.maxPopulation);
+        OnHouseUpdate?.Invoke(this);
+    }
+
+    [ContextMenu("Set population to 1")]
+    public void SetPopulation()
+    {
+        _population = Mathf.Clamp(1, 0, _house.maxPopulation);
+        OnHouseUpdate?.Invoke(this);
+    }
+
+    public int Population => _population;
 }
