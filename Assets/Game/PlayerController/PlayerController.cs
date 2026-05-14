@@ -257,6 +257,9 @@ public class PlayerController : MonoBehaviour
 
         Destroy(Placer.GetComponent<PlacingComp>());
 
+        Debug.Log("Placed building tag: " + Placer.tag);
+        if (Placer.tag == "House") _orchestrator.RegisterBuilding(Placer.GetComponent<HouseComp>());
+
         Placer = null;
         Debug.Log("placing building at: " + position);
         

@@ -726,9 +726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112c115f68905fc46ad38f3ed898c780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RTSCameraController
-  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  sprintActionName: Sprint
-  inputDeadZone: 0.1
   moveSpeed: 15
   sprintSpeedMultiplier: 4
   acceleration: 50
@@ -1003,15 +1000,21 @@ MonoBehaviour:
   playerController: {fileID: 1656769960}
   cameraController: {fileID: 399398205}
   _resources:
+  - resource: {fileID: 11400000, guid: f95a35c05e6377149a7c5c5f3cf83a0b, type: 2}
+    amount: 0
+    maxAmount: 0
   - resource: {fileID: 11400000, guid: a3f2183e6b2f79546ac3de9533788855, type: 2}
     amount: 250
     maxAmount: 5000
   - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
-    amount: 10
+    amount: 250
     maxAmount: 5000
   - resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
     amount: 250
     maxAmount: 5000
+  houses: []
+  populationGrowthRate: 512
+  populationFree: 0
 --- !u!4 &592909561
 Transform:
   m_ObjectHideFlags: 0
@@ -1238,6 +1241,8 @@ MonoBehaviour:
   playerController: {fileID: 1656769960}
   buildings:
   - buttonName: House
+    SO: {fileID: 11400000, guid: f9874d641776362429b654484ed9255e, type: 2}
+  - buttonName: House 2
     SO: {fileID: 11400000, guid: f9874d641776362429b654484ed9255e, type: 2}
   buttonTemplate: {fileID: 9197481963319205126, guid: a58bde2bbf2985b48aae2aabddae803e, type: 3}
   tooltipTemplate: {fileID: 9197481963319205126, guid: d4b6fc097a8ba9b4d9871f46ccdc461b, type: 3}

@@ -4,13 +4,11 @@ using UnityEngine.InputSystem;
 
 public class RTSCameraController : MonoBehaviour
 {
-    [Header("Input")]
-    [SerializeField]
-    InputActionReference moveAction;
-    [SerializeField]
-    string sprintActionName = "Sprint";
-    [SerializeField]
-    float inputDeadZone = 0.1f;
+    private PlayerInputHandler _inputHandler;
+    private PlayerInput _inputActions;
+
+    private InputAction moveAction;
+    private InputAction sprintAction;
 
     private bool hasMoveInput = false;
     private Vector3 moveInput3D;
@@ -22,7 +20,6 @@ public class RTSCameraController : MonoBehaviour
     float decelTimer = 0.0f;
     Vector3 decelStartVelocity = Vector3.zero;
     
-    private InputAction sprintAction;
     
     Vector3 cursorPositon = Vector3.zero;
 
@@ -49,9 +46,13 @@ public class RTSCameraController : MonoBehaviour
         if(orbitalFollow == null) orbitalFollow = camera.GetComponent<CinemachineOrbitalFollow>();
     }
 
-    private void Awake()
+    void Start()
     {
-        sprintAction = moveAction.action.actionMap.FindAction(sprintActionName);
+        _inputHandler = FindFirstObjectByType<PlayerInputHandler>();
+        _inputActions = _inputHandler.inputActions;
+
+        moveAction = _inputActions.Player.Move;
+        sprintAction = _inputActions.Player.Sprint;
         GroundLayerMask = LayerMask.GetMask("Terrain");
     }
 
@@ -65,7 +66,12 @@ public class RTSCameraController : MonoBehaviour
 
     void HandleInput()
     {
-        Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
+        if (moveAction.enabled == false) { 
+            moveInput3D = Vector3.zero;
+            return; 
+        }
+
+        Vector2 moveInput = moveAction.ReadValue<Vector2>();
         
         Vector3 forward = camera.transform.forward;
         forward.y = 0;
@@ -77,7 +83,7 @@ public class RTSCameraController : MonoBehaviour
 
         moveInput3D = forward * moveInput.y + right * moveInput.x;
     
-        hasMoveInput = moveInput.sqrMagnitude > inputDeadZone * inputDeadZone;
+        hasMoveInput = true/*moveInput.sqrMagnitude > inputDeadZone * inputDeadZone*/;
         
         sprintInput = sprintAction.IsPressed();
 

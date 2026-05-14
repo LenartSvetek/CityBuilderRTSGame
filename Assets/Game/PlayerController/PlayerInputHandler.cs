@@ -8,6 +8,8 @@ public class PlayerInputHandler : MonoBehaviour
     private PlayerInput _inputActions;
     private Vector2 _moveInput;
 
+    public PlayerInput inputActions => _inputActions;
+
     private bool _isLooking;
     private Vector2 _lookInput;
 

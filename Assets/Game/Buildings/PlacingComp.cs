@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlacingComp : MonoBehaviour
 {
+    private PlayerInputHandler _inputHandler;
     private PlayerInput _inputActions;
 
     private BoxCollider _myBox;
-
     private bool _canPlace = true;
 
     public bool canPlace => _canPlace;
@@ -22,10 +22,14 @@ public class PlacingComp : MonoBehaviour
         // Get the reference to your existing collider
         _myBox = GetComponentInChildren<BoxCollider>();
 
-        _inputActions = new PlayerInput();
+        Debug.Log("Input actions number: " + FindObjectsByType<PlayerInputHandler>(FindObjectsSortMode.InstanceID).Length);
+
+        _inputHandler = FindFirstObjectByType<PlayerInputHandler>();
+        _inputActions = _inputHandler.inputActions;
 
         _inputActions.Building.Enable();
-
+        
+        
         _inputActions.Building.Rotate.performed += OnRotateStart;
         _inputActions.Building.Rotate.canceled += OnRotateStop;
     }
@@ -71,6 +75,7 @@ public class PlacingComp : MonoBehaviour
         var outline = GetComponentInChildren<Outline>();
         outline.enabled = false;
         outline.OutlineColor = Color.black;
+
     }
 
     void OnRotateStart(InputAction.CallbackContext context)
