@@ -1007,7 +1007,7 @@ MonoBehaviour:
     amount: 250
     maxAmount: 5000
   - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
-    amount: 250
+    amount: 10
     maxAmount: 5000
   - resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
     amount: 250
@@ -1240,6 +1240,8 @@ MonoBehaviour:
   - buttonName: House
     SO: {fileID: 11400000, guid: f9874d641776362429b654484ed9255e, type: 2}
   buttonTemplate: {fileID: 9197481963319205126, guid: a58bde2bbf2985b48aae2aabddae803e, type: 3}
+  tooltipTemplate: {fileID: 9197481963319205126, guid: d4b6fc097a8ba9b4d9871f46ccdc461b, type: 3}
+  resourceTemplate: {fileID: 9197481963319205126, guid: 74533610fe58e0b4a9d3029782e257e7, type: 3}
 --- !u!114 &1734650367
 MonoBehaviour:
   m_ObjectHideFlags: 0

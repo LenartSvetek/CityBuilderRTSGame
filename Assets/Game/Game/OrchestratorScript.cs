@@ -42,6 +42,12 @@ public class OrchestratorScript : MonoBehaviour
         return true;
     }
 
+    public bool CheckResourceAvailability(ResourceSO resourceType, int amount)
+    {
+        var resource = _resources.Find(r => r.resource == resourceType);
+        return resource != null && resource.amount >= amount;
+    }
+
     public bool ApplyBuildingCost(BuidlingSO buidlingSO)
     {
         CheckBuildingCost(buidlingSO);

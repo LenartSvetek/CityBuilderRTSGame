@@ -1,17 +1,33 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlacingComp : MonoBehaviour
 {
+    private PlayerInput _inputActions;
+
     private BoxCollider _myBox;
 
     private bool _canPlace = true;
 
     public bool canPlace => _canPlace;
 
+    #region Rotate
+    private bool _isRotating = false;
+    private float _rotDir = 0;
+    private float _rotSpeed = 90; // degrees per second
+    #endregion
+
     void Start()
     {
         // Get the reference to your existing collider
         _myBox = GetComponentInChildren<BoxCollider>();
+
+        _inputActions = new PlayerInput();
+
+        _inputActions.Building.Enable();
+
+        _inputActions.Building.Rotate.performed += OnRotateStart;
+        _inputActions.Building.Rotate.canceled += OnRotateStop;
     }
 
     void Update()
@@ -39,6 +55,15 @@ public class PlacingComp : MonoBehaviour
             outline.OutlineColor = Color.black;
             _canPlace = true;
         }
+
+        #region Rotate
+
+        if(_isRotating)
+        {
+            transform.Rotate(0, _rotDir * _rotSpeed * Time.unscaledDeltaTime, 0);
+        }
+
+        #endregion
     }
 
     void OnDestroy()
@@ -46,6 +71,18 @@ public class PlacingComp : MonoBehaviour
         var outline = GetComponentInChildren<Outline>();
         outline.enabled = false;
         outline.OutlineColor = Color.black;
+    }
+
+    void OnRotateStart(InputAction.CallbackContext context)
+    {
+        _isRotating = true;
+        _rotDir = context.ReadValue<float>();
+    }
+
+    void OnRotateStop(InputAction.CallbackContext context)
+    {
+        _isRotating = false;
+        _rotDir = 0;
     }
 
     // Optional: Draw it in the Scene view so you can verify it matches
