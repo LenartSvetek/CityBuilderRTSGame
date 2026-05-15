@@ -1,5 +1,8 @@
 using JetBrains.Annotations;
+using NaughtyAttributes;
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 using Random = UnityEngine.Random;
@@ -11,7 +14,7 @@ public class HouseComp : MonoBehaviour
     [SerializeField] HouseSO _house;
 
     [SerializeField]
-    private int _population = 0;
+    private List<Pawn> population;
 
     public HouseSO house => _house;
 
@@ -25,26 +28,16 @@ public class HouseComp : MonoBehaviour
         obj.name = "Model";
     }
 
-    
 
-    private void OnMouseOver()
+    public bool AddPawn(Pawn pawn)
     {
-        SetPopulation(_population + 1);
-    }
-
-    [ContextMenu("Set population")]
-    public void SetPopulation(int newPopulation)
-    {
-        _population = Mathf.Clamp(newPopulation, 0, _house.maxPopulation);
+        if (population.Count >= _house.maxPopulation)
+            return false;
+        population.Add(pawn);
         OnHouseUpdate?.Invoke(this);
+        return true;
     }
 
-    [ContextMenu("Set population to 1")]
-    public void SetPopulation()
-    {
-        _population = Mathf.Clamp(1, 0, _house.maxPopulation);
-        OnHouseUpdate?.Invoke(this);
-    }
-
-    public int Population => _population;
+    public int Population => population.Count;
+    public int space => _house.maxPopulation - population.Count;
 }

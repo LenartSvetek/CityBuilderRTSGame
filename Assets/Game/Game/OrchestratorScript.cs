@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class OrchestratorScript : MonoBehaviour
@@ -21,6 +22,11 @@ public class OrchestratorScript : MonoBehaviour
     [SerializeField]
     List<HouseComp> houses;
 
+    [SerializeField]
+    List<WorkshopComp> workshops;
+    List<WorkshopComp> workshopsWSpace => workshops.Where(w => w.population.hasSpace).ToList();
+
+
     #region Population
     [Foldout("Population")]
     [SerializeField]
@@ -31,7 +37,15 @@ public class OrchestratorScript : MonoBehaviour
     float populationGrowthCutoff = 0f;
     [Foldout("Population")]
     [SerializeField]
-    int populationFree = 0;
+    GameObject pawnPrefab;
+    [Foldout("Population")]
+    [SerializeField]
+    List<Pawn> workers;
+    [Foldout("Population")]
+    [SerializeField]
+    List<Pawn> freeWorkers;
+    [SerializeField]
+    int populationFree => freeWorkers.Count;
     #endregion
 
     public List<ResourceAmount> resources => _resources;
@@ -46,6 +60,7 @@ public class OrchestratorScript : MonoBehaviour
     void Update()
     {
         UpdatePopulation();
+        DistributeFreeWorkforce();
     }
 
     private void UpdatePopulation()
@@ -60,14 +75,66 @@ public class OrchestratorScript : MonoBehaviour
         var populationResource = _resources.Find(r => r.resource.resourceName == "Population");
         if (populationResource != null)
         {
-            var newPop = Mathf.FloorToInt(populationGrowthTimer / populationGrowthCutoff);
-            newPop = Mathf.Min(populationResource.amount + newPop, populationResource.maxAmount);
-            populationFree += newPop - populationResource.amount;
+            var popChange = Mathf.FloorToInt(populationGrowthTimer / populationGrowthCutoff);
+            
+
+            var newPop = Mathf.Min(populationResource.amount + popChange, populationResource.maxAmount);
+            popChange = newPop - populationResource.amount;
+
             populationResource.amount = newPop;
             OnResourceChange.Invoke(resources);
+
+            int i = 0;
+            Debug.Log($"Adding population: {popChange}, free population: {houses.Count}");
+            while (popChange > 0 && i < houses.Count)
+            {
+                HouseComp house = houses[i];
+                int take = Mathf.Min(popChange, house.space);
+                popChange -= take;
+                
+                for(int j = 0; j < take; j++)
+                {
+                    var pawn = CreatePawn(house).GetComponent<Pawn>();
+                    house.AddPawn(pawn);
+                    freeWorkers.Add(pawn);
+                }
+
+
+                i++;
+            }
         }
 
         populationGrowthTimer = 0f;
+    }
+
+    private void DistributeFreeWorkforce()
+    {
+        if(populationFree <= 0 || workshopsWSpace.Count <= 0) return;
+
+        int popToAssign = Mathf.Min(1, Mathf.FloorToInt(populationFree / workshopsWSpace.Count));
+        int workshopsAssigned = workshopsWSpace.Count;
+        for (int w_i = 0; populationFree > 0 && w_i < workshopsAssigned; w_i++)
+        {
+            WorkshopComp workshop = workshopsWSpace[w_i];
+            
+            int actualMoveCount = Mathf.Min(popToAssign, populationFree, freeWorkers.Count);
+            int startIndex = freeWorkers.Count - actualMoveCount;
+            List<Pawn> pawnsToMove = freeWorkers.GetRange(startIndex, actualMoveCount);
+
+            workers.AddRange(pawnsToMove);
+            freeWorkers.RemoveRange(startIndex, actualMoveCount);
+
+            workshop.population.AddWorkers(pawnsToMove);
+        }
+    }
+
+    public GameObject CreatePawn(HouseComp house)
+    {
+        GameObject obj = Instantiate(pawnPrefab);
+        Pawn pawnComp = obj.GetComponent<Pawn>();
+        pawnComp.SetHome(house);
+
+        return obj;
     }
 
     public bool CheckBuildingCost(BuidlingSO buidlingSO)
@@ -122,6 +189,16 @@ public class OrchestratorScript : MonoBehaviour
         resources.Find(r => r.resource.resourceName == "Population").maxAmount = maxPop;
 
         OnResourceChange.Invoke(resources);
+    }
+
+    public void RegisterBuilding(WorkshopComp workshop)
+    {
+        if (workshops.Contains(workshop))
+        {
+            return;
+        }
+
+        workshops.Add(workshop);
     }
 
     #endregion

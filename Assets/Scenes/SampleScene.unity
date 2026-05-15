@@ -1013,8 +1013,11 @@ MonoBehaviour:
     amount: 250
     maxAmount: 5000
   houses: []
+  workshops: []
   populationGrowthRate: 512
-  populationFree: 0
+  pawnPrefab: {fileID: 8583642070189780200, guid: 234d09c258f5c864999b1041020ac6d4, type: 3}
+  workers: []
+  freeWorkers: []
 --- !u!4 &592909561
 Transform:
   m_ObjectHideFlags: 0
@@ -1242,8 +1245,8 @@ MonoBehaviour:
   buildings:
   - buttonName: House
     SO: {fileID: 11400000, guid: f9874d641776362429b654484ed9255e, type: 2}
-  - buttonName: House 2
-    SO: {fileID: 11400000, guid: f9874d641776362429b654484ed9255e, type: 2}
+  - buttonName: Bread factory
+    SO: {fileID: 11400000, guid: 8b76dde0034430e4da0dcf858cec3216, type: 2}
   buttonTemplate: {fileID: 9197481963319205126, guid: a58bde2bbf2985b48aae2aabddae803e, type: 3}
   tooltipTemplate: {fileID: 9197481963319205126, guid: d4b6fc097a8ba9b4d9871f46ccdc461b, type: 3}
   resourceTemplate: {fileID: 9197481963319205126, guid: 74533610fe58e0b4a9d3029782e257e7, type: 3}

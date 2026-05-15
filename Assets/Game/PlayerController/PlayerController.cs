@@ -252,13 +252,13 @@ public class PlayerController : MonoBehaviour
 
         Placer.transform.parent = null;
         Placer.transform.position = position;
-        BoxCollider collider = Placer.GetComponentInChildren<BoxCollider>();
-        collider.enabled = true;
+        
 
         Destroy(Placer.GetComponent<PlacingComp>());
 
         Debug.Log("Placed building tag: " + Placer.tag);
         if (Placer.tag == "House") _orchestrator.RegisterBuilding(Placer.GetComponent<HouseComp>());
+        if (Placer.tag == "Building") _orchestrator.RegisterBuilding(Placer.GetComponent<WorkshopComp>());
 
         Placer = null;
         Debug.Log("placing building at: " + position);
@@ -285,9 +285,6 @@ public class PlayerController : MonoBehaviour
 
         Placer = Instantiate(buildingSO.prefab, position, Quaternion.identity);
         Placer.transform.parent = this.transform;
-        
-        BoxCollider collider = Placer.GetComponentInChildren<BoxCollider>();
-		collider.enabled = false;
 
         Placer.AddComponent<PlacingComp>();
 

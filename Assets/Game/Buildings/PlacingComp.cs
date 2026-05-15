@@ -19,8 +19,9 @@ public class PlacingComp : MonoBehaviour
 
     void Start()
     {
-        // Get the reference to your existing collider
         _myBox = GetComponentInChildren<BoxCollider>();
+
+        _myBox.enabled = false; 
 
         Debug.Log("Input actions number: " + FindObjectsByType<PlayerInputHandler>(FindObjectsSortMode.InstanceID).Length);
 
@@ -76,6 +77,7 @@ public class PlacingComp : MonoBehaviour
         outline.enabled = false;
         outline.OutlineColor = Color.black;
 
+        _myBox.enabled = true;
     }
 
     void OnRotateStart(InputAction.CallbackContext context)
