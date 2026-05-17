@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 2827267719173407582}
   m_Layer: 8
   m_Name: GatheringSpot
-  m_TagString: Untagged
+  m_TagString: GatherSpot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 5824839470381920996}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.102, y: 0, z: 4.353}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

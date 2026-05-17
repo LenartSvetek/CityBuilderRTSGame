@@ -67,11 +67,8 @@ public class OrchestratorScript : MonoBehaviour
     {
         populationGrowthTimer += Time.unscaledDeltaTime;
 
-        Debug.Log($"Population growth timer: {populationGrowthTimer}, cutoff: {populationGrowthCutoff}");
-
         if (populationGrowthTimer < populationGrowthCutoff) return;
 
-        
         var populationResource = _resources.Find(r => r.resource.resourceName == "Population");
         if (populationResource != null)
         {
@@ -85,7 +82,6 @@ public class OrchestratorScript : MonoBehaviour
             OnResourceChange.Invoke(resources);
 
             int i = 0;
-            Debug.Log($"Adding population: {popChange}, free population: {houses.Count}");
             while (popChange > 0 && i < houses.Count)
             {
                 HouseComp house = houses[i];

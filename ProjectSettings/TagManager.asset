@@ -9,6 +9,7 @@ TagManager:
   - Resource
   - House
   - Building
+  - GatherSpot
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Units
   - Building
   - Resource
-  - 
+  - Hidden
   - 
   - 
   - 
