@@ -1006,6 +1006,9 @@ MonoBehaviour:
   - resource: {fileID: 11400000, guid: a3f2183e6b2f79546ac3de9533788855, type: 2}
     amount: 250
     maxAmount: 5000
+  - resource: {fileID: 11400000, guid: 351303075c914a5448040d36863a2c63, type: 2}
+    amount: 0
+    maxAmount: 50
   - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
     amount: 250
     maxAmount: 5000
@@ -1247,6 +1250,8 @@ MonoBehaviour:
     SO: {fileID: 11400000, guid: f9874d641776362429b654484ed9255e, type: 2}
   - buttonName: Bread factory
     SO: {fileID: 11400000, guid: 8b76dde0034430e4da0dcf858cec3216, type: 2}
+  - buttonName: Well
+    SO: {fileID: 11400000, guid: 33c56db17a9754642ac12e37a4f8ae0f, type: 2}
   buttonTemplate: {fileID: 9197481963319205126, guid: a58bde2bbf2985b48aae2aabddae803e, type: 3}
   tooltipTemplate: {fileID: 9197481963319205126, guid: d4b6fc097a8ba9b4d9871f46ccdc461b, type: 3}
   resourceTemplate: {fileID: 9197481963319205126, guid: 74533610fe58e0b4a9d3029782e257e7, type: 3}

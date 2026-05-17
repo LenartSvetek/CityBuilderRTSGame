@@ -20,3 +20,5 @@ MonoBehaviour:
   attackDamage: 5
   canGather: 1
   canBuild: 1
+  gatherPoints: 30
+  gatherPerMin: 5

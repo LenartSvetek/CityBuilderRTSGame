@@ -133,9 +133,9 @@ public class OrchestratorScript : MonoBehaviour
         return obj;
     }
 
-    public bool CheckBuildingCost(BuidlingSO buidlingSO)
+    public bool CheckResourceCost(List<ResourceCost> cost)
     {
-        foreach(var resourceCost in buidlingSO.resourceCosts)
+        foreach(var resourceCost in cost)
         {
             var resource = _resources.Find(r => r.resource == resourceCost.resource);
             if (resource == null || resource.amount < resourceCost.amount)
@@ -152,11 +152,11 @@ public class OrchestratorScript : MonoBehaviour
         return resource != null && resource.amount >= amount;
     }
 
-    public bool ApplyBuildingCost(BuidlingSO buidlingSO)
+    public bool ApplyResourceCost(List<ResourceCost> cost)
     {
-        CheckBuildingCost(buidlingSO);
+        CheckResourceCost(cost);
 
-        foreach (var resourceCost in buidlingSO.resourceCosts)
+        foreach (var resourceCost in cost)
         {
             var resource = _resources.Find(r => r.resource == resourceCost.resource);
             if (resource != null)
@@ -167,6 +167,17 @@ public class OrchestratorScript : MonoBehaviour
 
         OnResourceChange.Invoke(resources);
         return true;
+    }
+
+    public void AddResources(List<ResourceCost> production)
+    {
+        foreach(var product in production)
+        {
+            var resource = _resources.Find(r => r.resource == product.resource);
+            resource.amount = Mathf.Min(resource.amount + product.amount, resource.maxAmount);
+        }
+
+        OnResourceChange.Invoke(resources);
     }
 
     #region Registering Buildings

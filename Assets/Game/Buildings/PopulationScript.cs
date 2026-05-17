@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class PopulationScript : MonoBehaviour
     int maxWorkers;
 
     [SerializeField]
+    [ReadOnly]
     List<Pawn> workers;
 
     public int space => maxWorkers - workers.Count;

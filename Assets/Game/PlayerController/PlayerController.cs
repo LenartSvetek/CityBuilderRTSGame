@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviour
     public void placeBuilding(RaycastHit hit)
     {
         if (Placer.GetComponent<PlacingComp>().canPlace != true) return;
-        if(!_orchestrator.ApplyBuildingCost(currHoldBuilding)) return;
+        if(!_orchestrator.ApplyResourceCost(currHoldBuilding.resourceCosts)) return;
 
         // Place object at the hit point
         Vector3 position = hit.point;
@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour
 
     BuidlingSO currHoldBuilding = null;
     public void OnBuildingUI(BuidlingSO buildingSO) {
-        if(!_orchestrator.CheckBuildingCost(buildingSO)) return;
+        if(!_orchestrator.CheckResourceCost(buildingSO.resourceCosts)) return;
 
         currHoldBuilding = buildingSO;
 

@@ -15,4 +15,7 @@ public class PawnSO : ScriptableObject
     [Header("Economy")]
     public bool canGather;
     public bool canBuild;
+
+    public int gatherPoints;
+    public float gatherPerMin;
 }

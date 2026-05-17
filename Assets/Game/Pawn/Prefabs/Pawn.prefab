@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01c4b4cb6ce30a47b03fd2e288497f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorkerComp
-  state: 2
+  state: 3
 --- !u!1 &8968360995202469732
 GameObject:
   m_ObjectHideFlags: 0

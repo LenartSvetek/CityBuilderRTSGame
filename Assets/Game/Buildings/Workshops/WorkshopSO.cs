@@ -6,14 +6,17 @@ using UnityEngine;
 public class WorkshopSO : ScriptableObject
 {
     [SerializeField]
-    List<ResourceCost> resources;
+    List<ResourceCost> _resources;
+    public List<ResourceCost> Resources => _resources;
 
     [SerializeField]
-    List<ResourceCost> production;
+    List<ResourceCost> _production;
+    public List<ResourceCost> Production => _production;
 
     [SerializeField]
     [Tooltip("Time it takes to produce the item in seconds")]
-    int productionCost; // in seconds
+    int _productionCost; // in seconds
+    public int ProductionCost => _productionCost;
 
     [SerializeField] public GameObject[] prefabs;
 }

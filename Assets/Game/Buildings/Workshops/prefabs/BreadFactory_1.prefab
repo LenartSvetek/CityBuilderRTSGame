@@ -50,6 +50,7 @@ MonoBehaviour:
   _population: {fileID: 0}
   _production: {fileID: 11400000, guid: cf117c86ce6b6d34aaaba929328519ba, type: 2}
   prodProgress: 0
+  _GatherSpot: {fileID: 0}
 --- !u!114 &-5357782062863799669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0dff61fcfb33b43a72aa9a9208fa32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PopulationScript
-  maxWorkers: 3
+  maxWorkers: 1
   workers: []
 --- !u!1001 &1479418583461826927
 PrefabInstance:

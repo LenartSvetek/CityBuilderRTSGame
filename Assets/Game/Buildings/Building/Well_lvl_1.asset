@@ -9,17 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09eb5b6fc16892b47b16518ff52fe723, type: 3}
-  m_Name: Bread_alt_1
-  m_EditorClassIdentifier: Assembly-CSharp::WorkshopSO
-  _resources:
+  m_Script: {fileID: 11500000, guid: f49a4519b32004742b4afce5b518277f, type: 3}
+  m_Name: Well_lvl_1
+  m_EditorClassIdentifier: Assembly-CSharp::BuidlingSO
+  prefab: {fileID: 474047452912756182, guid: 4acca829e9bef9447bd2a0d9e9566f60, type: 3}
+  resourceCosts:
   - resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
-    amount: 5
+    amount: 50
   - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
-    amount: 5
-  _production:
-  - resource: {fileID: 11400000, guid: a3f2183e6b2f79546ac3de9533788855, type: 2}
-    amount: 15
-  _productionCost: 30
-  prefabs:
-  - {fileID: 1360468252654966213, guid: 32e74d545e45e4742be633eda96e73a3, type: 3}
+    amount: 20
