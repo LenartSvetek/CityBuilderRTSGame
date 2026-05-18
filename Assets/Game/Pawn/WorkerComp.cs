@@ -59,9 +59,8 @@ public class WorkerComp : MonoBehaviour
 
         _pawn.transform.position = HouseGatherSpot.position;
 
-        _pawn.MovementComp.MoveTo(WorkGatherSpot.position, (bool b) => { Debug.Log("I arrived"); EnterWorkPlace(); });
-
         state = WorkerState.walking;
+        _pawn.MovementComp.MoveTo(WorkGatherSpot.position, (bool b) => { Debug.Log("I arrived"); EnterWorkPlace(); });
     }
 
     void EnterWorkPlace()

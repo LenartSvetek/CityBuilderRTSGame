@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8a2114daf05134a868bc532f101ddd, type: 3}
   m_Name: HouseLvL2Info
   m_EditorClassIdentifier: Assembly-CSharp::HouseSO
-  maxPopulation: 5
+  maxPopulation: 15
   level: 2
   prefabs:
   - {fileID: 8576294685000717922, guid: 2ddf396db4b5c414993936c3fa554abf, type: 3}

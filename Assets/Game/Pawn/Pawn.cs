@@ -71,12 +71,7 @@ public class Pawn : MonoBehaviour
         Vector3 lossyScale = transform.lossyScale;
         float maxRadiusScale = 1f;
 
-        //if (_capsuleCollider.direction == 0) // X-Axis
-        //    maxRadiusScale = Mathf.Max(Mathf.Abs(lossyScale.y), Mathf.Abs(lossyScale.z));
-        //else if (_capsuleCollider.direction == 1) // Y-Axis
         maxRadiusScale = Mathf.Max(Mathf.Abs(lossyScale.x), Mathf.Abs(lossyScale.z));
-        //else 
-        //    maxRadiusScale = Mathf.Max(Mathf.Abs(lossyScale.x), Mathf.Abs(lossyScale.y));
 
         float worldRadius = _capsuleCollider.radius * maxRadiusScale;
 

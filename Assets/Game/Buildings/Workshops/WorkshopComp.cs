@@ -34,8 +34,7 @@ public class WorkshopComp : MonoBehaviour
 
     public bool StartProduction()
     {
-        if (!_orchestrator.ApplyResourceCost(_production.Resources)) return false;
-        return true;
+        return _orchestrator.ApplyResourceCost(_production.Resources);
     }
 
     public void StopProduction(bool success) {

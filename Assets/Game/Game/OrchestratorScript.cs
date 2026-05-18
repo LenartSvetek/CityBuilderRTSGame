@@ -154,7 +154,7 @@ public class OrchestratorScript : MonoBehaviour
 
     public bool ApplyResourceCost(List<ResourceCost> cost)
     {
-        CheckResourceCost(cost);
+        if(!CheckResourceCost(cost)) return false;
 
         foreach (var resourceCost in cost)
         {
