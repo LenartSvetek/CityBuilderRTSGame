@@ -41,4 +41,16 @@ public class WorkshopComp : MonoBehaviour
         if (!success) _orchestrator.AddResources(_production.Resources);
         _orchestrator.AddResources(_production.Production);
     }
+
+    #region placing
+
+    public bool CanPlace(ResourceSO resource)
+    {
+        Debug.Log($"Can place {resource?.resourceName} in {name} with production resource req: {_production.Resource}");
+        if (_production.Resource == null) return true;
+        if(resource == null) return false;
+        return resource.resourceName == _production.Resource.resourceName;
+    }
+
+    #endregion
 }

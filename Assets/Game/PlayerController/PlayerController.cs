@@ -81,30 +81,7 @@ public class PlayerController : MonoBehaviour
     void LateUpdate() 
     {
         if(playerClicked) handlePlayerClick();
-        
-        Vector3 mousePos = _cameraController.GetCursorPosition;
-        
-        Ray ray = new Ray(mousePos + Vector3.up * 100f, Vector3.down);
-        RaycastHit hit;
-
-        var layersAll = new List<String>() { "Units", "Building", "Resource", "Terrain" };
-        var layers = new List<String>{};
-        if(Placer == null) layers.AddRange(layersAll);
-        else layers.Add("Terrain");
-        int hoverMask = LayerMask.GetMask(layers.ToArray());
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, hoverMask)) 
-        {
-            GameObject hitObj = hit.transform.root.gameObject;
-
-            if (Placer != null)
-            {
-                Vector3 position = hit.point;
-                //position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
-                //position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
-                Placer.transform.position = position;
-            }
-        }
+       
         
         playerClicked = false;
     }
@@ -244,16 +221,7 @@ public class PlayerController : MonoBehaviour
         if (Placer.GetComponent<PlacingComp>().canPlace != true) return;
         if(!_orchestrator.ApplyResourceCost(currHoldBuilding.resourceCosts)) return;
 
-        // Place object at the hit point
-        Vector3 position = hit.point;
-        //position.x = Mathf.Floor(position.x / _gridSize) * _gridSize + _gridSize / 2.0f;
-        //position.z = Mathf.Floor(position.z / _gridSize) * _gridSize + _gridSize / 2.0f;
-        //ObjectPlacer.PlaceObject(position, Placer);
-
-        Placer.transform.parent = null;
-        Placer.transform.position = position;
-        
-
+       
         Destroy(Placer.GetComponent<PlacingComp>());
 
         Debug.Log("Placed building tag: " + Placer.tag);
@@ -261,11 +229,7 @@ public class PlayerController : MonoBehaviour
         if (Placer.tag == "Building") _orchestrator.RegisterBuilding(Placer.GetComponent<WorkshopComp>());
 
         Placer = null;
-        Debug.Log("placing building at: " + position);
         
-        Placer = Instantiate(DefualtPlacer, position, Quaternion.identity);
-        Placer.transform.parent = transform;
-        Placer.SetActive(false);
 
         currHoldBuilding = null;
         playerState = PlayerState.Idle;
@@ -277,18 +241,12 @@ public class PlayerController : MonoBehaviour
 
         currHoldBuilding = buildingSO;
 
-        Vector3 position = Placer.transform.position;
-        Placer.transform.parent = null;
-        Destroy(Placer);
-        
         Debug.Log("Prefab: " + buildingSO.name);
 
-        Placer = Instantiate(buildingSO.prefab, position, Quaternion.identity);
-        Placer.transform.parent = this.transform;
+        Placer = Instantiate(buildingSO.prefab, transform.position, Quaternion.identity);
 
         Placer.AddComponent<PlacingComp>();
 
-        Placer.SetActive(true);
         
         Debug.Log("Placer set to: " + Placer.name);
 

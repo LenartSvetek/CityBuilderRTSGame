@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4525856043968905034}
   - component: {fileID: -5357782062863799669}
   - component: {fileID: 1354691266385619393}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BreadFactory_1
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -49,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorkshopComp
   _population: {fileID: 0}
   _production: {fileID: 11400000, guid: cf117c86ce6b6d34aaaba929328519ba, type: 2}
-  prodProgress: 0
   _GatherSpot: {fileID: 0}
 --- !u!114 &-5357782062863799669
 MonoBehaviour:

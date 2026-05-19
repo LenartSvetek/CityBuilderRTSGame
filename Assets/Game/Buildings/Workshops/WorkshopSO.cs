@@ -6,6 +6,10 @@ using UnityEngine;
 public class WorkshopSO : ScriptableObject
 {
     [SerializeField]
+    ResourceSO _resource;
+    public ResourceSO Resource => _resource;
+
+    [SerializeField]
     List<ResourceCost> _resources;
     public List<ResourceCost> Resources => _resources;
 

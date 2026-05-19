@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: -2793049388034315617}
   - component: {fileID: -7078009615794574952}
   - component: {fileID: 2389542828370100854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Env_CommercialBuilding_01
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

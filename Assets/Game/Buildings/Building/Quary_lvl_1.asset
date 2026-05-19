@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49a4519b32004742b4afce5b518277f, type: 3}
+  m_Name: Quary_lvl_1
+  m_EditorClassIdentifier: Assembly-CSharp::BuidlingSO
+  prefab: {fileID: 474047452912756182, guid: a7e80c5caee0c4046977fd50fa6cfb94, type: 3}
+  resourceCosts:
+  - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
+    amount: 100

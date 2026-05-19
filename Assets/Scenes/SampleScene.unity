@@ -897,10 +897,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 298990548464716359, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
-      propertyPath: HorizontalAxis.Center
-      value: -0
-      objectReference: {fileID: 0}
     - target: {fileID: 2043941502239233409, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
       propertyPath: cursorUI
       value: 
@@ -913,6 +909,10 @@ PrefabInstance:
       propertyPath: brain
       value: 
       objectReference: {fileID: 350262128}
+    - target: {fileID: 4013568951686597272, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
+      propertyPath: Placer
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4013568951686597272, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
       propertyPath: _cameraController
       value: 
@@ -962,9 +962,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 3475627999122963882, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
-    - {fileID: 1123976701238986755, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}
@@ -1252,6 +1250,8 @@ MonoBehaviour:
     SO: {fileID: 11400000, guid: 8b76dde0034430e4da0dcf858cec3216, type: 2}
   - buttonName: Well
     SO: {fileID: 11400000, guid: 33c56db17a9754642ac12e37a4f8ae0f, type: 2}
+  - buttonName: Quary
+    SO: {fileID: 11400000, guid: bfe6a0144d09a2e448a91f999caae2a2, type: 2}
   buttonTemplate: {fileID: 9197481963319205126, guid: a58bde2bbf2985b48aae2aabddae803e, type: 3}
   tooltipTemplate: {fileID: 9197481963319205126, guid: d4b6fc097a8ba9b4d9871f46ccdc461b, type: 3}
   resourceTemplate: {fileID: 9197481963319205126, guid: 74533610fe58e0b4a9d3029782e257e7, type: 3}
