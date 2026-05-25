@@ -73,7 +73,7 @@ public class PlacingComp : MonoBehaviour
             BuildingScript bScript;
 
             if (workshopComp == null) IsNotPlacable();
-            else if ((bScript = hitObj.transform.root.GetComponent<BuildingScript>()) && workshopComp.CanPlace(bScript.resource) || workshopComp.CanPlace(null)) { IsPlacable(); pos = hitObj.transform.position; }
+            else if ((bScript = hitObj.transform.root.GetComponent<BuildingScript>()) && bScript.resource != null && workshopComp.CanPlace(bScript.resource)) { IsPlacable(); pos = hitObj.transform.position; }
             else IsNotPlacable();
         }
         else if(colliders.Length > 1)

@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 8163682294841744505}
   - component: {fileID: -3153103548570973506}
   - component: {fileID: 7334282937221671891}
+  - component: {fileID: 3017372220025629539}
   m_Layer: 8
   m_Name: Env_ResidentBuilding_01
   m_TagString: Building
@@ -175,3 +176,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0b6b49bf507434fbe056e2911b4f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineController
+--- !u!208 &3017372220025629539
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6045110163862441004}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.8520002, y: 2.608, z: 2.8630002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2.6060002, z: 0.012}
+  m_TimeToStationary: 0.5

@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2303688805320479301
 Transform:
@@ -97,6 +97,14 @@ PrefabInstance:
     - target: {fileID: 1360468252654966213, guid: 32e74d545e45e4742be633eda96e73a3, type: 3}
       propertyPath: m_TagString
       value: Building
+      objectReference: {fileID: 0}
+    - target: {fileID: 1360468252654966213, guid: 32e74d545e45e4742be633eda96e73a3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1369776193156961655, guid: 32e74d545e45e4742be633eda96e73a3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1849442357326532479, guid: 32e74d545e45e4742be633eda96e73a3, type: 3}
       propertyPath: m_LocalPosition.x

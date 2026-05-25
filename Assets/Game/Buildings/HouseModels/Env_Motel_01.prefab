@@ -14,12 +14,13 @@ GameObject:
   - component: {fileID: 8411616029845880748}
   - component: {fileID: -4672321193634636912}
   - component: {fileID: 4517097636695730109}
+  - component: {fileID: 8157899952294341790}
   m_Layer: 8
   m_Name: Env_Motel_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &413338273679517980
 Transform:
@@ -144,6 +145,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0b6b49bf507434fbe056e2911b4f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineController
+--- !u!208 &8157899952294341790
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078515718066926502}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.9640002, y: 5.201, z: 3.3270001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 5.1990004, z: 0.532}
+  m_TimeToStationary: 0.5
 --- !u!1 &5824839470381920996
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +175,7 @@ GameObject:
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2827267719173407582
 Transform:

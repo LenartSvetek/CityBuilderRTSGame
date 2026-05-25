@@ -218,6 +218,7 @@ public class PlayerController : MonoBehaviour
     
     public void placeBuilding(RaycastHit hit)
     {
+        if (currHoldBuilding == null) return;
         if (Placer.GetComponent<PlacingComp>().canPlace != true) return;
         if(!_orchestrator.ApplyResourceCost(currHoldBuilding.resourceCosts)) return;
 
@@ -237,6 +238,7 @@ public class PlayerController : MonoBehaviour
 
     BuidlingSO currHoldBuilding = null;
     public void OnBuildingUI(BuidlingSO buildingSO) {
+        if (currHoldBuilding) { Destroy(Placer); currHoldBuilding = null; }
         if(!_orchestrator.CheckResourceCost(buildingSO.resourceCosts)) return;
 
         currHoldBuilding = buildingSO;

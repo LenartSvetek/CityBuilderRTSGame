@@ -14,7 +14,7 @@ GameObject:
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8493468223693686902
 Transform:
@@ -45,12 +45,13 @@ GameObject:
   - component: {fileID: 5929294460753122572}
   - component: {fileID: 4888027748749472830}
   - component: {fileID: -2331622086541161463}
+  - component: {fileID: -1870183685414835555}
   m_Layer: 8
   m_Name: Env_CompanyBuilding_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8319828603918035214
 Transform:
@@ -175,3 +176,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0b6b49bf507434fbe056e2911b4f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineController
+--- !u!208 &-1870183685414835555
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664407419727344564}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.874, y: 3.7460003, z: 4.637}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 3.7460003, z: 0.45900002}
+  m_TimeToStationary: 0.5
