@@ -1,10 +1,32 @@
 using UnityEngine;
 
+[System.Serializable]
+public enum PawnAlliance
+{
+    Player = 0,
+    Enemy = 1,
+    Neutral = 2
+}
+
+[System.Serializable]
+public enum PawnState
+{
+    waitingForWork = 0,
+    working = 1,
+    walking = 2,
+    home = 3,
+    attacking = 4
+}
+
+
 public class Pawn : MonoBehaviour
 {
     public PawnSO data;
     public int currentHealth;
-
+    [SerializeField]
+    private PawnAlliance _alliance;
+    public PawnAlliance alliance => _alliance;
+    public PawnState state = PawnState.home;
 
     [SerializeField]
     private WorkerComp _workerComp;

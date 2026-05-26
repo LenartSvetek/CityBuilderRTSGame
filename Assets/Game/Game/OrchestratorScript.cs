@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OrchestratorScript : MonoBehaviour
@@ -18,6 +19,8 @@ public class OrchestratorScript : MonoBehaviour
 
     [SerializeField]
     List<ResourceAmount> _resources;
+    List<ResourceAmount> _cleanResources; // tracks only the production/consumption of resources, not the total amount. Used for UI display and calculating per minute changes.
+    public List<ResourceAmount> cleanResources => _cleanResources;
 
     [SerializeField]
     List<HouseComp> houses;
@@ -54,6 +57,7 @@ public class OrchestratorScript : MonoBehaviour
     void Start()
     {
         populationGrowthCutoff = 1f / (populationGrowthRate / 60);
+        _cleanResources = _resources.Select(item => item.Clone()).ToList();
     }
 
     // Update is called once per frame
@@ -152,7 +156,7 @@ public class OrchestratorScript : MonoBehaviour
         return resource != null && resource.amount >= amount;
     }
 
-    public bool ApplyResourceCost(List<ResourceCost> cost)
+    public bool ApplyResourceCost(List<ResourceCost> cost, bool bProduction = false)
     {
         if(!CheckResourceCost(cost)) return false;
 
@@ -162,6 +166,14 @@ public class OrchestratorScript : MonoBehaviour
             if (resource != null)
             {
                 resource.amount -= resourceCost.amount;
+                if(bProduction)
+                {
+                    var cleanResource = _cleanResources.Find(r => r.resource == resourceCost.resource);
+                    if (cleanResource != null)
+                    {
+                        cleanResource.amount -= resourceCost.amount;
+                    }
+                }
             }
         }
 
@@ -169,12 +181,20 @@ public class OrchestratorScript : MonoBehaviour
         return true;
     }
 
-    public void AddResources(List<ResourceCost> production)
+    public void AddResources(List<ResourceCost> production, bool bProduction = false)
     {
         foreach(var product in production)
         {
             var resource = _resources.Find(r => r.resource == product.resource);
             resource.amount = Mathf.Min(resource.amount + product.amount, resource.maxAmount);
+            if(bProduction)
+            {
+                var cleanResource = _cleanResources.Find(r => r.resource == product.resource);
+                if (cleanResource != null)
+                {
+                    cleanResource.amount += product.amount;
+                }
+            }
         }
 
         OnResourceChange.Invoke(resources);

@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8737600407997384827}
   - component: {fileID: -7777532361706850215}
-  - component: {fileID: 9151962085617264487}
   - component: {fileID: -5137965404486452144}
+  - component: {fileID: 1942738455969621850}
   m_Layer: 0
-  m_Name: HouseLvL1
+  m_Name: OutpostLvl1
   m_TagString: House
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,24 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05e4e00f5069304d810ebb8af74878a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingComp
+  _health: 100
   models:
-  - {fileID: 8664407419727344564, guid: 60bbe753566ce5147bb6f23f272afe06, type: 3}
-  - {fileID: 1398429965378699571, guid: b846e66566f20394ea5e77dbedbed858, type: 3}
+  - {fileID: 8051985769325472309, guid: aaa0e76f273f68f4ea6d951825944ad5, type: 3}
   _GatherSpot: {fileID: 0}
---- !u!114 &9151962085617264487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8455136431455234019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b459d56d0e5fded4ba97fcf30f473250, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HouseComp
-  _house: {fileID: 11400000, guid: c54e627fe1b559c4fb2459c8aa8ea417, type: 2}
-  population: []
 --- !u!114 &-5137965404486452144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,3 +64,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Selectable
   selectionRing: {fileID: 0}
   isSelected: 0
+--- !u!114 &1942738455969621850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8455136431455234019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db250d2fae8e99148b0daea0cf97d73d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OutpostComp

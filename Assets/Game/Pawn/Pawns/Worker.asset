@@ -18,6 +18,7 @@ MonoBehaviour:
   moveSpeed: 50
   attackRange: 5
   attackDamage: 5
+  attackInterval: 500
   canGather: 1
   canBuild: 1
   gatherPoints: 30

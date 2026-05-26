@@ -18,22 +18,15 @@ public class HouseComp : MonoBehaviour
     [SerializeField]
     private List<Pawn> population;
 
-    [SerializeField]
-    private Transform _GatherSpot;
-    public Transform gatherSpot => _GatherSpot;
+    
 
     public HouseSO house => _house;
 
+    BuildingComp _building;
+    public BuildingComp building => _building;
     private void Awake()
     {
-        int rInd = Mathf.FloorToInt(Random.value * _house.prefabs.Length) % _house.prefabs.Length;
-
-        GameObject obj = Instantiate(_house.prefabs[rInd], transform);
-        obj.tag = "House";
-        obj.transform.localPosition = Vector3.zero;
-        obj.name = "Model";
-
-        _GatherSpot = transform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("GatherSpot")).FirstOrDefault();
+        _building = GetComponent<BuildingComp>();
     }
 
 

@@ -25,10 +25,17 @@ public class PlacingComp : MonoBehaviour
 
     Outline outline;
 
+    BuidlingSO buildingData;
+
     #region Workshop
     WorkshopComp workshopComp;
 
     #endregion
+
+    void SetBuidlingSO(BuidlingSO data) 
+    {
+        buildingData = data;
+    }
 
     void Start()
     {
@@ -70,10 +77,11 @@ public class PlacingComp : MonoBehaviour
         {
             Debug.Log("Something is overlapping my Box Collider!");
             var hitObj = colliders[0].gameObject;
-            BuildingScript bScript;
-
+            
+            BuildingScript hitBScript = hitObj.transform.root.GetComponent<BuildingScript>();
+            Debug.Log("Hit object: " + hitObj.name + " resource: " + hitObj.transform.root.GetComponent<BuildingScript>().resource);
             if (workshopComp == null) IsNotPlacable();
-            else if ((bScript = hitObj.transform.root.GetComponent<BuildingScript>()) && bScript.resource != null && workshopComp.CanPlace(bScript.resource)) { IsPlacable(); pos = hitObj.transform.position; }
+            else if (hitBScript != null && workshopComp.production.Resource != null && workshopComp.CanPlace(hitBScript.resource)) { IsPlacable(); pos = hitObj.transform.position; }
             else IsNotPlacable();
         }
         else if(colliders.Length > 1)

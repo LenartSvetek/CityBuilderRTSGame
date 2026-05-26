@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WorkshopComp : MonoBehaviour
 {
@@ -12,34 +13,37 @@ public class WorkshopComp : MonoBehaviour
     WorkshopSO _production;
     public WorkshopSO production => _production;
 
-    [SerializeField]
-    [ReadOnly]
-    private Transform _GatherSpot;
-    public Transform gatherSpot => _GatherSpot;
+    BuildingComp _building;
+    public BuildingComp building => _building;
 
     public PopulationScript population => _population;
 
     [ReadOnly]
     private OrchestratorScript _orchestrator;
 
+    private void Awake()
+    {
+        _building = GetComponent<BuildingComp>();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _population = GetComponent<PopulationScript>();
 
-        _GatherSpot = transform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("GatherSpot")).FirstOrDefault();
+        
 
         _orchestrator = FindFirstObjectByType<OrchestratorScript>();
     }
 
     public bool StartProduction()
     {
-        return _orchestrator.ApplyResourceCost(_production.Resources);
+        return _orchestrator.ApplyResourceCost(_production.Resources, true);
     }
 
     public void StopProduction(bool success) {
-        if (!success) _orchestrator.AddResources(_production.Resources);
-        _orchestrator.AddResources(_production.Production);
+        if (!success) _orchestrator.AddResources(_production.Resources, true);
+        _orchestrator.AddResources(_production.Production, true);
     }
 
     #region placing

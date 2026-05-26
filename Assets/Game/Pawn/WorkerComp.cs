@@ -1,26 +1,17 @@
-using NUnit.Framework.Constraints;
-using Unity.VisualScripting;
-using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
-[System.Serializable]
-public enum WorkerState
-{
-    waitingForWork = 0,
-    working = 1,
-    walking = 2,
-    home = 3
-}
 
 public class WorkerComp : MonoBehaviour
 {
     private Pawn _pawn;
-    public WorkerState state = WorkerState.home;
+    
 
     private WorkshopComp _workshop;
 
     [SerializeField]
     private float productionProg = 0f;
+
+    public PawnState state { get => _pawn.state; set => _pawn.state = value; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,13 +27,13 @@ public class WorkerComp : MonoBehaviour
 
         switch (state)
         {
-            case WorkerState.home:
+            case PawnState.home:
                 GoToWork();
                 break;
-            case WorkerState.waitingForWork:
+            case PawnState.waitingForWork:
                 CheckForWork();
                 break;
-            case WorkerState.working:
+            case PawnState.working:
                 Work();
                 break;
             default:
@@ -52,14 +43,14 @@ public class WorkerComp : MonoBehaviour
 
     void GoToWork()
     {
-        Transform HouseGatherSpot = _pawn.CurrentHouse.gatherSpot;
-        Transform WorkGatherSpot = _pawn.WorkingPlace.gatherSpot;
+        Transform HouseGatherSpot = _pawn.CurrentHouse.building.gatherSpot;
+        Transform WorkGatherSpot = _pawn.WorkingPlace.building.gatherSpot;
         if (!_pawn.CheckPosition(HouseGatherSpot)) return;
 
 
         _pawn.transform.position = HouseGatherSpot.position;
 
-        state = WorkerState.walking;
+        state = PawnState.walking;
         _pawn.MovementComp.MoveTo(WorkGatherSpot.position, (bool b) => { Debug.Log("I arrived"); EnterWorkPlace(); });
     }
 
@@ -74,7 +65,7 @@ public class WorkerComp : MonoBehaviour
 
         productionProg = 0;
 
-        state = WorkerState.waitingForWork;
+        state = PawnState.waitingForWork;
     }
 
     void CheckForWork()
@@ -85,7 +76,7 @@ public class WorkerComp : MonoBehaviour
         }
 
         productionProg = 0;
-        state = WorkerState.working;
+        state = PawnState.working;
     }
 
     void Work()
@@ -94,13 +85,12 @@ public class WorkerComp : MonoBehaviour
 
         productionProg += prodPerSec * Time.unscaledDeltaTime;
 
-        Debug.Log($"Production progress: {productionProg}/{_workshop.production.ProductionCost}");
 
         if (productionProg >= _workshop.production.ProductionCost)
         {
             _workshop.StopProduction(true);
             productionProg = 0;
-            state = WorkerState.waitingForWork;
+            state = PawnState.waitingForWork;
 
         }
     }
