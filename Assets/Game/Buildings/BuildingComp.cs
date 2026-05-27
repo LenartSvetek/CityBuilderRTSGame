@@ -13,7 +13,12 @@ public class BuildingComp : MonoBehaviour
     public event Action OnBuildingDestroyed;
 
     [SerializeField]
+    float _maxHealth = 100;
+    public float maxHealth => _maxHealth;
+
+    [SerializeField]
     float _health = 100;
+    public float health => _health;
 
     [SerializeField]
     List<GameObject> models = new List<GameObject>();
