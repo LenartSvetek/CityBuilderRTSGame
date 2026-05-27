@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4643106407005442355}
   m_Layer: 8
-  m_Name: GatherSpot
+  m_Name: main
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

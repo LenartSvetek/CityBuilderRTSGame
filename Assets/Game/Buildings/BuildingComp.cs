@@ -35,7 +35,7 @@ public class BuildingComp : MonoBehaviour
 
         if (model == null)
         {
-            int rInd = Mathf.FloorToInt(Random.value * models.Count) % models.Count;
+            int rInd = Mathf.FloorToInt(UnityEngine.Random.value * models.Count) % models.Count;
 
             GameObject obj = Instantiate(models[rInd], transform);
             obj.transform.localPosition = Vector3.zero;
@@ -76,10 +76,10 @@ public class BuildingComp : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        OnBuildingTakeDamage.Invoke(this);
+        OnBuildingTakeDamage?.Invoke(this);
         _health -= damage;
         if (_health <= 0) {
-            OnBuildingDestroyed.Invoke();
+            OnBuildingDestroyed?.Invoke();
             _freeSpaces.Where(s => s != null).ToList().ForEach(s => s.GoHome());
             Destroy(gameObject);
         }
