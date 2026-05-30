@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponBaseComp : MonoBehaviour
 {
     [SerializeField]
-    List<Pawn> _targets;
+    List<WarriorComp> _targets;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
@@ -17,12 +17,14 @@ public class WeaponBaseComp : MonoBehaviour
         sensor.OnEnemyPawnLeave += OnEnemyPawnLeave;
     }
 
-    void OnEnemyPawnEnter(Pawn pawn) {
+    void OnEnemyPawnEnter(WarriorComp pawn) {
         if (_targets.Contains(pawn)) return;
         _targets.Add(pawn);
+
+        pawn.Attacked(GetComponent<BuildingComp>());
     }
 
-    void OnEnemyPawnLeave(Pawn pawn)
+    void OnEnemyPawnLeave(WarriorComp pawn)
     {
         _targets.Remove(pawn);
     }

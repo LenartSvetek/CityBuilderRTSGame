@@ -3,22 +3,37 @@ using UnityEngine;
 
 public class SensorComp : MonoBehaviour
 {
-    public event Action<Pawn> OnEnemyPawnEnter;
-    public event Action<Pawn> OnEnemyPawnLeave;
+    public event Action<WarriorComp> OnEnemyPawnEnter;
+    public event Action<WarriorComp> OnEnemyPawnLeave;
 
+    MeshRenderer meshRenderer;
+    void Start()
+    {
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name);
         if (!other.transform.root.TryGetComponent<Pawn>(out Pawn pawn) || pawn.alliance != PawnAlliance.Enemy) return;
 
-        OnEnemyPawnEnter?.Invoke(pawn);
+        OnEnemyPawnEnter?.Invoke(pawn.GetComponent<WarriorComp>());
     }
 
     void OnTriggerExit(Collider other)
     {
         if (!other.transform.root.TryGetComponent<Pawn>(out Pawn pawn) || pawn.alliance != PawnAlliance.Enemy) return;
 
-        OnEnemyPawnLeave?.Invoke(pawn);
+        OnEnemyPawnLeave?.Invoke(pawn.GetComponent<WarriorComp>());
+    }
+
+    public void ShowRange()
+    {
+        meshRenderer.enabled = true;
+    }
+
+    public void HideRange()
+    {
+        meshRenderer.enabled = false;
     }
 }

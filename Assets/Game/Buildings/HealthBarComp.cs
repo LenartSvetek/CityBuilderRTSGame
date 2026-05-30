@@ -126,8 +126,7 @@ public class HealthBarComp : MonoBehaviour
 
         if (healthBar != null)
             healthBar.fillAmount = comp.health / comp.maxHealth;
-        healthBar.Rebuild(CanvasUpdate.Layout);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(healthBar.rectTransform);
-        Debug.Log("Fill amount: " + healthBar.fillAmount);
+        //healthBar.Rebuild(CanvasUpdate.Layout);
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(healthBar.rectTransform);
     }
 }

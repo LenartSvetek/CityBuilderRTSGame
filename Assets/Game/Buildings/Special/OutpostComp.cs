@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OutpostComp : MonoBehaviour
 {
@@ -10,6 +11,6 @@ public class OutpostComp : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("the game is lost");
+        SceneManager.LoadScene("Menu");
     }
 }

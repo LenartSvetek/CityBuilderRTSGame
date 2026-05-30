@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class BuildingComp : MonoBehaviour
 {
     public event Action<BuildingComp> OnBuildingTakeDamage;
-    public event Action OnBuildingDestroyed;
+    public event Action<BuildingComp> OnBuildingDestroyed;
 
     [SerializeField]
     float _maxHealth = 100;
@@ -78,13 +78,13 @@ public class BuildingComp : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
-    {
+    public void TakeDamage(float damage) { 
+        if (_health <= 0) return;
         OnBuildingTakeDamage?.Invoke(this);
         _health -= damage;
         if (_health <= 0) {
-            OnBuildingDestroyed?.Invoke();
-            _freeSpaces.Where(s => s != null).ToList().ForEach(s => s.GoHome());
+            OnBuildingDestroyed?.Invoke(this);
+            //_freeSpaces.Where(s => s != null).ToList().ForEach(s => s.GoHome());
             Destroy(gameObject);
         }
     }
