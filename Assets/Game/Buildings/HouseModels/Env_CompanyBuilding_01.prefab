@@ -635,6 +635,7 @@ GameObject:
   - component: {fileID: 6308527931845943345}
   - component: {fileID: 391029918556459206}
   - component: {fileID: 4148531027658712819}
+  - component: {fileID: 5293417632609875771}
   m_Layer: 8
   m_Name: Env_CompanyBuilding_01
   m_TagString: House
@@ -803,6 +804,20 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 4.8910003, z: 0.45900002}
   m_TimeToStationary: 0.5
+--- !u!114 &5293417632609875771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8576294685000717922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27a4e9613807674c8204714f03b255e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBarComp
+  healthSprite: {fileID: 21300000, guid: f0a24f27ca7d7c3408b1d0891265f3e8, type: 3}
+  hideAfterAttack: 1
 --- !u!1 &8895422136053662226
 GameObject:
   m_ObjectHideFlags: 0

@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2126877002915608957}
   - component: {fileID: -3194104578289960311}
   - component: {fileID: 1380585062579277508}
+  - component: {fileID: 1000113098119075593}
   m_Layer: 8
   m_Name: Env_CommercialBuilding_03
   m_TagString: Building
@@ -217,6 +218,20 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.46, y: 2.25, z: 0.91300005}
   m_TimeToStationary: 0.5
+--- !u!114 &1000113098119075593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650591154451796056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27a4e9613807674c8204714f03b255e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBarComp
+  healthSprite: {fileID: 21300000, guid: f0a24f27ca7d7c3408b1d0891265f3e8, type: 3}
+  hideAfterAttack: 1
 --- !u!1 &1431832671652976431
 GameObject:
   m_ObjectHideFlags: 0

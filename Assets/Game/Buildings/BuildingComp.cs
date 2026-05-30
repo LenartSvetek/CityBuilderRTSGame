@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[ExecuteAlways]
 public class BuildingComp : MonoBehaviour
 {
     public event Action<BuildingComp> OnBuildingTakeDamage;
@@ -92,7 +91,7 @@ public class BuildingComp : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(_attackSpots == null) return;
+        if(_attackSpots == null || _freeSpaces == null || _attackSpots == null) return;
 
         Gizmos.color = Color.red;
         for(int i = 0; i < _attackSpots.Length; i++)

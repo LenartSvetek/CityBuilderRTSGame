@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2871759954896372482}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (4)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3917647626002581133}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (2)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1835127302619471401}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (17)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2491135436675444760}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (9)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2573489269422964328}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (8)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6717752118915287004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6162268047708571477}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (12)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8337495915389344397}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (1)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8051859648436121939}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (15)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8001487994285053376}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (16)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2612494077980309246}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (6)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4695196189459721671}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (11)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3392702855472843026}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (10)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -412,7 +412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4998171473212113931}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (14)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6081839877626068180}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: main
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -480,9 +480,10 @@ GameObject:
   - component: {fileID: 936709131285820190}
   - component: {fileID: 3865017136616344606}
   - component: {fileID: 895614056758324420}
-  m_Layer: 0
+  - component: {fileID: 1314899405934407705}
+  m_Layer: 8
   m_Name: Env_Motel_04
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -644,6 +645,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.9274993, y: 10.401885, z: 6.6544437}
   m_Center: {x: 0, y: 5.199057, z: 0.53238595}
+--- !u!114 &1314899405934407705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8051985769325472309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27a4e9613807674c8204714f03b255e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBarComp
+  healthSprite: {fileID: 21300000, guid: f0a24f27ca7d7c3408b1d0891265f3e8, type: 3}
+  hideAfterAttack: 1
 --- !u!1 &8260956655006215095
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 929908486193640950}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (5)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -684,7 +699,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6748759701088129946}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (7)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -715,7 +730,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5825104128411927952}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (13)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}
@@ -746,7 +761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8511663026880569876}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GatherSpot (3)
   m_TagString: GatherSpot
   m_Icon: {fileID: 0}

@@ -6,23 +6,33 @@ public class HealthBarComp : MonoBehaviour
     private Transform camera;
 
     BuildingComp buildingComp;
+    [SerializeField ]
+    Sprite healthSprite;
 
     Canvas canvas;
     Image healthBar;
 
-    float verticalOffset = 0.5f; 
+    float verticalOffset = 0.5f;
+
+    [SerializeField]
+    float hideAfterAttack = 1;
+    float hideAfterAttackTimer = 0;
+
+    bool isVisible = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         camera = Camera.main.transform;
 
-        buildingComp = GetComponent<BuildingComp>();
+        buildingComp = GetComponentInParent<BuildingComp>();
         buildingComp.OnBuildingTakeDamage += UpdateHealthBar;
 
         GameObject canvasObj = new GameObject("BuildingCanvas");
         canvasObj.transform.SetParent(transform);
         canvas = canvasObj.AddComponent<Canvas>();
+        canvas.enabled = false;
+
         var rectTransform = canvas.GetComponent<RectTransform>();
 
         rectTransform.sizeDelta = new Vector2(10, 1); 
@@ -41,9 +51,11 @@ public class HealthBarComp : MonoBehaviour
         
 
         GameObject fillObj = new GameObject("Fill");
+       
         fillObj.transform.SetParent(canvasObj.transform, false);
 
         healthBar = fillObj.AddComponent<Image>();
+        healthBar.sprite = healthSprite;
         healthBar.color = Color.green; 
 
         healthBar.type = Image.Type.Filled;
@@ -70,17 +82,32 @@ public class HealthBarComp : MonoBehaviour
 
     private void LateUpdate()
     {
+        hideAfterAttackTimer -= Time.unscaledDeltaTime;
+        if (hideAfterAttackTimer < 0) {
+            canvas.enabled = false;    
+            hideAfterAttackTimer = 0; 
+        }
+
         if (camera != null)
         {
             canvas.transform.rotation = camera.rotation; 
         }
     }
 
+    private void OnMouseOver()
+    {
+        if (!isVisible)
+        {
+            canvas.enabled = true;
+        }
+        hideAfterAttackTimer = hideAfterAttack;
+    }
+
     void UpdatePosition()
     {
         Vector3 targetPosition = transform.position;
 
-        var collider = GetComponentInChildren<Collider>();
+        var collider = GetComponent<Collider>();
         if (collider != null)
         {
             targetPosition.y = collider.bounds.max.y + verticalOffset;
@@ -91,10 +118,15 @@ public class HealthBarComp : MonoBehaviour
 
     void UpdateHealthBar(BuildingComp comp)
     {
-        Debug.Log("Building attacked");
+        if (!isVisible)
+        {
+            canvas.enabled = true;
+        }
+        hideAfterAttackTimer = hideAfterAttack;
+
         if (healthBar != null)
             healthBar.fillAmount = comp.health / comp.maxHealth;
-
+        healthBar.Rebuild(CanvasUpdate.Layout);
         LayoutRebuilder.ForceRebuildLayoutImmediate(healthBar.rectTransform);
         Debug.Log("Fill amount: " + healthBar.fillAmount);
     }

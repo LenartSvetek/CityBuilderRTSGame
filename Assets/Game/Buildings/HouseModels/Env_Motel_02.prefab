@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 7594410238316249057}
   - component: {fileID: 7731017223672562420}
   - component: {fileID: -5933601481090739821}
+  - component: {fileID: -7203418702825688033}
   m_Layer: 8
   m_Name: Env_Motel_02
   m_TagString: House
@@ -364,6 +365,20 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 4.099, z: 0.532}
   m_TimeToStationary: 0.5
+--- !u!114 &-7203418702825688033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398429965378699571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27a4e9613807674c8204714f03b255e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBarComp
+  healthSprite: {fileID: 21300000, guid: f0a24f27ca7d7c3408b1d0891265f3e8, type: 3}
+  hideAfterAttack: 1
 --- !u!1 &1406751322635291679
 GameObject:
   m_ObjectHideFlags: 0
