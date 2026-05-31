@@ -10,6 +10,7 @@ TagManager:
   - House
   - Building
   - GatherSpot
+  - AttackOrigin
   layers:
   - Default
   - TransparentFX

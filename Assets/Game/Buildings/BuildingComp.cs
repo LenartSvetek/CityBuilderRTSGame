@@ -8,17 +8,6 @@ using UnityEngine.InputSystem;
 
 public class BuildingComp : MonoBehaviour
 {
-    public event Action<BuildingComp> OnBuildingTakeDamage;
-    public event Action<BuildingComp> OnBuildingDestroyed;
-
-    [SerializeField]
-    float _maxHealth = 100;
-    public float maxHealth => _maxHealth;
-
-    [SerializeField]
-    float _health = 100;
-    public float health => _health;
-
     [SerializeField]
     List<GameObject> models = new List<GameObject>();
 
@@ -33,8 +22,13 @@ public class BuildingComp : MonoBehaviour
     private Transform _GatherSpot;
     public Transform gatherSpot => _GatherSpot;
 
+    HealthComp _healthComp;
+    public HealthComp healthComp => _healthComp;
+
     private void Awake()
     {
+        _healthComp = GetComponent<HealthComp>();
+
         Transform model = transform.Find("Model");
 
         if (model == null)
@@ -75,17 +69,6 @@ public class BuildingComp : MonoBehaviour
                 _freeSpaces[i] = null;
                 return;
             }
-        }
-    }
-
-    public void TakeDamage(float damage) { 
-        if (_health <= 0) return;
-        OnBuildingTakeDamage?.Invoke(this);
-        _health -= damage;
-        if (_health <= 0) {
-            OnBuildingDestroyed?.Invoke(this);
-            //_freeSpaces.Where(s => s != null).ToList().ForEach(s => s.GoHome());
-            Destroy(gameObject);
         }
     }
 

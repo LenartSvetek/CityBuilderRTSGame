@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -7777532361706850215}
   - component: {fileID: 9151962085617264487}
   - component: {fileID: -5137965404486452144}
+  - component: {fileID: 5055684460869245297}
   m_Layer: 0
   m_Name: HouseLvL1
   m_TagString: House
@@ -49,6 +50,7 @@ MonoBehaviour:
   models:
   - {fileID: 8664407419727344564, guid: 60bbe753566ce5147bb6f23f272afe06, type: 3}
   - {fileID: 1398429965378699571, guid: b846e66566f20394ea5e77dbedbed858, type: 3}
+  _attackSpots: []
   _GatherSpot: {fileID: 0}
 --- !u!114 &9151962085617264487
 MonoBehaviour:
@@ -78,3 +80,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Selectable
   selectionRing: {fileID: 0}
   isSelected: 0
+--- !u!114 &5055684460869245297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8455136431455234019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990866aa42435fd4599ed07b3d69fbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComp
+  _maxHealth: 100
+  _health: 100

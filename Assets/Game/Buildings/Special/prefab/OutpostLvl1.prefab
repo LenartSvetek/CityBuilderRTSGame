@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -7777532361706850215}
   - component: {fileID: -5137965404486452144}
   - component: {fileID: 1942738455969621850}
+  - component: {fileID: 2017362719358491345}
   m_Layer: 0
   m_Name: OutpostLvl1
   m_TagString: House
@@ -46,8 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05e4e00f5069304d810ebb8af74878a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingComp
-  _maxHealth: 100
-  _health: 100
   models:
   - {fileID: 8051985769325472309, guid: aaa0e76f273f68f4ea6d951825944ad5, type: 3}
   _attackSpots:
@@ -97,3 +96,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db250d2fae8e99148b0daea0cf97d73d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutpostComp
+--- !u!114 &2017362719358491345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8455136431455234019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990866aa42435fd4599ed07b3d69fbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComp
+  _maxHealth: 100
+  _health: 100

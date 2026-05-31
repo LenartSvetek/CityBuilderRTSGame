@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -5357782062863799669}
   - component: {fileID: 1354691266385619393}
   - component: {fileID: -7203972672672289299}
+  - component: {fileID: 6027888626006503269}
   m_Layer: 8
   m_Name: BreadFactory_1
   m_TagString: Building
@@ -91,4 +92,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildingComp
   models:
   - {fileID: 1360468252654966213, guid: 32e74d545e45e4742be633eda96e73a3, type: 3}
+  _attackSpots: []
   _GatherSpot: {fileID: 0}
+--- !u!114 &6027888626006503269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6008541998106594462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990866aa42435fd4599ed07b3d69fbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComp
+  _maxHealth: 100
+  _health: 100

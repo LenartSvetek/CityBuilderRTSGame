@@ -1,4 +1,12 @@
+using System;
+using System.Linq;
 using UnityEngine;
+
+[Serializable]
+public enum BulletType
+{
+    Hitscan = 0
+};
 
 public class RangedWeaponComp : WeaponBaseComp
 {
@@ -6,8 +14,12 @@ public class RangedWeaponComp : WeaponBaseComp
     protected override void Start()
     {
         base.Start();
-        Debug.Log("Ranged weapon start");    
     }
 
-    
+    protected override void Attack(WarriorComp warrior)
+    {
+        hitscanComp.CreateLine(attackOrigin.position, warrior.transform.position, 0.1f);
+
+        warrior.healthComp.TakeDamage(attackDamage);
+    }
 }

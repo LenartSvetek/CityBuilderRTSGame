@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 1206952506146132231}
   - component: {fileID: 8100110640372851683}
   - component: {fileID: 4864482481305816625}
+  - component: {fileID: 8820414840654012932}
+  - component: {fileID: -8661728591863527413}
   m_Layer: 0
   m_Name: Wizard_Tower
   m_TagString: Untagged
@@ -171,6 +173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponComp
   _targets: []
+  attackInterval: 100
+  attackDamage: 10
 --- !u!114 &4864482481305816625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,9 +187,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05e4e00f5069304d810ebb8af74878a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingComp
-  _maxHealth: 100
-  _health: 100
   models:
   - {fileID: 8740576562649096075, guid: 6f5af8cd0d393bd45ab682775641a268, type: 3}
   _attackSpots: []
   _GatherSpot: {fileID: 0}
+--- !u!114 &8820414840654012932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8289942228325360362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990866aa42435fd4599ed07b3d69fbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComp
+  _maxHealth: 100
+  _health: 100
+--- !u!114 &-8661728591863527413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8289942228325360362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a915ab518dc344d82b60fc36009ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitScan
+  line: {fileID: 7150472791158245276, guid: ac500fa9de01c574a9e496f417ba0f3c, type: 3}

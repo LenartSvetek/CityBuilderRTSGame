@@ -5,7 +5,8 @@ public class HealthBarComp : MonoBehaviour
 {
     private Transform camera;
 
-    BuildingComp buildingComp;
+    [SerializeField]
+    HealthComp healthComp;
     [SerializeField ]
     Sprite healthSprite;
 
@@ -25,8 +26,9 @@ public class HealthBarComp : MonoBehaviour
     {
         camera = Camera.main.transform;
 
-        buildingComp = GetComponentInParent<BuildingComp>();
-        buildingComp.OnBuildingTakeDamage += UpdateHealthBar;
+        healthComp = transform.root.GetComponent<HealthComp>();
+        healthComp.OnTakingDamage += UpdateHealthBar;
+        healthComp.OnHeal += UpdateHealthBar;
 
         GameObject canvasObj = new GameObject("BuildingCanvas");
         canvasObj.transform.SetParent(transform);
@@ -68,7 +70,7 @@ public class HealthBarComp : MonoBehaviour
         StretchUIElement(fillRect);
 
         UpdatePosition();
-        UpdateHealthBar(buildingComp);
+        UpdateHealthBar(healthComp);
     }
 
     void StretchUIElement(RectTransform rect)
@@ -88,6 +90,11 @@ public class HealthBarComp : MonoBehaviour
             hideAfterAttackTimer = 0; 
         }
 
+        if(healthComp.health < healthComp.maxHealth)
+        {
+            canvas.enabled = true;
+        }
+
         if (camera != null)
         {
             canvas.transform.rotation = camera.rotation; 
@@ -96,6 +103,7 @@ public class HealthBarComp : MonoBehaviour
 
     private void OnMouseOver()
     {
+        Debug.Log("YOOOO");
         if (!isVisible)
         {
             canvas.enabled = true;
@@ -116,7 +124,7 @@ public class HealthBarComp : MonoBehaviour
         canvas.transform.position = new Vector3(transform.position.x, targetPosition.y, transform.position.z);
     }
 
-    void UpdateHealthBar(BuildingComp comp)
+    void UpdateHealthBar(HealthComp comp)
     {
         if (!isVisible)
         {

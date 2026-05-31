@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5766082687551866585}
   - component: {fileID: 1479091509295187448}
   - component: {fileID: -585215719035612538}
+  - component: {fileID: 5256342391091508966}
   m_Layer: 8
   m_Name: quary
   m_TagString: Building
@@ -91,4 +92,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildingComp
   models:
   - {fileID: 6045110163862441004, guid: 61150aa885a5af84a9ad04a8e38ea2ed, type: 3}
+  _attackSpots: []
   _GatherSpot: {fileID: 0}
+--- !u!114 &5256342391091508966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474047452912756182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990866aa42435fd4599ed07b3d69fbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComp
+  _maxHealth: 100
+  _health: 100

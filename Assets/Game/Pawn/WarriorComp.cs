@@ -8,6 +8,8 @@ public class WarriorComp : MonoBehaviour
 
     public PawnState state { get => _pawn.state; set => _pawn.state = value; }
 
+    public HealthComp healthComp => _pawn.HealthComp;
+
     float _attackTimer = 0f;
 
     [SerializeField]
@@ -49,7 +51,7 @@ public class WarriorComp : MonoBehaviour
         //_pawn.transform.position = HouseGatherSpot.position;
 
         if (subscribeToEv)
-            target.OnBuildingDestroyed += OnTargetDefeated;
+            target.healthComp.OnDeath += OnTargetDefeated;
 
         state = PawnState.walking;
         _pawn.MovementComp.MoveTo(WorkGatherSpot.position, (bool b) => { StartAttacking(); });
@@ -69,7 +71,7 @@ public class WarriorComp : MonoBehaviour
         if (_attackTimer >= _pawn.data.attackInterval / 1000f)
         {
             _attackTimer = 0;
-            target.TakeDamage(_pawn.data.attackDamage);
+            target.healthComp.TakeDamage(_pawn.data.attackDamage);
         }
     }
 
@@ -79,15 +81,15 @@ public class WarriorComp : MonoBehaviour
         state = PawnState.home;
     }
 
-    public void OnTargetDefeated(BuildingComp destroyed)
+    public void OnTargetDefeated(HealthComp destroyed)
     {
         Debug.Log(gameObject.name + " handling destruction of " + destroyed.name);
 
-        if (target == destroyed)
+        if (target.gameObject == destroyed.gameObject)
         {
             state = PawnState.home;
             // 1. Unsubscribe from the dead building immediately
-            target.OnBuildingDestroyed -= OnTargetDefeated;
+            target.healthComp.OnDeath-= OnTargetDefeated;
 
             // 2. Pivot to your backup target
             target = ogTarget;
@@ -96,7 +98,7 @@ public class WarriorComp : MonoBehaviour
             // 3. Decide whether to march to the new target or go home
             if (target != null)
             {
-                GoToTarget(true); // Subscribe to the new target's destruction event
+                GoToTarget(false); // Subscribe to the new target's destruction event
             }
             else
             {
@@ -105,9 +107,9 @@ public class WarriorComp : MonoBehaviour
             return;
         }
 
-        if (ogTarget == destroyed)
+        if (ogTarget.gameObject == destroyed.gameObject)
         {
-            ogTarget.OnBuildingDestroyed -= OnTargetDefeated;
+            ogTarget.healthComp.OnDeath -= OnTargetDefeated;
             ogTarget = null;
         }
     }
@@ -129,11 +131,11 @@ public class WarriorComp : MonoBehaviour
     void OnDestroy()
     {
         if (target != null) {
-            target.OnBuildingDestroyed -= OnTargetDefeated;
+            target.healthComp.OnDeath -= OnTargetDefeated;
         }
         if (ogTarget != null)
         {
-            ogTarget.OnBuildingDestroyed -= OnTargetDefeated;
+            ogTarget.healthComp.OnDeath -= OnTargetDefeated;
         }
     }
 }

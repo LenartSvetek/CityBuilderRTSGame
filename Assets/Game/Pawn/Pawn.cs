@@ -22,7 +22,7 @@ public enum PawnState
 public class Pawn : MonoBehaviour
 {
     public PawnSO data;
-    public int currentHealth;
+    
     [SerializeField]
     private PawnAlliance _alliance;
     public PawnAlliance alliance => _alliance;
@@ -50,14 +50,19 @@ public class Pawn : MonoBehaviour
     private PawnMovement _movementComp;
     public PawnMovement MovementComp => _movementComp;
 
+    private HealthComp _healthComp;
+    public HealthComp HealthComp => _healthComp;
+
     protected virtual void Awake()
     {
-        currentHealth = data.maxHealth;
+        
 
         _workerComp = GetComponent<WorkerComp>();
         _movementComp = GetComponent<PawnMovement>();
+        _healthComp = GetComponent<HealthComp>();
 
         _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
+
     }
 
     public void SetHome(HouseComp house)
@@ -70,19 +75,6 @@ public class Pawn : MonoBehaviour
         _workingAt = workshop;
         _workerComp.enabled = true;
     }
-
-    public virtual void TakeDamage(int amount)
-    {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
-            Die();
-    }
-
-    protected virtual void Die()
-    {
-        Destroy(gameObject);
-    }
-
 
     public bool CheckPosition(Transform position)
     {
