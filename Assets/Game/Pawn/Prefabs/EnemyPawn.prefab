@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27a4e9613807674c8204714f03b255e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBarComp
+  healthComp: {fileID: 0}
   healthSprite: {fileID: 21300000, guid: f0a24f27ca7d7c3408b1d0891265f3e8, type: 3}
   hideAfterAttack: 1
 --- !u!1 &5315904887280299278
@@ -305,7 +306,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pawn
   data: {fileID: 11400000, guid: 1f5768de056498d48b87f5fc99ca8a90, type: 2}
-  currentHealth: 100
   _alliance: 1
   state: 3
   _workerComp: {fileID: 0}
@@ -415,6 +415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WarriorComp
   ogTarget: {fileID: 0}
   target: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: 8efcdf05362cc8f499d69ded19e41d7c, type: 3}
 --- !u!114 &480495426251822873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +430,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthComp
   _maxHealth: 100
   _health: 100
+  _selfHealAmount: 10
+  _selfHealInterval: 100
+  _selfhealAttackStopTimeout: 1000
 --- !u!1 &8968360995202469732
 GameObject:
   m_ObjectHideFlags: 0

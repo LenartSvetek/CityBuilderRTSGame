@@ -11,6 +11,8 @@ public class OrchestratorScript : MonoBehaviour
 {
     public event Action<List<ResourceAmount>> OnResourceChange;
 
+    public event Action<HealthComp> OnBuildingAttacked;
+
     [Header("References")]
     [SerializeField]
     PlayerController playerController;
@@ -29,6 +31,8 @@ public class OrchestratorScript : MonoBehaviour
     List<WorkshopComp> workshops;
     List<WorkshopComp> workshopsWSpace => workshops.Where(w => w.population.hasSpace).ToList();
 
+    [SerializeField]
+    List<HealthComp> allHealthStuff = new();
 
     #region Population
     [Foldout("Population")]
@@ -58,6 +62,11 @@ public class OrchestratorScript : MonoBehaviour
     {
         populationGrowthCutoff = 1f / (populationGrowthRate / 60);
         _cleanResources = _resources.Select(item => item.Clone()).ToList();
+
+        foreach (var item in allHealthStuff)
+        {
+            item.OnTakingDamage += RelayAttacked;
+        }
     }
 
     // Update is called once per frame
@@ -77,7 +86,7 @@ public class OrchestratorScript : MonoBehaviour
         if (populationResource != null)
         {
             var popChange = Mathf.FloorToInt(populationGrowthTimer / populationGrowthCutoff);
-            
+
 
             var newPop = Mathf.Min(populationResource.amount + popChange, populationResource.maxAmount);
             popChange = newPop - populationResource.amount;
@@ -91,8 +100,8 @@ public class OrchestratorScript : MonoBehaviour
                 HouseComp house = houses[i];
                 int take = Mathf.Min(popChange, house.space);
                 popChange -= take;
-                
-                for(int j = 0; j < take; j++)
+
+                for (int j = 0; j < take; j++)
                 {
                     var pawn = CreatePawn(house).GetComponent<Pawn>();
                     house.AddPawn(pawn);
@@ -109,14 +118,14 @@ public class OrchestratorScript : MonoBehaviour
 
     private void DistributeFreeWorkforce()
     {
-        if(populationFree <= 0 || workshopsWSpace.Count <= 0) return;
+        if (populationFree <= 0 || workshopsWSpace.Count <= 0) return;
 
         int popToAssign = Mathf.Min(1, Mathf.FloorToInt(populationFree / workshopsWSpace.Count));
         int workshopsAssigned = workshopsWSpace.Count;
         for (int w_i = 0; populationFree > 0 && w_i < workshopsAssigned; w_i++)
         {
             WorkshopComp workshop = workshopsWSpace[w_i];
-            
+
             int actualMoveCount = Mathf.Min(popToAssign, populationFree, freeWorkers.Count);
             int startIndex = freeWorkers.Count - actualMoveCount;
             List<Pawn> pawnsToMove = freeWorkers.GetRange(startIndex, actualMoveCount);
@@ -139,12 +148,12 @@ public class OrchestratorScript : MonoBehaviour
 
     public bool CheckResourceCost(List<ResourceCost> cost)
     {
-        foreach(var resourceCost in cost)
+        foreach (var resourceCost in cost)
         {
             var resource = _resources.Find(r => r.resource == resourceCost.resource);
             if (resource == null || resource.amount < resourceCost.amount)
             {
-                return false; 
+                return false;
             }
         }
         return true;
@@ -158,7 +167,7 @@ public class OrchestratorScript : MonoBehaviour
 
     public bool ApplyResourceCost(List<ResourceCost> cost, bool bProduction = false)
     {
-        if(!CheckResourceCost(cost)) return false;
+        if (!CheckResourceCost(cost)) return false;
 
         foreach (var resourceCost in cost)
         {
@@ -166,7 +175,7 @@ public class OrchestratorScript : MonoBehaviour
             if (resource != null)
             {
                 resource.amount -= resourceCost.amount;
-                if(bProduction)
+                if (bProduction)
                 {
                     var cleanResource = _cleanResources.Find(r => r.resource == resourceCost.resource);
                     if (cleanResource != null)
@@ -183,11 +192,11 @@ public class OrchestratorScript : MonoBehaviour
 
     public void AddResources(List<ResourceCost> production, bool bProduction = false)
     {
-        foreach(var product in production)
+        foreach (var product in production)
         {
             var resource = _resources.Find(r => r.resource == product.resource);
             resource.amount = Mathf.Min(resource.amount + product.amount, resource.maxAmount);
-            if(bProduction)
+            if (bProduction)
             {
                 var cleanResource = _cleanResources.Find(r => r.resource == product.resource);
                 if (cleanResource != null)
@@ -210,12 +219,15 @@ public class OrchestratorScript : MonoBehaviour
         }
 
         houses.Add(house);
+        allHealthStuff.Add(house.building.healthComp);
 
         var maxPop = houses.Select(house => house.house.maxPopulation).Sum();
         Debug.Log("Max population updated: " + maxPop);
         resources.Find(r => r.resource.resourceName == "Population").maxAmount = maxPop;
 
         OnResourceChange.Invoke(resources);
+
+        house.building.healthComp.OnTakingDamage += RelayAttacked;
     }
 
     public void RegisterBuilding(WorkshopComp workshop)
@@ -226,7 +238,15 @@ public class OrchestratorScript : MonoBehaviour
         }
 
         workshops.Add(workshop);
+        allHealthStuff.Add(workshop.building.healthComp);
+
+        workshop.building.healthComp.OnTakingDamage += RelayAttacked;
     }
 
     #endregion
+
+    void RelayAttacked(HealthComp health)
+    {
+        OnBuildingAttacked?.Invoke(health);
+    }
 }

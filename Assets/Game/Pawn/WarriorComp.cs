@@ -18,6 +18,9 @@ public class WarriorComp : MonoBehaviour
     [SerializeField]
     BuildingComp target;
 
+    [SerializeField]
+    AudioClip attackSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -67,6 +70,7 @@ public class WarriorComp : MonoBehaviour
 
     void Attack()
     {
+        AudioSource.PlayClipAtPoint(attackSound, transform.position);
         _attackTimer += Time.unscaledDeltaTime;
         if (_attackTimer >= _pawn.data.attackInterval / 1000f)
         {

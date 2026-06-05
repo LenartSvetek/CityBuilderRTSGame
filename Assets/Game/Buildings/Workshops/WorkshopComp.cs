@@ -21,6 +21,12 @@ public class WorkshopComp : MonoBehaviour
     [ReadOnly]
     private OrchestratorScript _orchestrator;
 
+    [SerializeField]
+    private AudioClip _startProductionSound;
+
+    [SerializeField]
+    private AudioClip _endProductionSound;
+
     private void Awake()
     {
         _building = GetComponent<BuildingComp>();
@@ -38,12 +44,20 @@ public class WorkshopComp : MonoBehaviour
 
     public bool StartProduction()
     {
-        return _orchestrator.ApplyResourceCost(_production.Resources, true);
+        var success = _orchestrator.ApplyResourceCost(_production.Resources, true);
+
+        if(success)
+            AudioSource.PlayClipAtPoint(_startProductionSound, transform.position);
+
+        return success;
     }
 
     public void StopProduction(bool success) {
         if (!success) _orchestrator.AddResources(_production.Resources, true);
-        _orchestrator.AddResources(_production.Production, true);
+        else
+            _orchestrator.AddResources(_production.Production, true);
+
+        AudioSource.PlayClipAtPoint(_endProductionSound, transform.position);
     }
 
     #region placing

@@ -175,6 +175,7 @@ MonoBehaviour:
   _targets: []
   attackInterval: 100
   attackDamage: 10
+  attackSound: {fileID: 8300000, guid: c3eaacaba1a5c6c46b94965718f7f464, type: 3}
 --- !u!114 &4864482481305816625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +206,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthComp
   _maxHealth: 100
   _health: 100
+  _selfHealAmount: 10
+  _selfHealInterval: 100
+  _selfhealAttackStopTimeout: 1000
 --- !u!114 &-8661728591863527413
 MonoBehaviour:
   m_ObjectHideFlags: 0

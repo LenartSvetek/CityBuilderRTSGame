@@ -1106,6 +1106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 592909561}
   - component: {fileID: 592909560}
+  - component: {fileID: 592909562}
   m_Layer: 0
   m_Name: GameOrhestrator
   m_TagString: Untagged
@@ -1145,6 +1146,9 @@ MonoBehaviour:
     maxAmount: 5000
   houses: []
   workshops: []
+  allHealthStuff:
+  - {fileID: 1354071738}
+  - {fileID: 1630157735}
   populationGrowthRate: 512
   pawnPrefab: {fileID: 8583642070189780200, guid: 234d09c258f5c864999b1041020ac6d4, type: 3}
   workers: []
@@ -1164,6 +1168,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &592909562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592909559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f03c0ba2e6131469068149ca068c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackgroundMusic
+  ambientMusic:
+  - {fileID: 8300000, guid: 11484cc671dfcb840bb95c943daf29f3, type: 3}
+  - {fileID: 8300000, guid: c8a57a98532f45d46a5f7a6c3c1aab79, type: 3}
+  combatMusic:
+  - {fileID: 8300000, guid: bba585c4dbf1def4887df9250db51e03, type: 3}
+  - {fileID: 8300000, guid: 32bb46b5bcba4534f9089bbd0edb7d27, type: 3}
+  type: 0
+  bufferTime: 500
+  combatMusicDuration: 15
 --- !u!1001 &777599576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1370,6 +1395,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05e4e00f5069304d810ebb8af74878a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingComp
+--- !u!114 &1354071738 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2017362719358491345, guid: 7cc1839a6ffb25040b6a2ee6429f1c6d, type: 3}
+  m_PrefabInstance: {fileID: 386981093}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990866aa42435fd4599ed07b3d69fbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComp
 --- !u!114 &1630157733 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4864482481305816625, guid: 0a1bb0b99fdcdba41b967510c4f98992, type: 3}
@@ -1381,6 +1417,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05e4e00f5069304d810ebb8af74878a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingComp
+--- !u!114 &1630157735 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8820414840654012932, guid: 0a1bb0b99fdcdba41b967510c4f98992, type: 3}
+  m_PrefabInstance: {fileID: 1703885598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990866aa42435fd4599ed07b3d69fbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComp
 --- !u!114 &1656769960 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4013568951686597272, guid: 7a10f490f623e8142a7f9a4d2974e085, type: 3}

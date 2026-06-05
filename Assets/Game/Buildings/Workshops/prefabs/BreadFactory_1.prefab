@@ -50,6 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorkshopComp
   _population: {fileID: 0}
   _production: {fileID: 11400000, guid: cf117c86ce6b6d34aaaba929328519ba, type: 2}
+  _startProductionSound: {fileID: 8300000, guid: d628635af43b12c4098f05ef4e0335a8, type: 3}
+  _endProductionSound: {fileID: 8300000, guid: 161bbcbba6bcfa14ab11ce66a02dd92b, type: 3}
 --- !u!114 &-5357782062863799669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,3 +110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthComp
   _maxHealth: 100
   _health: 100
+  _selfHealAmount: 10
+  _selfHealInterval: 100
+  _selfhealAttackStopTimeout: 1000

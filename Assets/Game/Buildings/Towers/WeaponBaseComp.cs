@@ -19,6 +19,9 @@ public class WeaponBaseComp : MonoBehaviour
 
     float attackTimer = 0;
 
+    [SerializeField]
+    AudioClip attackSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
@@ -64,6 +67,7 @@ public class WeaponBaseComp : MonoBehaviour
 
         if (attackTimer <= 0 && _targets.Count > 0) {
             attackTimer = attackInterval;
+            AudioSource.PlayClipAtPoint(attackSound, transform.position);
             Attack(_targets[0]);
         }
     }
