@@ -29,3 +29,5 @@ MonoBehaviour:
   eatResources:
   - resource: {fileID: 11400000, guid: a3f2183e6b2f79546ac3de9533788855, type: 2}
     amount: 10
+  - resource: {fileID: 11400000, guid: 351303075c914a5448040d36863a2c63, type: 2}
+    amount: 10

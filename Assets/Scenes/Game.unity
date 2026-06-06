@@ -1128,6 +1128,9 @@ MonoBehaviour:
   - resource: {fileID: 11400000, guid: a3f2183e6b2f79546ac3de9533788855, type: 2}
     amount: 1000
     maxAmount: 5000
+  - resource: {fileID: 11400000, guid: 351303075c914a5448040d36863a2c63, type: 2}
+    amount: 100
+    maxAmount: 5000
   - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
     amount: 1250
     maxAmount: 5000
@@ -1557,6 +1560,8 @@ MonoBehaviour:
     SO: {fileID: 11400000, guid: 2f1bfa052051ac54ea1a5061a90f2314, type: 2}
   - buttonName: Fence
     SO: {fileID: 11400000, guid: dfc68f9b20f93c6468a05b9cd33359ae, type: 2}
+  - buttonName: Well
+    SO: {fileID: 11400000, guid: 73c2e044b4236744eb8ca97a1bd192a0, type: 2}
   buttonTemplate: {fileID: 9197481963319205126, guid: a58bde2bbf2985b48aae2aabddae803e, type: 3}
   tooltipTemplate: {fileID: 9197481963319205126, guid: d4b6fc097a8ba9b4d9871f46ccdc461b, type: 3}
   resourceTemplate: {fileID: 9197481963319205126, guid: 74533610fe58e0b4a9d3029782e257e7, type: 3}
