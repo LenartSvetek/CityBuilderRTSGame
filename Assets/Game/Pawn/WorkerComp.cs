@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public class WorkerComp : MonoBehaviour
@@ -51,7 +52,7 @@ public class WorkerComp : MonoBehaviour
         _pawn.transform.position = HouseGatherSpot.position;
 
         state = PawnState.walking;
-        _pawn.MovementComp.MoveTo(WorkGatherSpot.position, (bool b) => { Debug.Log("I arrived"); EnterWorkPlace(); });
+        _pawn.MovementComp.MoveTo(WorkGatherSpot.position, (NavMeshAgent agent, bool b) => { EnterWorkPlace(); });
     }
 
     void EnterWorkPlace()
@@ -94,4 +95,6 @@ public class WorkerComp : MonoBehaviour
 
         }
     }
+
+   
 }

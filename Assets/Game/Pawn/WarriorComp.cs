@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public class WarriorComp : MonoBehaviour
@@ -48,7 +49,7 @@ public class WarriorComp : MonoBehaviour
 
     void GoToTarget(bool subscribeToEv = true)
     {
-        Debug.Log($"target: {target} ogTarget: {ogTarget}");
+
         //Transform HouseGatherSpot = _pawn.CurrentHouse.building.gatherSpot;
         if (!target.GetSpot(this, out Transform WorkGatherSpot)) return;
         //_pawn.transform.position = HouseGatherSpot.position;
@@ -57,12 +58,45 @@ public class WarriorComp : MonoBehaviour
             target.healthComp.OnDeath += OnTargetDefeated;
 
         state = PawnState.walking;
-        _pawn.MovementComp.MoveTo(WorkGatherSpot.position, (bool b) => { StartAttacking(); });
+        _pawn.MovementComp.MoveTo(WorkGatherSpot.position, OnLocationArrive);
+    }
+
+    void OnLocationArrive(NavMeshAgent agent, bool success)
+    {
+        Debug.Log("Has movement been succesfull: " + success);
+        if(success)
+        {
+            StartAttacking();
+            return;
+        }
+
+        Vector3[] corners = agent.path.corners;
+        if (corners.Length == 0) return;
+
+        Vector3 lastReachablePoint = corners[corners.Length - 1];
+
+        Vector3 dirTarget = (target.transform.position - lastReachablePoint).normalized;
+
+        RaycastHit hit;
+        float checkDistance = 2.0f;
+        int buildingLayerMask = 1 << LayerMask.NameToLayer("Building");
+
+        
+        if (Physics.Raycast(lastReachablePoint + Vector3.up * 0.5f, dirTarget, out hit, checkDistance, buildingLayerMask))
+        {
+            Attacked(hit.collider.transform.root.GetComponent<BuildingComp>());
+        
+            Debug.DrawLine(lastReachablePoint, hit.point, Color.red);
+        }
+        else
+        {
+            
+            Debug.DrawLine(lastReachablePoint + Vector3.up * 0.5f, lastReachablePoint + dirTarget * checkDistance + Vector3.up * 0.5f, Color.red, 1000000);
+        }
     }
 
     void StartAttacking()
     {
-        Debug.Log($"target: {target} ogTarget: {ogTarget}");
         _attackTimer = 0;
 
         state = PawnState.attacking;
@@ -87,9 +121,8 @@ public class WarriorComp : MonoBehaviour
 
     public void OnTargetDefeated(HealthComp destroyed)
     {
-        Debug.Log(gameObject.name + " handling destruction of " + destroyed.name);
-
-        if (target.gameObject == destroyed.gameObject)
+        if(destroyed == null) return;
+        if (target != null && target.gameObject == destroyed.gameObject)
         {
             state = PawnState.home;
             // 1. Unsubscribe from the dead building immediately
@@ -111,7 +144,7 @@ public class WarriorComp : MonoBehaviour
             return;
         }
 
-        if (ogTarget.gameObject == destroyed.gameObject)
+        if (ogTarget != null && ogTarget.gameObject == destroyed.gameObject)
         {
             ogTarget.healthComp.OnDeath -= OnTargetDefeated;
             ogTarget = null;
@@ -120,7 +153,6 @@ public class WarriorComp : MonoBehaviour
 
     public void Attacked(BuildingComp tower)
     {
-        Debug.Log("Attacked");
         if (ogTarget != null || ogTarget == target || target == tower || tower == null) return;
 
         ogTarget = target;
@@ -130,6 +162,11 @@ public class WarriorComp : MonoBehaviour
         GoToTarget();
 
         enabled = true;
+    }
+
+    public void SetTarget(Transform t)
+    {
+        target = t.GetComponent<BuildingComp>();
     }
 
     void OnDestroy()

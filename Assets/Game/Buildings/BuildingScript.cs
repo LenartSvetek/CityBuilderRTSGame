@@ -47,7 +47,6 @@ public class BuildingScript : MonoBehaviour {
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        Debug.Log("Start has been called");
         updateBuilding();
     }
 
@@ -59,7 +58,6 @@ public class BuildingScript : MonoBehaviour {
             children.Add(child);
         }
 
-        Debug.Log($"Number of children: {children.Count}");
 
         foreach (Transform child in children) {
             DestroyAllChildren(child.gameObject); 
@@ -69,7 +67,6 @@ public class BuildingScript : MonoBehaviour {
     public void updateBuilding() {
         DestroyAllChildren(gameObject);
 
-        Debug.Log($"Yoo level is {_level} type: {_type.ToString()}");
 
         if (_type == BUILDING_TYPE.Resource)
         {
@@ -93,7 +90,6 @@ public class BuildingScript : MonoBehaviour {
         if (transform.childCount != 0) return;
         
         if (handle.Status == AsyncOperationStatus.Succeeded) {
-            Debug.Log($"Loaded {handle.Result.Count} assets that matched both labels.");
 
             if (handle.Result.Count > 0) {
                 int rInd = Mathf.FloorToInt(Random.value * handle.Result.Count);

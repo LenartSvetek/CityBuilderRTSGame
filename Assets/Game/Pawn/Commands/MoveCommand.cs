@@ -12,7 +12,7 @@ public class MoveCommand : IPawnCommand
         this.target = target;
     }
 
-    public void Execute(GameObject pawn, [CanBeNull] Action<bool> callback)
+    public void Execute(GameObject pawn, [CanBeNull] Action<NavMeshAgent, bool> callback)
     {
         NavMeshHit navHit;
         if (NavMesh.SamplePosition(target, out navHit, 2f, NavMesh.AllAreas))

@@ -43,7 +43,6 @@ public class PlacingComp : MonoBehaviour
 
         _myBox.enabled = false; 
 
-        Debug.Log("Input actions number: " + FindObjectsByType<PlayerInputHandler>(FindObjectsSortMode.InstanceID).Length);
 
         _inputHandler = FindFirstObjectByType<PlayerInputHandler>();
         _inputActions = _inputHandler.inputActions;
@@ -72,14 +71,16 @@ public class PlacingComp : MonoBehaviour
         Vector3 halfExtents = Vector3.Scale(_myBox.size, transform.lossyScale) * 0.5f;
         
         var colliders = Physics.OverlapBox(center, halfExtents, transform.rotation, LayerMask.GetMask("Building"));
-        Debug.Log("Colliders overlapping: " + colliders.Length + " center: " + center);
+
         if (colliders.Length == 1)
         {
-            Debug.Log("Something is overlapping my Box Collider!");
+
             var hitObj = colliders[0].gameObject;
             
             BuildingScript hitBScript = hitObj.transform.root.GetComponent<BuildingScript>();
-            Debug.Log("Hit object: " + hitObj.name + " resource: " + hitObj.transform.root.GetComponent<BuildingScript>().resource);
+
+            Debug.Log("overlapping " + hitObj.name);
+
             if (workshopComp == null) IsNotPlacable();
             else if (hitBScript != null && workshopComp.production.Resource != null && workshopComp.CanPlace(hitBScript.resource)) { IsPlacable(); pos = hitObj.transform.position; }
             else IsNotPlacable();

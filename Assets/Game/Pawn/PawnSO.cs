@@ -1,4 +1,6 @@
 using JetBrains.Annotations;
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -24,4 +26,13 @@ public class PawnSO : ScriptableObject
 
     public int gatherPoints;
     public float gatherPerMin;
+
+    public int foodEat = 5;
+    [Tooltip("In ms")]
+    public float foodTimeout = 30 * 1000f;
+    [Tooltip("How many times can miss food")]
+    public int TimesHungry = 3;
+
+    public List<ResourceCost> eatResources; 
+
 }

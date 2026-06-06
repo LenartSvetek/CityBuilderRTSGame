@@ -26,7 +26,7 @@ public class PopulationScript : MonoBehaviour
     {
         if (workers.Count >= maxWorkers)
         {
-            Debug.LogError("No space for more workers!");
+
             return;
         }
         workers.Add(pawn);
@@ -37,7 +37,7 @@ public class PopulationScript : MonoBehaviour
     {
         if (workers.Count >= maxWorkers)
         {
-            Debug.LogError("No space for more workers!");
+
             return;
         }
         workers.AddRange(pawns);
@@ -46,4 +46,15 @@ public class PopulationScript : MonoBehaviour
         }
     }
 
+
+    void OnDestroy()
+    {
+        var orch = Object.FindFirstObjectByType<OrchestratorScript>();
+
+        if(orch)
+        {
+            workers.ForEach(p => p.SentHome());
+            workers.ForEach(orch.PawnFreed);
+        }
+    }
 }

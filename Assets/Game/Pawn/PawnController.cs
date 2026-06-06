@@ -15,6 +15,8 @@ public class PawnController : MonoBehaviour
     private Pawn pawn;
     private Coroutine _executionRoutine;
 
+    private 
+
     void Awake() => pawn = GetComponent<Pawn>();
 
     public void IssueCommands(List<IPawnCommand> newCommands)
@@ -68,7 +70,7 @@ public class PawnController : MonoBehaviour
             bool commandFinished = false;
             bool commandSuccess = false;
 
-            currentCommand.Execute(pawn.gameObject, (success) => 
+            currentCommand.Execute(pawn.gameObject, (agent, success) => 
             {
                 commandSuccess = success;
                 commandFinished = true;
@@ -82,7 +84,6 @@ public class PawnController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Command failed. Stopping queue.");
                 IsRunning = false;
             }
         }

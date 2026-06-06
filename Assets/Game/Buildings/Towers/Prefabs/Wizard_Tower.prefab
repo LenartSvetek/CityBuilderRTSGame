@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: -8661728591863527413}
   m_Layer: 0
   m_Name: Wizard_Tower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponComp
   _targets: []
   attackInterval: 100
-  attackDamage: 10
+  attackDamage: 5
   attackSound: {fileID: 8300000, guid: c3eaacaba1a5c6c46b94965718f7f464, type: 3}
 --- !u!114 &4864482481305816625
 MonoBehaviour:

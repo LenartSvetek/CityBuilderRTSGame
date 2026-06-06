@@ -12,14 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09eb5b6fc16892b47b16518ff52fe723, type: 3}
   m_Name: Bread_alt_1
   m_EditorClassIdentifier: Assembly-CSharp::WorkshopSO
-  _resources:
-  - resource: {fileID: 11400000, guid: 2781d4cd2b2f40849bcd680a7472b767, type: 2}
-    amount: 5
-  - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
-    amount: 5
+  _resource: {fileID: 0}
+  _resources: []
   _production:
   - resource: {fileID: 11400000, guid: a3f2183e6b2f79546ac3de9533788855, type: 2}
-    amount: 15
+    amount: 45
   _productionCost: 30
   prefabs:
   - {fileID: 1360468252654966213, guid: 32e74d545e45e4742be633eda96e73a3, type: 3}

@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9db4e207e3065499106f7196a25ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pawn
-  data: {fileID: 11400000, guid: 1f5768de056498d48b87f5fc99ca8a90, type: 2}
+  data: {fileID: 11400000, guid: 660b171518140c24ab06ffea0e6267fd, type: 2}
   _alliance: 1
   state: 3
   _workerComp: {fileID: 0}

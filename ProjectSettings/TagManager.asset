@@ -11,6 +11,8 @@ TagManager:
   - Building
   - GatherSpot
   - AttackOrigin
+  - Tower
+  - Outpost
   layers:
   - Default
   - TransparentFX

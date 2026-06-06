@@ -50,6 +50,10 @@ public class Buildings : MonoBehaviour
         }
 
         orchestrator.OnResourceChange += OnResourceChange;
+
+        var btnDest = root.Q<Button>("Destruction");
+
+        btnDest.clicked += () => playerController.SetDestroySet();
     }
 
     void ShowTooltip(BuidlingSO buidling, Button btn) {

@@ -14,7 +14,6 @@ public class SensorComp : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         if (!other.transform.root.TryGetComponent<Pawn>(out Pawn pawn) || pawn.alliance != PawnAlliance.Enemy) return;
 
         OnEnemyPawnEnter?.Invoke(pawn.GetComponent<WarriorComp>());

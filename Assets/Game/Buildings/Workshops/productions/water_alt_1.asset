@@ -15,8 +15,8 @@ MonoBehaviour:
   _resource: {fileID: 0}
   _resources: []
   _production:
-  - resource: {fileID: 11400000, guid: 351303075c914a5448040d36863a2c63, type: 2}
-    amount: 25
+  - resource: {fileID: 11400000, guid: cb7a449d6aa5c1a4fb728314e48c3242, type: 2}
+    amount: 75
   _productionCost: 10
   prefabs:
   - {fileID: 650591154451796056, guid: 4866c2038fcdb0e42958363e93858f56, type: 3}

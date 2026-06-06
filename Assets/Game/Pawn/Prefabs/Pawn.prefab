@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 331633878721695637}
   - component: {fileID: -8856374255708760752}
   - component: {fileID: -6404853505542185128}
+  - component: {fileID: -7308829920257733436}
   m_Layer: 7
   m_Name: Pawn
   m_TagString: Pawn
@@ -433,6 +434,19 @@ MonoBehaviour:
   _selfHealAmount: 10
   _selfHealInterval: 100
   _selfhealAttackStopTimeout: 1000
+--- !u!114 &-7308829920257733436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583642070189780200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c4ff9b461d6754887403ef67ead87b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EatComp
+  EatTimer: 0
 --- !u!1 &8968360995202469732
 GameObject:
   m_ObjectHideFlags: 0

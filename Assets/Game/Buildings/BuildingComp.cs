@@ -36,7 +36,7 @@ public class BuildingComp : MonoBehaviour
             int rInd = Mathf.FloorToInt(UnityEngine.Random.value * models.Count) % models.Count;
 
             GameObject obj = Instantiate(models[rInd], transform);
-            obj.transform.localPosition = Vector3.zero;
+            //obj.transform.localPosition = Vector3.zero;
             obj.name = "Model";
         }
         _GatherSpot = transform.GetComponentsInChildren<Transform>().Where(t => t.CompareTag("GatherSpot") && t.name == "main").FirstOrDefault();

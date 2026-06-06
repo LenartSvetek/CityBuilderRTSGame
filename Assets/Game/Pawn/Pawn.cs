@@ -53,9 +53,13 @@ public class Pawn : MonoBehaviour
     private HealthComp _healthComp;
     public HealthComp HealthComp => _healthComp;
 
+    OrchestratorScript _orchestratorScript;
+    public OrchestratorScript orchestrator => _orchestratorScript;
+
+
     protected virtual void Awake()
     {
-        
+        _orchestratorScript = Object.FindFirstObjectByType<OrchestratorScript>();
 
         _workerComp = GetComponent<WorkerComp>();
         _movementComp = GetComponent<PawnMovement>();
@@ -105,9 +109,15 @@ public class Pawn : MonoBehaviour
         Vector3 point1 = center + worldDirection * halfCylinderHeight;
         Vector3 point2 = center - worldDirection * halfCylinderHeight;
         bool isHit = Physics.CheckCapsule(point1, point2, worldRadius, LayerMask.GetMask("Units"));
-
-        Debug.Log($"Checking position for {gameObject.name} at {position.position}. Capsule points: {point1}, {point2}, radius: {worldRadius}. Hit: {isHit}");
+        
 
         return !isHit;
+    }
+
+    public void SentHome()
+    {
+        state = PawnState.home;
+        _workingAt = null;
+        _workerComp.enabled = false;
     }
 }

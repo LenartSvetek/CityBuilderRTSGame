@@ -15,7 +15,7 @@ MonoBehaviour:
   pawnName: Worker
   prefab: {fileID: 0}
   maxHealth: 100
-  moveSpeed: 50
+  moveSpeed: 10
   attackRange: 5
   attackDamage: 5
   attackInterval: 500
@@ -23,3 +23,9 @@ MonoBehaviour:
   canBuild: 1
   gatherPoints: 30
   gatherPerMin: 5
+  foodEat: 5
+  foodTimeout: 30000
+  TimesHungry: 3
+  eatResources:
+  - resource: {fileID: 11400000, guid: a3f2183e6b2f79546ac3de9533788855, type: 2}
+    amount: 10

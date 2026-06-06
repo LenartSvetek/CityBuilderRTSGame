@@ -222,7 +222,7 @@ public class OrchestratorScript : MonoBehaviour
         allHealthStuff.Add(house.building.healthComp);
 
         var maxPop = houses.Select(house => house.house.maxPopulation).Sum();
-        Debug.Log("Max population updated: " + maxPop);
+
         resources.Find(r => r.resource.resourceName == "Population").maxAmount = maxPop;
 
         OnResourceChange.Invoke(resources);
@@ -243,10 +243,28 @@ public class OrchestratorScript : MonoBehaviour
         workshop.building.healthComp.OnTakingDamage += RelayAttacked;
     }
 
+    public void RegisterDependent(HealthComp comp)
+    {
+        if (allHealthStuff.Contains(comp))
+        {
+            return;
+        }
+
+        allHealthStuff.Add(comp);
+
+        comp.OnTakingDamage += RelayAttacked;
+    }
+
     #endregion
 
     void RelayAttacked(HealthComp health)
     {
         OnBuildingAttacked?.Invoke(health);
+    }
+
+    public void PawnFreed(Pawn p)
+    {
+        workers.Remove(p);
+        freeWorkers.Add(p);
     }
 }

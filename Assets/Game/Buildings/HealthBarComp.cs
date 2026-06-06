@@ -103,7 +103,6 @@ public class HealthBarComp : MonoBehaviour
 
     private void OnMouseOver()
     {
-        Debug.Log("YOOOO");
         if (!isVisible)
         {
             canvas.enabled = true;
@@ -134,7 +133,5 @@ public class HealthBarComp : MonoBehaviour
 
         if (healthBar != null)
             healthBar.fillAmount = comp.health / comp.maxHealth;
-        //healthBar.Rebuild(CanvasUpdate.Layout);
-        //LayoutRebuilder.ForceRebuildLayoutImmediate(healthBar.rectTransform);
     }
 }

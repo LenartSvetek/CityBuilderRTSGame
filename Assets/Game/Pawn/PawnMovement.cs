@@ -9,7 +9,7 @@ public class PawnMovement : MonoBehaviour
     private Pawn pawn;
     private bool _isMoving = false;
     
-    Action<bool> callback;
+    Action<NavMeshAgent, bool> callback;
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -32,7 +32,7 @@ public class PawnMovement : MonoBehaviour
         }
     }
 
-    public void MoveTo(Vector3 position, [CanBeNull] Action<bool> callback)
+    public void MoveTo(Vector3 position, [CanBeNull] Action<NavMeshAgent, bool> callback)
     {
         _isMoving = true;
         agent.ResetPath();
@@ -61,12 +61,11 @@ public class PawnMovement : MonoBehaviour
     
     void OnDestinationReached()
     {
-        Debug.Log("OnDestinationReached");
+
         if (callback != null)
         {
-            Debug.Log("Callback called");
-            callback.Invoke(true);
-            callback = null;
+
+            callback.Invoke(agent, agent.pathStatus == NavMeshPathStatus.PathComplete);
         }
     }
 }

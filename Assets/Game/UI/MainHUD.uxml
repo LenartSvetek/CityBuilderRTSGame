@@ -8,4 +8,5 @@
     </ui:TabView>
     <ui:VisualElement name="ContexMenu" style="flex-grow: 1; position: absolute; right: 0; bottom: 0; height: 340px; width: 249px;" />
     <ui:VisualElement name="Resources" style="flex-grow: 1; top: 0; position: absolute; right: 0; left: 0; flex-direction: row; justify-content: center;" />
+    <ui:Button text="Destroy building" name="Destruction" style="position: absolute;" />
 </ui:UXML>

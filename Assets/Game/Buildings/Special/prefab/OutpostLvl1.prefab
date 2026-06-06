@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2017362719358491345}
   m_Layer: 0
   m_Name: OutpostLvl1
-  m_TagString: House
+  m_TagString: Outpost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -110,3 +110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthComp
   _maxHealth: 100
   _health: 100
+  _selfHealAmount: 10
+  _selfHealInterval: 100
+  _selfhealAttackStopTimeout: 1000

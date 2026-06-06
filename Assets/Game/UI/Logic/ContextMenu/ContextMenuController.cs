@@ -26,8 +26,6 @@ public class ContextMenuController : MonoBehaviour
     void UpdateUI()
     {
         ObjectType objectType = player.objectType;
-        Debug.Log("Yooo");
-        Debug.Log(objectType.ToString());
         HUD.rootVisualElement.Q("ContexMenu").Clear();
         switch (objectType)
         {
@@ -37,7 +35,6 @@ public class ContextMenuController : MonoBehaviour
                 HouseComp obj = player.SelectedObjects[0].GetComponent<HouseComp>();
                 if (obj.CompareTag("House"))
                 {
-                    Debug.Log(obj.name);
                     var ui = global::HouseUI.buildUI(HouseUI, obj);
                     HUD.rootVisualElement.Q("ContexMenu").Add(ui);
                 }

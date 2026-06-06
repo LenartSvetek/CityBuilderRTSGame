@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,7 +9,8 @@ public enum PlayerState
     Idle,
     Controlling,
     PlacingBuilding,
-    DragSelecting
+    DragSelecting,
+    Destroying
 }
 
 public enum ObjectType
@@ -95,12 +97,9 @@ public class PlayerController : MonoBehaviour
     {
         if(EventSystem.current.IsPointerOverGameObject())
         {
-            Debug.Log("Clicked on UI, ignoring.");
             return;
         }
-        
-        
-        
+     
         Ray ray = _cameraController.GetRay;
         RaycastHit hit;
         // Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red, 1000);
@@ -115,7 +114,6 @@ public class PlayerController : MonoBehaviour
                 if (!Physics.SphereCast(ray, 0.5f, out hit, Mathf.Infinity, layersToHit)) return;
                 
                 GameObject hitObj = hit.transform.root.gameObject;
-                Debug.Log($"Hit: {hitObj.name} | {hitObj.tag}");
 
                 switch (hitObj.tag)
                 { 
@@ -151,9 +149,22 @@ public class PlayerController : MonoBehaviour
 
             case PlayerState.DragSelecting:
                 break;
+            case PlayerState.Destroying:
+                playerState = PlayerState.Idle;
+                int buildingMask = LayerMask.GetMask("Building");
+                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, buildingMask)) return;
+
+                if (hit.collider.gameObject.tag.CompareTo("Outpost") == 0) return;
+
+                Destroy(hit.collider.gameObject);
+                break;
         }
     }
     
+    public void SetDestroySet()
+    {
+        playerState = PlayerState.Destroying;
+    }
     public void selectObject(GameObject pawn)
     {
         // Removed the hoveredObject hijack! Now it strictly selects exactly what you clicked.
@@ -189,7 +200,6 @@ public class PlayerController : MonoBehaviour
 
     void SetObjectType(GameObject p)
     {
-        Debug.Log($"SetObjectType: {p.tag}");
         switch (p.tag)
         {
             case "Pawn":
@@ -225,10 +235,9 @@ public class PlayerController : MonoBehaviour
        
         Destroy(Placer.GetComponent<PlacingComp>());
 
-        Debug.Log("Placed building tag: " + Placer.tag);
         if (Placer.tag == "House") _orchestrator.RegisterBuilding(Placer.GetComponent<HouseComp>());
         if (Placer.tag == "Building") _orchestrator.RegisterBuilding(Placer.GetComponent<WorkshopComp>());
-
+        if (Placer.tag == "Tower") _orchestrator.RegisterDependent(Placer.GetComponent<HealthComp>());
         Placer = null;
         
 
@@ -243,14 +252,9 @@ public class PlayerController : MonoBehaviour
 
         currHoldBuilding = buildingSO;
 
-        Debug.Log("Prefab: " + buildingSO.name);
-
         Placer = Instantiate(buildingSO.prefab, transform.position, Quaternion.identity);
 
         Placer.AddComponent<PlacingComp>();
-
-        
-        Debug.Log("Placer set to: " + Placer.name);
 
         playerState = PlayerState.PlacingBuilding;
     }
